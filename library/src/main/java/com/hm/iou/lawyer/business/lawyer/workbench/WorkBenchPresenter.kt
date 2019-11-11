@@ -1,4 +1,4 @@
-package com.hm.iou.lawyer.business.lawyer
+package com.hm.iou.lawyer.business.lawyer.workbench
 
 import android.content.Context
 import com.hm.iou.base.mvp.HMBasePresenter
@@ -19,9 +19,10 @@ class WorkBenchPresenter(context: Context, view: WorkBenchContract.View) :
     override fun init() {
 
         mListDataWaiteToDo.add(object : IMenuItem {
-            override fun getIIcon(): Int = -1
 
-            override fun getIName(): String = "进行中"
+            override fun getIModel(): ModelType = ModelType.WAIT_TO_LOADING
+
+            override fun getIIcon(): Int = -1
 
             override fun getIRedDotNum(): String = "1"
 
@@ -30,7 +31,7 @@ class WorkBenchPresenter(context: Context, view: WorkBenchContract.View) :
         mListDataWaiteToDo.add(object : IMenuItem {
             override fun getIIcon(): Int = -1
 
-            override fun getIName(): String = "已完成"
+            override fun getIModel(): ModelType = ModelType.WAIT_TO_FINISH
 
             override fun getIRedDotNum(): String = "1"
 
@@ -39,7 +40,7 @@ class WorkBenchPresenter(context: Context, view: WorkBenchContract.View) :
         mListDataWaiteToDo.add(object : IMenuItem {
             override fun getIIcon(): Int = -1
 
-            override fun getIName(): String = "全部订单"
+            override fun getIModel(): ModelType = ModelType.WAIT_TO_ALL_ORDER
 
             override fun getIRedDotNum(): String = "1"
 
@@ -51,7 +52,7 @@ class WorkBenchPresenter(context: Context, view: WorkBenchContract.View) :
         mListDataLawyerOrder.add(object : IMenuItem {
             override fun getIIcon(): Int = -1
 
-            override fun getIName(): String = "律师咨询"
+            override fun getIModel(): ModelType = ModelType.LAWYER_ORDER_CONSULT
 
             override fun getIRedDotNum(): String = "1"
 
@@ -60,7 +61,7 @@ class WorkBenchPresenter(context: Context, view: WorkBenchContract.View) :
         mListDataLawyerOrder.add(object : IMenuItem {
             override fun getIIcon(): Int = -1
 
-            override fun getIName(): String = "律师函"
+            override fun getIModel(): ModelType = ModelType.LAWYER_LETTER
 
             override fun getIRedDotNum(): String = "1"
 
@@ -69,7 +70,7 @@ class WorkBenchPresenter(context: Context, view: WorkBenchContract.View) :
         mListDataLawyerOrder.add(object : IMenuItem {
             override fun getIIcon(): Int = -1
 
-            override fun getIName(): String = "邀请接单"
+            override fun getIModel(): ModelType = ModelType.LAWYER_INVITE_RECEIVE
 
             override fun getIRedDotNum(): String = "1"
 

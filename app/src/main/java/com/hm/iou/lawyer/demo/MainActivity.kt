@@ -3,7 +3,7 @@ package com.hm.iou.lawyer.demo
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.hm.iou.lawyer.business.lawyer.WorkBenchActivity
+import com.hm.iou.lawyer.business.lawyer.workbench.WorkBenchActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

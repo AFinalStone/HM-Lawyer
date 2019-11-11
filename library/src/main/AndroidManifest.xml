@@ -4,7 +4,17 @@
     <application>
 
         <activity
-            android:name=".business.lawyer.WorkBenchActivity"
+            android:name=".business.lawyer.workbench.WorkBenchActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".business.lawyer.wallet.WalletActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".business.lawyer.withdraw.WithDrawActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
     </application>

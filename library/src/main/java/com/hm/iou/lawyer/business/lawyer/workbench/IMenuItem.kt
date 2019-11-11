@@ -1,4 +1,4 @@
-package com.hm.iou.lawyer.business.lawyer
+package com.hm.iou.lawyer.business.lawyer.workbench
 
 /**
  * @author : 借条管家-shilei
@@ -14,9 +14,9 @@ interface IMenuItem {
     fun getIIcon(): Int
 
     /**
-     * 菜单名称
+     * 菜单
      */
-    fun getIName(): String
+    fun getIModel(): ModelType
 
     /**
      * 红点数量

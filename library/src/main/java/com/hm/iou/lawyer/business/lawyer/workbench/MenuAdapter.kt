@@ -1,4 +1,4 @@
-package com.hm.iou.lawyer.business.lawyer
+package com.hm.iou.lawyer.business.lawyer.workbench
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -18,7 +18,7 @@ class MenuAdapter :
         if (itemIcon != null) {
 //            helper?.setImageResource(R.id.iv_icon, itemIcon)
         }
-        helper?.setText(R.id.tv_name, item?.getIName())
+        helper?.setText(R.id.tv_name, item?.getIModel()?.modelName)
 
         val ifShow = item?.ifShowRedDot()
         if (ifShow == true) {

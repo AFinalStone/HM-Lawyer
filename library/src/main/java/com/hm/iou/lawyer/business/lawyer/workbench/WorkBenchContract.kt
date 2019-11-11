@@ -1,4 +1,4 @@
-package com.hm.iou.lawyer.business.lawyer
+package com.hm.iou.lawyer.business.lawyer.workbench
 
 import com.hm.iou.base.mvp.BaseContract
 

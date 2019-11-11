@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/uikit_bg_card_form"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <ImageView
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:src="@mipmap/uikit_icon_close_black" />
+
+
+    <TextView
+        style="@style/UikitTextView.Large"
+        android:layout_gravity="center_horizontal"
+        android:text="提现到账金额" />
+
+    <TextView
+        style="@style/UikitTextView"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="17dp"
+        android:text="提现"
+        android:textSize="@dimen/textFontSize_16" />
+
+    <TextView
+        style="@style/UikitTextView"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:text="¥900.00"
+        android:textSize="@dimen/textFontSize_30" />
+
+    <View
+        style="@style/UikitDivider.Horizontal"
+        android:layout_marginTop="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/UikitTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="提现金额"
+            android:textColor="#ff575b62"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_withdraw_money"
+            style="@style/UikitTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff575b62"
+            android:textSize="14sp"
+            tools:text="¥1000.00" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/UikitTextView"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:text="服务费"
+            android:textColor="#ff575b62" />
+
+        <TextView
+            android:id="@+id/tv_service_money"
+            style="@style/UikitTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff575b62"
+            tools:text="¥1000.00" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/UikitTextView"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:text="服务费费率"
+            android:textColor="#ff575b62" />
+
+        <TextView
+            android:id="@+id/tv_service_rate"
+            style="@style/UikitTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff575b62"
+            android:textSize="14sp"
+            tools:text="¥1000.00" />
+    </LinearLayout>
+
+    <Button
+        style="@style/UikitHMButton.Large.Main"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="确认提现" />
+</LinearLayout>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/uikit_background"
+    android:orientation="vertical">
+
+    <com.hm.iou.uikit.HMTopBarView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/uikit_topbar_height"
+        app:backIconIsShow="false"
+        app:bottomDividerIsShow="false"
+        app:titleBackground="@color/transparent"
+        app:titleText="提现" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingStart="21dp"
+        android:paddingEnd="21dp">
+
+        <TextView
+            style="@style/UikitTextView"
+            android:text="提现银行卡" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="7dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_bank_card"
+                style="@style/UikitTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="请绑定提现银行卡"
+                tools:text="6222 **** **** **8 317" />
+
+            <TextView
+                android:id="@+id/tv_bank_name"
+                style="@style/UikitTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="中国工商银行" />
+
+            <ImageView
+                android:id="@+id/iv_to_bank_detail"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:paddingStart="16dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:src="@mipmap/uikit_ic_arrow_right" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/UikitDivider.Horizontal"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            style="@style/UikitTextView"
+            android:layout_marginTop="20dp"
+            android:text="请输入提现金额：" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="7dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/UikitTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:text="@string/uikit_money"
+                android:textSize="@dimen/textFontSize_30"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_withdraw_money"
+                style="@style/UikitEditText"
+                android:layout_width="match_parent"
+                android:layout_marginStart="7dp"
+                android:background="@null"
+                android:hint="提现金额最低为100元"
+                android:textSize="@dimen/textFontSize_22" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/UikitDivider.Horizontal"
+            android:layout_marginTop="5dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_remainder_money"
+                style="@style/UikitTextView.Auxiliary.Small"
+                android:layout_height="match_parent"
+                android:text="钱包余额¥1000.00" />
+
+            <TextView
+                android:id="@+id/tv_withdraw_all_money"
+                style="@style/UikitTextView.Auxiliary.Small"
+                android:layout_height="match_parent"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:text="全部提现"
+                android:textColor="@color/uikit_function_remind" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                style="@style/UikitTextView.Auxiliary.Small"
+                android:layout_height="match_parent"
+                android:text="10%提现费用" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_withdraw_record"
+            style="@style/UikitTextView.Auxiliary"
+            android:layout_width="90dp"
+            android:layout_height="20dp"
+            android:drawableStart="@mipmap/lawyer_ic_lawyer_withdraw_record"
+            android:gravity="center"
+            android:text="提现记录"
+            android:textColor="#ff575b62" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="0dp" />
+
+        <TextView
+            android:id="@+id/tv_common_question"
+            style="@style/UikitTextView.Auxiliary"
+            android:layout_width="90dp"
+            android:layout_height="20dp"
+            android:drawableStart="@mipmap/lawyer_ic_lawyer_withdraw_record"
+            android:gravity="center"
+            android:text="常见问题"
+            android:textColor="#ff575b62" />
+    </LinearLayout>
+
+    <com.hm.iou.uikit.HMBottomBarView
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:bottomTitleText="确认提现"
+        app:enable="false" />
+</LinearLayout>

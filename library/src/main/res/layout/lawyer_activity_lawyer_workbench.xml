@@ -12,6 +12,7 @@
         app:backIconIsShow="false"
         app:bottomDividerIsShow="false"
         app:rightIcon="@mipmap/uikit_ic_top_person"
+        app:titleBackground="@color/transparent"
         app:titleText="律师工作台" />
 
     <androidx.core.widget.NestedScrollView
@@ -24,6 +25,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ll_wallet"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginStart="13dp"
