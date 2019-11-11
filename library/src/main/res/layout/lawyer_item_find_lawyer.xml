@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:background="@drawable/uikit_bg_item_ripple"
+    android:clickable="true"
+    android:focusable="true">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:background="@color/uikit_function_exception" />
+
+    <com.hm.iou.uikit.HMDotTextView
+        android:id="@+id/dot_num"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignTop="@id/iv_icon"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="-8dp"
+        android:layout_toEndOf="@id/iv_icon"
+        app:dotBackgroundColor="@color/uikit_function_exception"
+        app:dotText="1"
+        app:dotTextColor="@color/white"
+        app:dotTextSize="@dimen/textFontSize_12" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/UikitTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="53dp"
+        android:text="进行中" />
+
+</RelativeLayout>

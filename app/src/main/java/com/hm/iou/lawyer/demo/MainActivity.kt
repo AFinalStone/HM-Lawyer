@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.hm.iou.lawyer.business.lawyer.workbench.WorkBenchActivity
+import com.hm.iou.tools.kt.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
