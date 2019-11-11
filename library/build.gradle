@@ -32,7 +32,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
-    implementation 'com.heima.iou:hmbasebizlocal:1.0.0'
+    api 'com.heima.iou:hmbasebizlocal:1.0.0'
 }
 
 apply from: './maven_local.gradle'
