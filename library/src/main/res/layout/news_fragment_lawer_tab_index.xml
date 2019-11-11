@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/view_statusbar_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="24dip"
+        android:background="@color/white" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dip"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_lawyer_header"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/iv_lawyer_header"
+                android:layout_width="24dip"
+                android:layout_height="24dip"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@mipmap/jietiao_ic_home_top_header" />
+
+            <TextView
+                android:id="@+id/tv_lawyer_unread"
+                android:layout_width="11dp"
+                android:layout_height="11dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/jietiao_bg_home_top_header_red_num"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="6dp"
+                android:visibility="invisible" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_lawyer_workbench"
+            style="@style/UikitTextView"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:background="?attr/selectableItemBackground"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="律师工作台"
+            android:textColor="@color/uikit_text_sub_content"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.youth.banner.Banner
+                android:id="@+id/banner_lawyer"
+                android:layout_width="match_parent"
+                android:layout_height="94dip"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:visibility="gone"
+                app:delay_time="3000"
+                app:image_scale_type="fit_xy"
+                app:is_auto_play="true" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingTop="20dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:id="@+id/tv_lawyer_find_lawyer"
+                    style="@style/UikitTextView"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableTop="@mipmap/lawyer_ic_find_lawyer"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_horizontal"
+                    android:text="找律师" />
+
+                <TextView
+                    android:id="@+id/tv_lawyer_lawyer_letter"
+                    style="@style/UikitTextView"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableTop="@mipmap/lawyer_ic_lawyer_letter"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_horizontal"
+                    android:text="律师函" />
+
+                <TextView
+                    android:id="@+id/tv_lawyer_my_order"
+                    style="@style/UikitTextView"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableTop="@mipmap/lawyer_ic_my_order"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_horizontal"
+                    android:text="我的订单" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_lawyer_court_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/lawyer_img_lawyer_court_banner" />
+
+            <RelativeLayout
+                android:id="@+id/rl_lawyer_baike"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:background="?attr/selectableItemBackground"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp">
+
+                <ImageView
+                    android:id="@+id/iv_lawyer_baike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/lawyer_ic_law_baike" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/iv_lawyer_baike">
+
+                    <TextView
+                        android:id="@+id/tv_lawyer_baike_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="法律百科" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/tv_lawyer_baike_title"
+                        android:background="#FFF1F6FD"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="安全便捷"
+                        android:textColor="#FF909FB7"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_lawyer_baike_title"
+                        android:layout_marginTop="3dp"
+                        android:text="解您心中的疑惑"
+                        android:textColor="@color/uikit_text_auxiliary"
+                        android:textSize="12dp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/uikit_ic_arrow_right" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_lawyer_calc"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="?attr/selectableItemBackground"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp">
+
+                <ImageView
+                    android:id="@+id/iv_lawyer_calc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/lawyer_ic_fee_calc" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/iv_lawyer_calc">
+
+                    <TextView
+                        android:id="@+id/tv_lawyer_calc_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="费用计算" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/tv_lawyer_calc_title"
+                        android:background="#FFF1F6FD"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="安全便捷"
+                        android:textColor="#FF909FB7"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_lawyer_calc_title"
+                        android:layout_marginTop="3dp"
+                        android:text="解您心中的疑惑"
+                        android:textColor="@color/uikit_text_auxiliary"
+                        android:textSize="12dp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/uikit_ic_arrow_right" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

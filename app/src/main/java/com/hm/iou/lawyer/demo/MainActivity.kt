@@ -1,9 +1,10 @@
 package com.hm.iou.lawyer.demo
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.hm.iou.lawyer.business.lawyer.WorkBenchActivity
+import com.hm.iou.tools.kt.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -15,5 +16,10 @@ class MainActivity : AppCompatActivity() {
         btn_lawyer.setOnClickListener {
             startActivity(Intent(this@MainActivity, WorkBenchActivity::class.java))
         }
+
+        btn_lawyer_index.setOnClickListener {
+            startActivity<TabActivity>()
+        }
+
     }
 }

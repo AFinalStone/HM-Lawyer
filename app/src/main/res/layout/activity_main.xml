@@ -12,4 +12,10 @@
         android:layout_height="wrap_content"
         android:text="律师工作台" />
 
+    <Button
+        android:id="@+id/btn_lawyer_index"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="律师Tab首页" />
+
 </LinearLayout>
