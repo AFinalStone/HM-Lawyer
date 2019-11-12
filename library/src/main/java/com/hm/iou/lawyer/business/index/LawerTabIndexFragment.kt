@@ -11,6 +11,7 @@ import com.hm.iou.base.mvp.HMBaseFragment
 import com.hm.iou.base.utils.RouterUtil
 import com.hm.iou.base.utils.StatusBarUtil
 import com.hm.iou.lawyer.R
+import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.sharedata.event.CommBizEvent
 import com.hm.iou.tools.DensityUtil
 import com.hm.iou.tools.ImageLoader
@@ -50,7 +51,7 @@ class LawerTabIndexFragment : HMBaseFragment<LawerTabIndexPresenter>(),
         }
         //找律师
         mContentView?.findViewById<View>(R.id.tv_lawyer_find_lawyer)?.clickWithDuration {
-
+            activity?.let { NavigationHelper.toFindLawyerPage(it) }
         }
         //律师函
         mContentView?.findViewById<View>(R.id.tv_lawyer_lawyer_letter)?.clickWithDuration {

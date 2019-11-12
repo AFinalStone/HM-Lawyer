@@ -16,6 +16,7 @@ import com.hm.iou.sharedata.model.UserInfo
 import com.hm.iou.tools.ToastUtil
 import com.hm.iou.tools.kt.startActivity
 import com.hm.iou.userinfo.api.PersonApi
+import com.hm.iou.tools.kt.startActivity
 import com.sina.weibo.sdk.utils.MD5
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
