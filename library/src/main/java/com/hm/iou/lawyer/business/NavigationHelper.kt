@@ -12,8 +12,10 @@ import com.hm.iou.lawyer.bean.LetterReceiverBean
 import com.hm.iou.lawyer.business.lawyer.withdraw.WithDrawActivity
 import com.hm.iou.lawyer.business.user.create.CreateLawyerLetterActivity
 import com.hm.iou.lawyer.business.user.create.InputReceiverAddressActivity
+import com.hm.iou.lawyer.business.user.create.LawyerLetterDescActivity
 import com.hm.iou.lawyer.business.user.find.FindLawyerActivity
 import com.hm.iou.lawyer.business.user.lawyer.LawyerDetailActivity
+import com.hm.iou.lawyer.business.user.order.MyOrderListActivity
 import com.hm.iou.tools.kt.startActivity
 
 /**
@@ -106,6 +108,20 @@ object NavigationHelper {
         val intent = Intent(context, InputReceiverAddressActivity::class.java)
         intent.putExtra("receiver", data)
         context.startActivityForResult(intent, reqCode)
+    }
+
+    /**
+     * 进入律师函介绍页面
+     */
+    fun toLetterDescPage(context: Context) {
+        context.startActivity<LawyerLetterDescActivity>()
+    }
+
+    /**
+     * 进入用户个人的订单列表
+     */
+    fun toUserPersonalOrderListPage(context: Context) {
+        context.startActivity<MyOrderListActivity>()
     }
 
 }

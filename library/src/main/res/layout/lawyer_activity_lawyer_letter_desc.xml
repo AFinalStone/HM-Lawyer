@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.hm.iou.uikit.HMTopBarView
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/uikit_topbar_height"
+        app:backIconIsShow="false"
+        app:bottomDividerIsShow="false"
+        app:titleText="律师函介绍" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomBar"
+        android:layout_below="@id/topbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp">
+
+            <TextView
+                style="@style/UikitTextView"
+                android:lineSpacingExtra="3dp"
+                android:text="@string/lawyer_letter_desc"
+                android:textColor="@color/uikit_text_sub_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/lawyer_ic_title_decorator_left" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="律师函的作用"
+                    android:textColor="#ff6b7286"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:src="@mipmap/lawyer_ic_title_decorator_right" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/lawyer_bg_letter_desc"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_letter_use1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="12dp"
+                        android:src="@mipmap/lawyer_ic_letter_use1" />
+
+                    <TextView
+                        android:id="@+id/tv_letter_use1"
+                        style="@style/UikitTextView"
+                        android:layout_toRightOf="@id/iv_letter_use1"
+                        android:text="@string/lawyer_letter_use1_title"
+                        android:textSize="13dp" />
+
+                    <TextView
+                        style="@style/UikitTextView.Small"
+                        android:layout_below="@id/tv_letter_use1"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@id/iv_letter_use1"
+                        android:lineSpacingExtra="2dp"
+                        android:text="@string/lawyer_letter_use1"
+                        android:textColor="@color/uikit_text_sub_content" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+
+                    <ImageView
+                        android:id="@+id/iv_letter_use2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="12dp"
+                        android:src="@mipmap/lawyer_ic_letter_use2" />
+
+                    <TextView
+                        android:id="@+id/tv_letter_use2"
+                        style="@style/UikitTextView"
+                        android:layout_toRightOf="@id/iv_letter_use2"
+                        android:text="@string/lawyer_letter_use2_title"
+                        android:textSize="13dp" />
+
+                    <TextView
+                        style="@style/UikitTextView.Small"
+                        android:layout_below="@id/tv_letter_use2"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@id/iv_letter_use2"
+                        android:lineSpacingExtra="2dp"
+                        android:text="@string/lawyer_letter_use2"
+                        android:textColor="@color/uikit_text_sub_content" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+
+                    <ImageView
+                        android:id="@+id/iv_letter_use3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="12dp"
+                        android:src="@mipmap/lawyer_ic_letter_use3" />
+
+                    <TextView
+                        android:id="@+id/tv_letter_use3"
+                        style="@style/UikitTextView"
+                        android:layout_toRightOf="@id/iv_letter_use3"
+                        android:text="@string/lawyer_letter_use3_title"
+                        android:textSize="13dp" />
+
+                    <TextView
+                        style="@style/UikitTextView.Small"
+                        android:layout_below="@id/tv_letter_use3"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@id/iv_letter_use3"
+                        android:lineSpacingExtra="2dp"
+                        android:text="@string/lawyer_letter_use3"
+                        android:textColor="@color/uikit_text_sub_content" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/lawyer_ic_title_decorator_left" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="服务流程"
+                    android:textColor="#ff6b7286"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:src="@mipmap/lawyer_ic_title_decorator_right" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/UikitTextView.Small"
+                    android:drawableTop="@mipmap/lawyer_ic_letter_flow1"
+                    android:drawablePadding="4dp"
+                    android:text="需求描述"
+                    android:textColor="@color/uikit_text_sub_content" />
+
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="2dp"
+                    android:src="@mipmap/uikit_ic_arrow_right" />
+
+                <TextView
+                    style="@style/UikitTextView.Small"
+                    android:drawableTop="@mipmap/lawyer_ic_letter_flow2"
+                    android:drawablePadding="4dp"
+                    android:text="律师接单"
+                    android:textColor="@color/uikit_text_sub_content" />
+
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="2dp"
+                    android:src="@mipmap/uikit_ic_arrow_right" />
+
+                <TextView
+                    style="@style/UikitTextView.Small"
+                    android:drawableTop="@mipmap/lawyer_ic_letter_flow3"
+                    android:drawablePadding="4dp"
+                    android:text="需求沟通"
+                    android:textColor="@color/uikit_text_sub_content" />
+
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="2dp"
+                    android:src="@mipmap/uikit_ic_arrow_right" />
+
+                <TextView
+                    style="@style/UikitTextView.Small"
+                    android:drawableTop="@mipmap/lawyer_ic_letter_flow4"
+                    android:drawablePadding="4dp"
+                    android:text="完成发送"
+                    android:textColor="@color/uikit_text_sub_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.hm.iou.uikit.HMBottomBarView
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        app:bottomTitleText="我要发函" />
+
+    <View
+        style="@style/UikitDivider.Horizontal"
+        android:layout_above="@+id/bottomBar" />
+
+</RelativeLayout>

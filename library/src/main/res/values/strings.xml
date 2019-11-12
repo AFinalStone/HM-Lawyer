@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Library</string>
+
+    <string name="lawyer_letter_desc">律师函（Lawyer\'s letter）是指律师接受客户的委托就有关事实或法律问题进行披露、评价，进而提出要求以达到一定效果而制作、发送的专业法律文书，对于诉讼人维护自身合法权益具有重要的作用。</string>
+    <string name="lawyer_letter_use1_title">以法律为依据向对方提出合理要求</string>
+    <string name="lawyer_letter_use1">在律师函中，律师将从事实出发，以法律法规为依据提出您的合理要求，让对方意识到自身的违法行为</string>
+    <string name="lawyer_letter_use2_title">严正警告对方不解决纠纷将被起诉</string>
+    <string name="lawyer_letter_use2">在律师函中，会告知对方不解决将被起诉，以及被起诉后的后果:财产被查封、影响企业经营、被列入失信人名单</string>
+    <string name="lawyer_letter_use3_title">限定协商期限避免对方拖延</string>
+    <string name="lawyer_letter_use3">在律师函中，会明确协商的最后期限，从而给对方紧迫感，促使对方立即协商解决纠纷，避免对方拖延 </string>
+
+
 </resources>
