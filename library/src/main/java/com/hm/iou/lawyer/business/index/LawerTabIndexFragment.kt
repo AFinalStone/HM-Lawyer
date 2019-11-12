@@ -55,7 +55,9 @@ class LawerTabIndexFragment : HMBaseFragment<LawerTabIndexPresenter>(),
         }
         //律师函
         mContentView?.findViewById<View>(R.id.tv_lawyer_lawyer_letter)?.clickWithDuration {
-
+            activity?.let {
+                NavigationHelper.toLetterDescPage(it)
+            }
         }
         //我的订单
         mContentView?.findViewById<View>(R.id.tv_lawyer_my_order)?.clickWithDuration {
