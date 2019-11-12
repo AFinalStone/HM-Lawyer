@@ -4,8 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import com.hm.iou.base.ImageGalleryActivity
+import com.hm.iou.lawyer.bean.LetterReceiverBean
 import com.hm.iou.lawyer.business.lawyer.withdraw.WithDrawActivity
 import com.hm.iou.lawyer.business.user.create.CreateLawyerLetterActivity
+import com.hm.iou.lawyer.business.user.create.InputReceiverAddressActivity
 import com.hm.iou.lawyer.business.user.find.FindLawyerActivity
 import com.hm.iou.lawyer.business.user.lawyer.LawyerDetailActivity
 import com.hm.iou.tools.kt.startActivity
@@ -79,8 +81,18 @@ object NavigationHelper {
      */
     fun toCreateLawyerLetter(context: Context, lawyerId: String?, price: Int?) {
         context.startActivity<CreateLawyerLetterActivity>(
-
+            CreateLawyerLetterActivity.EXTRA_KEY_LAWYER_ID to (lawyerId ?: ""),
+            CreateLawyerLetterActivity.EXTRA_KEY_PRICE to (price ?: 0)
         )
+    }
+
+    /**
+     * 输入收件人地址页面
+     */
+    fun toInputReceiverAddress(context: Activity, reqCode: Int, data: LetterReceiverBean?) {
+        val intent = Intent(context, InputReceiverAddressActivity::class.java)
+        intent.putExtra("receiver", data)
+        context.startActivityForResult(intent, reqCode)
     }
 
 }

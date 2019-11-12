@@ -1,10 +1,9 @@
-package com.hm.iou.lawyer.business.user.create
+package com.hm.iou.lawyer.business.comm
 
 import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.Outline
 import android.os.Build
-import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
@@ -16,8 +15,6 @@ import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.hm.iou.lawyer.R
 import com.hm.iou.tools.DensityUtil
 import com.hm.iou.tools.ImageLoader
-
-import java.util.ArrayList
 
 /**
  * Created by hjy on 2019/1/21.

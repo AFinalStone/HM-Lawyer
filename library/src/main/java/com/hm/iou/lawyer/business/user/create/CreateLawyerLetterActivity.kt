@@ -11,15 +11,15 @@ import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.base.photo.CompressPictureUtil
 import com.hm.iou.database.table.IouData
 import com.hm.iou.lawyer.R
+import com.hm.iou.lawyer.bean.LetterReceiverBean
 import com.hm.iou.lawyer.business.NavigationHelper
+import com.hm.iou.lawyer.business.comm.IouImageUploadAdapter
 import com.hm.iou.router.Router
+import com.hm.iou.tools.kt.clickWithDuration
 import com.hm.iou.tools.kt.extraDelegate
-import com.hm.iou.tools.kt.getValue
 import com.hm.iou.tools.kt.putValue
-import com.jakewharton.rxbinding2.widget.RxTextView
+import com.hm.iou.uikit.HMTopBarView
 import kotlinx.android.synthetic.main.lawyer_activity_create_lawyer_letter.*
-import java.io.File
-import java.util.ArrayList
 
 /**
  * Created by hjy on 2019/11/12
@@ -37,13 +37,17 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
         private const val MAX_IMAGE_COUNT = 3
         private const val REQ_OPEN_SELECT_PIC = 100
         private const val REQ_IMAGE_GALLERY = 101
+        private const val REQ_INPUT_RECEIVER = 102
 
     }
 
     private var mLawyerId: String? by extraDelegate(EXTRA_KEY_LAWYER_ID, null)
     private var mPrice: Int? by extraDelegate(EXTRA_KEY_PRICE, null)
 
-    private val mImageAdapter = IouImageUploadAdapter(this, MAX_IMAGE_COUNT)
+    private var mReceiverInfo: LetterReceiverBean? = null
+
+    private val mImageAdapter =
+        IouImageUploadAdapter(this, MAX_IMAGE_COUNT)
     private var mFileList: MutableList<IouData.FileEntity>? = null
 
     override fun initPresenter(): CreateLawyerLetterPresenter =
@@ -68,7 +72,9 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (REQ_OPEN_SELECT_PIC == requestCode && Activity.RESULT_OK == resultCode) {
+        if (REQ_OPEN_SELECT_PIC == requestCode) {
+            if (resultCode != Activity.RESULT_OK)
+                return
             data?.let {
                 val pathList = data.getStringArrayListExtra("extra_result_selection_path")
                 if (pathList != null && pathList.isNotEmpty()) {
@@ -85,9 +91,12 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
                     }
                 }
             }
-        } else if (REQ_IMAGE_GALLERY == requestCode && Activity.RESULT_OK == resultCode) {
+        } else if (REQ_IMAGE_GALLERY == requestCode) {
+            if (resultCode != Activity.RESULT_OK)
+                return
             data?.let {
-                val delList = data.getStringArrayListExtra(ImageGalleryActivity.EXTRA_KEY_DELETE_URLS)
+                val delList =
+                    data.getStringArrayListExtra(ImageGalleryActivity.EXTRA_KEY_DELETE_URLS)
                 if (delList == null || delList.isEmpty())
                     return
                 mFileList?.let {
@@ -102,10 +111,29 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
                 }
                 mImageAdapter.deleteUrl(delList)
             }
+        } else if (REQ_INPUT_RECEIVER == requestCode) {
+            if (resultCode != Activity.RESULT_OK)
+                return
+            data?.let {
+                val receiverInfo = data.getParcelableExtra<LetterReceiverBean>("receiver")
+                mReceiverInfo = receiverInfo
+                mReceiverInfo?.let {
+                    tv_letter_receiver_info.text = it.receiverName
+                }
+            }
         }
     }
 
     private fun initViews() {
+        topbar.setOnMenuClickListener(object : HMTopBarView.OnTopBarMenuClickListener {
+            override fun onClickTextMenu() {
+
+            }
+
+            override fun onClickImageMenu() {
+            }
+        })
+
         et_letter_name.requestFocus()
         showSoftKeyboard(et_letter_name)
         et_letter_name.addTextChangedListener(object : HMTextChangeListener() {
@@ -135,6 +163,10 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
             }
         })
 
+        ll_letter_receiver_info.clickWithDuration {
+            NavigationHelper.toInputReceiverAddress(this, REQ_INPUT_RECEIVER, mReceiverInfo)
+        }
+
         rv_letter_image.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rv_letter_image.adapter = mImageAdapter
@@ -157,6 +189,10 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
         if (!mLawyerId.isNullOrEmpty() && (mPrice ?: 0) > 0) {
             et_letter_price.setText("${mPrice}元")
             et_letter_price.isEnabled = false
+        }
+
+        bottom_bar.setOnTitleClickListener {
+
         }
     }
 
