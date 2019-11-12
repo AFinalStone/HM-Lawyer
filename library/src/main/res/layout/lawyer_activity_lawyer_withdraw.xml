@@ -92,6 +92,7 @@
                 android:layout_marginStart="7dp"
                 android:background="@null"
                 android:hint="提现金额最低为100元"
+                android:inputType="numberDecimal"
                 android:textSize="@dimen/textFontSize_22" />
 
         </LinearLayout>

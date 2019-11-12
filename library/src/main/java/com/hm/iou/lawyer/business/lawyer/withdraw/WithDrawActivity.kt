@@ -6,6 +6,7 @@ import com.hm.iou.base.comm.HMTextChangeListener
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.business.NavigationHelper
+import com.hm.iou.router.Router
 import com.hm.iou.uikit.dialog.HMAlertDialog
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_withdraw.*
 
@@ -24,7 +25,9 @@ class WithDrawActivity : HMBaseActivity<WithDrawPresenter>(),
     override fun initEventAndData(savedInstanceState: Bundle?) {
 
         iv_to_bank_detail.setOnClickListener {
-            NavigationHelper.toBankCardDetail(mContext)
+            Router.getInstance()
+                .buildWithUrl("hmiou://m.54jietiao.com/pay/user_bind_bank?source=usercenter")
+                .navigation(mContext)
         }
         tv_withdraw_all_money.setOnClickListener {
 

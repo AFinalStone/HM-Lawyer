@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hm.iou.lawyer.demo">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".LawyerApplication"
@@ -22,9 +22,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".TabActivity"
-            android:screenOrientation="portrait"
-            />
+        <activity
+            android:name=".TabActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

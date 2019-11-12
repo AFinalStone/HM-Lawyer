@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.hm.iou.base.BaseBizAppLike
 import com.hm.iou.base.adver.AdBean
 import com.hm.iou.base.mvp.HMBaseFragment
 import com.hm.iou.base.utils.RouterUtil
@@ -18,12 +17,10 @@ import com.hm.iou.tools.ImageLoader
 import com.hm.iou.tools.ScreenUtil
 import com.hm.iou.tools.StringUtil
 import com.hm.iou.tools.kt.clickWithDuration
-import com.hm.iou.tools.kt.screenWidth
 import com.youth.banner.Banner
-import com.youth.banner.listener.OnBannerListener
 import com.youth.banner.loader.ImageLoaderInterface
 import org.greenrobot.eventbus.EventBus
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by hjy on 2019/11/11
@@ -33,7 +30,7 @@ import java.util.ArrayList
 class LawerTabIndexFragment : HMBaseFragment<LawerTabIndexPresenter>(),
     LawerTabIndexContract.View {
 
-    override fun getLayoutId(): Int = R.layout.news_fragment_lawer_tab_index
+    override fun getLayoutId(): Int = R.layout.lawyer_fragment_lawer_tab_index
 
     override fun initPresenter() = LawerTabIndexPresenter(activity!!, this)
 
