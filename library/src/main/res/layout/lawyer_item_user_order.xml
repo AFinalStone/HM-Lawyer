@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
+    android:background="@drawable/uikit_bg_card_form"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingTop="15dp"
+    android:paddingRight="15dp"
+    android:paddingBottom="15dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_order_time"
+            style="@style/UikitTextView.Auxiliary"
+            tools:text="2019.11.11 12:00" />
+
+        <TextView
+            android:id="@+id/tv_order_type"
+            style="@style/UikitTextView"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/uikit_bg_round_border_gray"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="发律师函"
+            android:textColor="@color/uikit_text_sub_content"
+            android:textSize="13dp" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_order_desc"
+        style="@style/UikitTextView"
+        android:layout_marginTop="10dp"
+        android:lineSpacingExtra="2dp"
+        android:textColor="@color/uikit_text_sub_content"
+        tools:text="朋友准备向我借钱，但是我不知道该怎么写借条，所以请各位律师帮忙代写一份借条。" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/tv_order_price"
+            style="@style/UikitTextView"
+            android:textSize="16dp"
+            tools:text="报价：¥100" />
+
+        <TextView
+            android:id="@+id/tv_order_status"
+            style="@style/UikitTextView"
+            android:layout_alignParentRight="true"
+            tools:text="已接单" />
+
+    </RelativeLayout>
+
+</LinearLayout>

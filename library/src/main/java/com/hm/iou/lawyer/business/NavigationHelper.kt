@@ -15,6 +15,7 @@ import com.hm.iou.lawyer.business.user.create.InputReceiverAddressActivity
 import com.hm.iou.lawyer.business.user.create.LawyerLetterDescActivity
 import com.hm.iou.lawyer.business.user.find.FindLawyerActivity
 import com.hm.iou.lawyer.business.user.lawyer.LawyerDetailActivity
+import com.hm.iou.lawyer.business.user.order.MyOrderListActivity
 import com.hm.iou.tools.kt.startActivity
 
 /**
@@ -114,6 +115,13 @@ object NavigationHelper {
      */
     fun toLetterDescPage(context: Context) {
         context.startActivity<LawyerLetterDescActivity>()
+    }
+
+    /**
+     * 进入用户个人的订单列表
+     */
+    fun toUserPersonalOrderListPage(context: Context) {
+        context.startActivity<MyOrderListActivity>()
     }
 
 }
