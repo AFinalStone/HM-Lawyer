@@ -170,6 +170,7 @@
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:bottomTitleText="确认提现"
-        app:enable="false" />
+        app:bottomTitleBackground="@drawable/uikit_selector_btn_minor_small"
+        app:bottomTitleColor="@color/uikit_text_auxiliary"
+        app:bottomTitleText="确认提现" />
 </LinearLayout>

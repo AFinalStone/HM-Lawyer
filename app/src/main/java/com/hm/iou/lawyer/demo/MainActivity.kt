@@ -4,12 +4,16 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.hm.iou.base.utils.RxUtil
 import com.hm.iou.lawyer.business.lawyer.workbench.WorkBenchActivity
+import com.hm.iou.logger.Logger
 import com.hm.iou.network.HttpReqManager
+import com.hm.iou.router.Router
 import com.hm.iou.sharedata.UserManager
 import com.hm.iou.sharedata.model.BaseResponse
 import com.hm.iou.sharedata.model.UserInfo
 import com.hm.iou.tools.ToastUtil
+import com.hm.iou.userinfo.api.PersonApi
 import com.sina.weibo.sdk.utils.MD5
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -27,6 +31,23 @@ class MainActivity : AppCompatActivity() {
         btn_lawyer.setOnClickListener {
             startActivity(Intent(this@MainActivity, WorkBenchActivity::class.java))
         }
+        btn_bank_card.setOnClickListener {
+
+            PersonApi.getUserThirdPlatformInfo()
+                .map(RxUtil.handleResponse())
+                .subscribe({ thirdInfo ->
+                    Logger.d("user" + thirdInfo.bankInfoResp.toString())
+                    //存储绑定银行卡信息
+                    val extendInfo = UserManager.getInstance(this@MainActivity).userExtendInfo
+                    extendInfo.thirdPlatformInfo = thirdInfo
+                    UserManager.getInstance(this@MainActivity)
+                        .updateOrSaveUserExtendInfo(extendInfo)
+                    Router.getInstance()
+                        .buildWithUrl("hmiou://m.54jietiao.com/pay/user_bind_bank?source=lawyer")
+                        .navigation(this@MainActivity)
+                }, { })
+
+        }
 
         btn_lawyer_index.setOnClickListener {
             //            startActivity<TabActivity>()
@@ -39,10 +60,10 @@ class MainActivity : AppCompatActivity() {
         val pwd = MD5.hexdigest("123456".toByteArray())
         val reqBean = MobileLoginReqBean()
         //        reqBean.setMobile("13186975702");
-        //        reqBean.setMobile("15967132742");
+//        reqBean.mobile = "15967132742";
         reqBean.mobile = "15267163669"
         //        reqBean.setMobile("18337150117");
-        //        reqBean.setMobile("17681832816");
+//        reqBean.mobile = "17681832816"
 
         reqBean.queryPswd = pwd
         HttpReqManager.getInstance().getService<LoginService>(LoginService::class.java!!)
