@@ -2,6 +2,7 @@ package com.hm.iou.lawyer.business
 
 import android.app.Activity
 import android.content.Intent
+import com.hm.iou.lawyer.business.lawyer.home.authen.AuthenticationActivity
 import com.hm.iou.lawyer.business.lawyer.withdraw.WithDrawActivity
 
 /**
@@ -24,5 +25,10 @@ object NavigationHelper {
      * 进入我的银行卡详情页面
      */
     fun toBankCardDetail(activity: Activity) {
+    }
+
+    fun toAuthentication(activity: Activity) {
+        val intent = Intent(activity, AuthenticationActivity::class.java)
+        activity.startActivity(intent)
     }
 }

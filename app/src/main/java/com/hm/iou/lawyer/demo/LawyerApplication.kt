@@ -17,9 +17,17 @@ class LawyerApplication : Application() {
         val baseBiz = BaseBizAppLike()
         baseBiz.isDebug = true
         baseBiz.onCreate(this)
+//        baseBiz.initServer(
+//            "http://dev.54jietiao.com", "http://dev.54jietiao.com",
+//            "http://dev.54jietiao.com"
+//        )
+//        baseBiz.initServer(
+//            "http://branch.54jietiao.com", "http://branch.54jietiao.com",
+//            "http://branch.54jietiao.com"
+//        )
         baseBiz.initServer(
-            "http://dev.54jietiao.com", "http://dev.54jietiao.com",
-            "http://dev.54jietiao.com"
+            "http://192.168.1.107:3000", "http://192.168.1.107:3000",
+            "http://192.168.1.107:3000"
         )
 //        baseBiz.initServer(
 //            "https://api.54jietiao.com", "http://upload.54jietiao.com",
