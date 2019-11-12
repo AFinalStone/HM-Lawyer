@@ -1,6 +1,7 @@
 package com.hm.iou.lawyer.business.lawyer.home.authen
 
 import com.hm.iou.base.mvp.BaseContract
+import com.hm.iou.lawyer.bean.req.LawyerAuthenticationReqBean
 
 /**
  * 律师认证
@@ -30,5 +31,10 @@ class AuthenticationContract {
          * 初始化
          */
         fun init()
+
+        /**
+         * 律师认证
+         */
+        fun lawyerAuthentication(req: LawyerAuthenticationReqBean)
     }
 }

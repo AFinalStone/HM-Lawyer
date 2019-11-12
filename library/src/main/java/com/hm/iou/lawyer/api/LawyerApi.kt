@@ -1,6 +1,8 @@
 package com.hm.iou.lawyer.api
 
+import com.hm.iou.lawyer.bean.req.LawyerAuthenticationReqBean
 import com.hm.iou.lawyer.bean.res.GetLawyerHomeStatusResBean
+import com.hm.iou.lawyer.bean.res.LawyerAuthenticationResBean
 import com.hm.iou.network.HttpReqManager
 import com.hm.iou.sharedata.model.BaseResponse
 import com.hm.iou.sharedata.model.UserThirdPlatformInfo
@@ -32,6 +34,15 @@ object LawyerApi {
      */
     suspend fun getLawyerHomeStatus(): BaseResponse<GetLawyerHomeStatusResBean> {
         return getService().getLawyerHomeStatus()
+    }
+
+    /**
+     * 律师认证
+     *
+     * @return
+     */
+    suspend fun LawyerAuthentication(req: LawyerAuthenticationReqBean): BaseResponse<LawyerAuthenticationResBean> {
+        return getService().lawyerAuthentication(req)
     }
 
 
