@@ -14,6 +14,7 @@ import com.hm.iou.sharedata.model.BaseResponse
 import com.hm.iou.sharedata.model.UserInfo
 import com.hm.iou.tools.ToastUtil
 import com.hm.iou.userinfo.api.PersonApi
+import com.hm.iou.tools.kt.startActivity
 import com.sina.weibo.sdk.utils.MD5
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_lawyer_index.setOnClickListener {
-            //            startActivity<TabActivity>()
+            startActivity<TabActivity>()
         }
 
     }

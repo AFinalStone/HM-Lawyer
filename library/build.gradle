@@ -30,6 +30,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
 
+    api 'com.heima.iou:hmdbcenterlocal:1.0.0'
     api 'com.heima.iou:hmbasebizlocal:1.0.0'
 }
 

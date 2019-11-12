@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.hm.iou.uikit.HMTopBarView
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/uikit_topbar_height"
+        app:backIconIsShow="false"
+        app:bottomDividerIsShow="false"
+        app:rightIcon="@mipmap/uikit_ic_about"
+        app:titleText="发律师函" />
+
+
+    <com.hm.iou.uikit.HMBottomBarView
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        app:bottomTitleText="发布"
+        app:enable="false"
+        />
+
+    <View
+        style="@style/UikitDivider.Horizontal"
+        android:layout_above="@+id/bottom_bar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_bar"
+        android:layout_below="@id/topbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/UikitTextView"
+                    android:layout_gravity="center_vertical"
+                    android:text="我的姓名" />
+
+                <EditText
+                    android:id="@+id/et_letter_name"
+                    style="@style/UikitEditText.Normal"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:hint="请输入您的姓名"
+                    android:maxLines="1" />
+
+            </LinearLayout>
+
+            <View style="@style/UikitDivider.Horizontal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/UikitTextView"
+                    android:layout_gravity="center_vertical"
+                    android:text="联系方式" />
+
+                <EditText
+                    android:id="@+id/et_letter_mobile"
+                    style="@style/UikitEditText.InputMobile"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:hint="请输入您的联系方式" />
+
+            </LinearLayout>
+
+            <View style="@style/UikitDivider.Horizontal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/UikitTextView"
+                    android:layout_gravity="center_vertical"
+                    android:text="我的报价" />
+
+                <EditText
+                    android:id="@+id/et_letter_price"
+                    style="@style/UikitEditText.Normal"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:hint="最低报价为300元"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:singleLine="true" />
+
+            </LinearLayout>
+
+            <View style="@style/UikitDivider.Horizontal" />
+
+            <LinearLayout
+                android:id="@+id/ll_letter_receiver_info"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/UikitTextView"
+                    android:layout_gravity="center_vertical"
+                    android:text="收件人信息" />
+
+                <TextView
+                    android:id="@+id/tv_letter_receiver_info"
+                    style="@style/UikitEditText.Normal"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:hint="收件人地址"
+                    android:maxLines="1" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/uikit_ic_arrow_right" />
+
+            </LinearLayout>
+
+            <View style="@style/UikitDivider.Horizontal" />
+
+            <TextView
+                style="@style/UikitTextView"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:text="收件人信息" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_letter_desc"
+                    style="@style/UikitEditText.Normal.TextArea"
+                    android:layout_height="160dp"
+                    android:gravity="left|top"
+                    android:hint="请简单介绍下您的案件问题"
+                    android:padding="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_letter_char_count"
+                    style="@style/UikitTextView"
+                    android:layout_alignRight="@id/et_letter_desc"
+                    android:layout_alignBottom="@id/et_letter_desc"
+                    android:layout_margin="8dp"
+                    android:text="0/500"
+                    android:textColor="#FFCFCFD6" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/UikitTextView.Auxiliary.Small"
+                android:layout_marginTop="15dp"
+                android:text="*如实描述您的案件，以便律师更高效的为您服务" />
+
+            <TextView
+                style="@style/UikitTextView"
+                android:layout_marginTop="15dp"
+                android:text="图片资料(最多添加三张图片)" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_letter_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:layout_marginBottom="20dip"
+                android:overScrollMode="never" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>
