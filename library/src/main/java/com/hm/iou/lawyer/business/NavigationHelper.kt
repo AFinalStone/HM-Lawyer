@@ -3,8 +3,12 @@ package com.hm.iou.lawyer.business
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+
+import com.hm.iou.lawyer.business.lawyer.home.authen.AuthenticationActivity
+
 import com.hm.iou.base.ImageGalleryActivity
 import com.hm.iou.lawyer.bean.LetterReceiverBean
+
 import com.hm.iou.lawyer.business.lawyer.withdraw.WithDrawActivity
 import com.hm.iou.lawyer.business.user.create.CreateLawyerLetterActivity
 import com.hm.iou.lawyer.business.user.create.InputReceiverAddressActivity
@@ -35,6 +39,10 @@ object NavigationHelper {
     fun toBankCardDetail(activity: Activity) {
     }
 
+    fun toAuthentication(activity: Activity) {
+        val intent = Intent(activity, AuthenticationActivity::class.java)
+        activity.startActivity(intent)
+    }
 
     /**
      * 进入查找律师页面

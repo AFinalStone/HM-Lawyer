@@ -882,5 +882,12 @@
       "iclass": "",
       "aclass": "com.hm.iou.iouqrcode.business.qj.borrowsquare.view.BorrowSquareIndexActivity"
     }
+  ],
+  "lawyer": [
+    {
+      "url": "hmiou://m.54jietiao.com/lawyer/lawyer_home",
+      "iclass": "",
+      "aclass": "com.hm.iou.lawyer.business.lawyer.home.prepare.HomePrepareActivity"
+    }
   ]
 }

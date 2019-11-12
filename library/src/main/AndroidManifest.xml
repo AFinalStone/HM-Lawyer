@@ -4,6 +4,27 @@
     <application>
 
         <activity
+            android:name=".business.lawyer.home.prepare.HomePrepareActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/UikitTranslucentThemeActivity" />
+
+        <activity
+            android:name=".business.lawyer.home.HomeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".business.lawyer.home.authen.AuthenticationActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".business.lawyer.home.authen.AuthenProgressActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".business.lawyer.workbench.WorkBenchActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
