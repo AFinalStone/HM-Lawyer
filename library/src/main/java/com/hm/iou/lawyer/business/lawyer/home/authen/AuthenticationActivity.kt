@@ -130,7 +130,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
             }
         }
         //提交认证
-        bottomBar.setOnTitleClickListener {
+        bottom_bar.setOnTitleClickListener {
             doSubmit()
         }
     }
@@ -339,42 +339,42 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
         val selfIntroduction = et_self_introduction.text ?: ""
 
         if (certificateCode.length < 17) {
-            bottomBar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
-            bottomBar.setTitleTextColor(R.color.uikit_text_auxiliary)
+            bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
         if (lawyerFirmName.length < 5) {
-            bottomBar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
-            bottomBar.setTitleTextColor(R.color.uikit_text_auxiliary)
+            bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
         if (certificateStartTime.isEmpty()) {
-            bottomBar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
-            bottomBar.setTitleTextColor(R.color.uikit_text_auxiliary)
+            bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
         if (selfIntroduction.length < 30) {
-            bottomBar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
-            bottomBar.setTitleTextColor(R.color.uikit_text_auxiliary)
+            bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
         if (mHeaderImagePath == null) {
-            bottomBar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
-            bottomBar.setTitleTextColor(R.color.uikit_text_auxiliary)
+            bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
         if (mAuthenImageFrontPath == null) {
-            bottomBar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
-            bottomBar.setTitleTextColor(R.color.uikit_text_auxiliary)
+            bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
         if (mAuthenImageBackPath == null) {
-            bottomBar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
-            bottomBar.setTitleTextColor(R.color.uikit_text_auxiliary)
+            bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
-        bottomBar.setTitleBackgournd(R.drawable.uikit_shape_common_btn_normal)
-        bottomBar.setTitleTextColor(R.color.uikit_text_main_content)
+        bottom_bar.setTitleBackgournd(R.drawable.uikit_shape_common_btn_normal)
+        bottom_bar.setTitleTextColor(R.color.uikit_text_main_content)
     }
 
 

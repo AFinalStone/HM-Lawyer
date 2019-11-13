@@ -296,7 +296,7 @@
     <View style="@style/UikitDivider.Horizontal" />
 
     <com.hm.iou.uikit.HMBottomBarView
-        android:id="@+id/bottomBar"
+        android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="50dip"
         app:bottomTitleBackground="@drawable/uikit_selector_btn_minor_small"

@@ -21,7 +21,7 @@ class LawyerLetterDescActivity : HMBaseActivity<HMBasePresenter<BaseContract.Bas
         HMBasePresenter(this, this)
 
     override fun initEventAndData(savedInstanceState: Bundle?) {
-        bottomBar.setOnTitleClickListener {
+        bottom_bar.setOnTitleClickListener {
             NavigationHelper.toCreateLawyerLetter(this, null, null)
             finish()
         }

@@ -81,7 +81,7 @@ class InputReceiverAddressActivity : HMBaseActivity<HMBasePresenter<BaseContract
             et_letter_addr.setText(data.receiverDetailAddress)
         }
 
-        bottomBar.setOnTitleClickListener {
+        bottom_bar.setOnTitleClickListener {
             val data = LetterReceiverBean()
             data.receiverName = et_letter_name.text.trim().toString()
             data.receiverIdCardNum = et_letter_idno.text.trim().toString()
@@ -103,10 +103,10 @@ class InputReceiverAddressActivity : HMBaseActivity<HMBasePresenter<BaseContract
             tv_letter_city.text.trim().isEmpty() ||
             et_letter_addr.text.trim().isEmpty()
         ) {
-            bottomBar.isEnabled = false
+            bottom_bar.isEnabled = false
             return
         }
-        bottomBar.isEnabled = true
+        bottom_bar.isEnabled = true
     }
 
 }

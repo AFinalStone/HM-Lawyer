@@ -16,7 +16,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottomBar"
+        android:layout_above="@+id/bottom_bar"
         android:layout_below="@id/topbar">
 
         <LinearLayout
@@ -259,7 +259,7 @@
     </ScrollView>
 
     <com.hm.iou.uikit.HMBottomBarView
-        android:id="@+id/bottomBar"
+        android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:layout_alignParentBottom="true"
@@ -267,6 +267,6 @@
 
     <View
         style="@style/UikitDivider.Horizontal"
-        android:layout_above="@+id/bottomBar" />
+        android:layout_above="@+id/bottom_bar" />
 
 </RelativeLayout>

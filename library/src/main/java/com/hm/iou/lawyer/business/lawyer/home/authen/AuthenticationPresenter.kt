@@ -1,10 +1,12 @@
 package com.hm.iou.lawyer.business.lawyer.home.authen
 
 import android.content.Context
+import com.hm.iou.base.file.FileApi
+import com.hm.iou.base.file.FileBizType
 import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.database.table.IouData
-import com.hm.iou.lawyer.api.LawyerApi
 import kotlinx.coroutines.launch
+import java.io.File
 
 /**
  * @author : 借条管家-shilei
@@ -30,19 +32,26 @@ class AuthenticationPresenter(context: Context, view: AuthenticationContract.Vie
         listAuthenImage: List<String>,
         listCertificateImage: MutableList<IouData.FileEntity>?
     ) {
-
-    }
-
-    private fun uploadDataToService() {
         launch {
             try {
                 mView.showLoadingView()
-
+                var file = File(headerImagePath)
+                val resultHeader = FileApi.uploadImageByCoroutine(file, FileBizType.Lawyer)
 //                val result = LawyerApi.LawyerAuthentication()
-//                result?.let {
+                resultHeader.let {
+
+                    mView.dismissLoadingView()
+                }
+//                for (authenImage in listAuthenImage) {
+//                    file = File(authenImage)
+//                    val resultAuthenImage = FileApi.uploadImageByCoroutine(file, FileBizType.Lawyer)
 //
-//                    mView.dismissLoadingView()
 //                }
+//                val result = LawyerApi.LawyerAuthentication()
+                resultHeader.let {
+
+                    mView.dismissLoadingView()
+                }
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -50,6 +59,10 @@ class AuthenticationPresenter(context: Context, view: AuthenticationContract.Vie
                 mView.dismissLoadingView()
             }
         }
+    }
+
+    private fun uploadDataToService() {
+
     }
 
 
