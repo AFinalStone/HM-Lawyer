@@ -1,6 +1,7 @@
 package com.hm.iou.lawyer.business.lawyer.home.authen
 
 import com.hm.iou.base.mvp.BaseContract
+import com.hm.iou.database.table.IouData
 import com.hm.iou.lawyer.bean.req.LawyerAuthenticationReqBean
 
 /**
@@ -35,6 +36,14 @@ class AuthenticationContract {
         /**
          * 律师认证
          */
-        fun lawyerAuthentication(req: LawyerAuthenticationReqBean)
+        fun lawyerAuthentication(
+            certificateCode: String,
+            lawyerFirmName: String,
+            certificateStartTime: String,
+            selfIntroduction: String,
+            headerImagePath: String,
+            listAuthenImage: List<String>,
+            listCertificateImage: MutableList<IouData.FileEntity>?
+        )
     }
 }

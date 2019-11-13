@@ -28,6 +28,7 @@ import com.hm.iou.uikit.datepicker.TimePickerDialog
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_authentication.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * 律师认证
@@ -273,13 +274,13 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
 
     private fun doSubmit() {
         //执业证号
-        val certificateCode = et_certificate_code.text ?: ""
+        val certificateCode: String = et_certificate_code.text.toString()
         //执业律所
-        val lawyerFirmName = et_lawyer_firm.text ?: ""
+        val lawyerFirmName: String = et_lawyer_firm.text.toString()
         //持证日期
-        val certificateStartTime = tv_certificate_start_time.text ?: ""
+        val certificateStartTime: String = tv_certificate_start_time.text.toString()
         //个人简介
-        val selfIntroduction = et_self_introduction.text ?: ""
+        val selfIntroduction: String = et_self_introduction.text.toString()
 
         if (certificateCode.length < 17) {
             toastErrorMessage("请输入正确的执业证号")
@@ -309,9 +310,19 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
             toastErrorMessage("请上传律师执业证年检页")
             return
         }
-
-//        val req = LawyerAuthenticationReqBean()
-//        mPresenter.lawyerAuthentication()
+        //认证照片
+        val listAuthenImage = ArrayList<String>()
+        listAuthenImage.add(mAuthenImageFrontPath ?: "")
+        listAuthenImage.add(mAuthenImageBackPath ?: "")
+        mPresenter.lawyerAuthentication(
+            certificateCode,
+            lawyerFirmName,
+            certificateStartTime,
+            selfIntroduction,
+            mHeaderImagePath ?: "",
+            listAuthenImage,
+            mListPhotoPath
+        )
     }
 
     /**
