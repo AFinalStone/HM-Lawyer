@@ -51,7 +51,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
     private var mAuthenImageFrontPath: String? = null//证件正面
     private var mAuthenImageBackPath: String? = null//证件反面
     private var mListPhotoPath: MutableList<IouData.FileEntity>? = null
-    private val mCertificateImageAdapter =
+    private val mHonorImageAdapter =
         IouImageUploadAdapter(this, MAX_CERTIFICATE_OF_HONOR_IMAGE_COUNT)//荣誉证书
     private var mDatePicker: Dialog? = null
 
@@ -109,19 +109,19 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
         //荣誉资质照片
         rv_certificate_of_honor.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rv_certificate_of_honor.adapter = mCertificateImageAdapter
-        mCertificateImageAdapter.setOnItemClickListener { adapter, _, position ->
+        rv_certificate_of_honor.adapter = mHonorImageAdapter
+        mHonorImageAdapter.setOnItemClickListener { adapter, _, position ->
             val viewType = adapter.getItemViewType(position)
             if (viewType == IouImageUploadAdapter.ITEM_TYPE_ADD) {
                 Router.getInstance()
                     .buildWithUrl("hmiou://m.54jietiao.com/select_pic/index")
                     .withString(
                         "enable_select_max_num",
-                        (MAX_CERTIFICATE_OF_HONOR_IMAGE_COUNT - mCertificateImageAdapter.getRealImageSize()).toString()
+                        (MAX_CERTIFICATE_OF_HONOR_IMAGE_COUNT - mHonorImageAdapter.getRealImageSize()).toString()
                     )
                     .navigation(mContext, REQ_CODE_SELECT_CERTIFICATE_IMAGE)
             } else if (viewType == IouImageUploadAdapter.ITEM_TYPE_IMAGE) {
-                val urls = mCertificateImageAdapter.getImageUrls()
+                val urls = mHonorImageAdapter.getImageUrls()
                 NavigationHelper.toEditGalleryPage(
                     mContext,
                     urls,
@@ -214,7 +214,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
                                 val entity = IouData.FileEntity()
                                 entity.value = "file://" + file.absolutePath
                                 mListPhotoPath!!.add(entity)
-                                mCertificateImageAdapter.addData(entity.value)
+                                mHonorImageAdapter.addData(entity.value)
                             }
                         }
                     }
@@ -240,7 +240,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
                             }
                         }
                     }
-                    mCertificateImageAdapter.deleteUrl(delList)
+                    mHonorImageAdapter.deleteUrl(delList)
                 }
             }
         }

@@ -30,4 +30,8 @@ class GetLawyerHomeStatusResBean {
      * 8：更新年检审核不通过
      */
     var updateYearCheckState: Int? = null
+    /**
+     * 实名认证失败信息
+     */
+    var authFailMsg: String? = null
 }

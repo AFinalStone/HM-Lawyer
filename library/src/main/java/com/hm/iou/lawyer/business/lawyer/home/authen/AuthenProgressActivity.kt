@@ -50,7 +50,7 @@ class AuthenProgressActivity : HMBaseActivity<HMBasePresenter<BaseContract.BaseV
         bottom_bar.setOnTitleClickListener {
             NavigationHelper.toAuthentication(mContext)
         }
-        if (false != mIfAuthenticationFailed) {
+        if (false == mIfAuthenticationFailed) {
             tv_status.text = "认证审核中"
             tv_desc.text = "您的认证申请正在审核中，我们将尽快为您审核"
             iv_status.setImageResource(R.mipmap.lawyer_ic_authen_loading)

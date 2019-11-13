@@ -12,7 +12,7 @@ import com.hm.iou.uikit.HMDotTextView
  * @E-Mail : afinalstone@foxmail.com
  */
 class MenuAdapter :
-    BaseQuickAdapter<IMenuItem, BaseViewHolder>(R.layout.lawyer_adapter_lawyer_workbench_list) {
+    BaseQuickAdapter<IMenuItem, BaseViewHolder>(R.layout.lawyer_item_lawyer_workbench_list) {
     override fun convert(helper: BaseViewHolder?, item: IMenuItem?) {
         val itemIcon = item?.getIIcon()
         if (itemIcon != null) {

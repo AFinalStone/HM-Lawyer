@@ -9,6 +9,7 @@ import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.bean.req.LawyerAuthenticationReqBean
 import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.logger.Logger
+import com.hm.iou.tools.kt.startActivity
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -78,14 +79,18 @@ class AuthenticationPresenter(context: Context, view: AuthenticationContract.Vie
                     , headerImageFileId, listAuthenImageFileId, listCertificateImageFileId
                 )
                 val lawyerAuthenResult = handleResponse(LawyerApi.lawyerAuthentication(req))
+                mView.dismissLoadingView()
                 lawyerAuthenResult?.let {
-                    NavigationHelper.toAuthenticationProgress(mContext, false)
+                    mContext.startActivity<AuthenProgressActivity>(
+                        AuthenProgressActivity.EXTRA_KEY_IF_AUTHENTICATION_FAILED to false
+                    )
+                    mView.closeCurrPage()
                 }
 
             } catch (e: Exception) {
                 e.printStackTrace()
-                handleException(e)
                 mView.dismissLoadingView()
+                handleException(e)
             }
         }
     }

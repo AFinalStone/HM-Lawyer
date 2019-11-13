@@ -14,10 +14,10 @@ data class GetLawyerHomeDetailResBean(
     val info: String?,//个人简介
     val lawFirm: String?,//执业律所
     val location: String?,//地址
-    val services: List<Service>?//律师服务
+    val services: List<LawyerServiceBean>?//律师服务
 )
 
-data class Service(
+data class LawyerServiceBean(
     val logo: String?,//律师服务icon
     val serviceDesc: String?,//律师服务文案
     val serviceId: Int?,//律师服务id
