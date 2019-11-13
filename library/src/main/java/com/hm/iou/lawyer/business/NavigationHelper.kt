@@ -16,7 +16,9 @@ import com.hm.iou.lawyer.business.user.create.InputReceiverAddressActivity
 import com.hm.iou.lawyer.business.user.create.LawyerLetterDescActivity
 import com.hm.iou.lawyer.business.user.find.FindLawyerActivity
 import com.hm.iou.lawyer.business.user.lawyer.LawyerDetailActivity
+import com.hm.iou.lawyer.business.user.order.MyOrderDetailActivity
 import com.hm.iou.lawyer.business.user.order.MyOrderListActivity
+import com.hm.iou.lawyer.business.user.order.RatingLawyerActivity
 import com.hm.iou.tools.kt.startActivity
 
 /**
@@ -135,6 +137,24 @@ object NavigationHelper {
      */
     fun toUserPersonalOrderListPage(context: Context) {
         context.startActivity<MyOrderListActivity>()
+    }
+
+    /**
+     * 用户进入我的订单详情页面
+     */
+    fun toUserOrderDetailPage(context: Context, orderId: String) {
+        context.startActivity<MyOrderDetailActivity>(
+            MyOrderDetailActivity.EXTRA_KEY_ORDER_ID to orderId
+        )
+    }
+
+    /**
+     * 进入评价律师页面
+     */
+    fun toRatingLawyerPage(context: Context, orderId: String) {
+        context.startActivity<RatingLawyerActivity>(
+            RatingLawyerActivity.EXTRA_KEY_ORDER_ID to orderId
+        )
     }
 
 }
