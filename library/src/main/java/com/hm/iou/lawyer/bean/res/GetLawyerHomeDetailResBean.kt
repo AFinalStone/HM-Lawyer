@@ -6,28 +6,21 @@ package com.hm.iou.lawyer.bean.res
  * @Date : 2019-11-12 14:10
  * @E-Mail : afinalstone@foxmail.com
  */
-class GetLawyerHomeDetailResBean {
-    /**
-     * 首次审核状态：
-     * 0：没有提交过审核
-     * 2：首次认证审核中
-     * 3：首次认证审核通过
-     * 4：首次认证审核不通过
-     */
-    var firstAuthState: Int? = null
-    /**
-     * 更新执业机构状态：
-     * 9：更新执业机构审核中
-     * 10：更细执业机构审核通过
-     * 11：更新执业机构审核不通过
-     */
-    var updateLawFirmState: Int? = null
-    /**
-     * 更新年检状态：
-     * 5：需要更新年检信息
-     * 6：更新年检审核中
-     * 7：更新年检审核通过
-     * 8：更新年检审核不通过
-     */
-    var updateYearCheckState: Int? = null
-}
+data class GetLawyerHomeDetailResBean(
+    val authName: String?,//姓名
+    val holdingYearCount: Int?,//执业年数
+    val honors: List<String>?,//荣誉资质
+    val image: String?,//个人形象照
+    val info: String?,//个人简介
+    val lawFirm: String?,//执业律所
+    val location: String?,//地址
+    val services: List<Service>?//律师服务
+)
+
+data class Service(
+    val logo: String?,//律师服务icon
+    val serviceDesc: String?,//律师服务文案
+    val serviceId: Int?,//律师服务id
+    val serviceName: String?,//律师服务名
+    val servicePrice: String?//服务价格
+)

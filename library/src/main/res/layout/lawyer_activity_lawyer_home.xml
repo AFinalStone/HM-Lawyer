@@ -24,20 +24,15 @@
         android:layout_alignParentBottom="true" />
 
     <View
+        android:id="@+id/view_divider"
         style="@style/UikitDivider.Horizontal"
         android:layout_above="@+id/bottom_bar" />
-
-    <com.hm.iou.uikit.HMLoadingView
-        android:id="@+id/loading_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nsv_layer_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/bottom_bar"
+        android:layout_above="@id/view_divider"
         android:layout_below="@id/topbar">
 
         <LinearLayout
@@ -304,5 +299,14 @@
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
+
+    <com.hm.iou.uikit.HMLoadingView
+        android:id="@+id/loading_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/view_divider"
+        android:layout_below="@id/topbar"
+        android:background="@color/uikit_background"
+        android:visibility="invisible" />
 
 </RelativeLayout>
