@@ -1,8 +1,6 @@
 package com.hm.iou.lawyer.api
 
-import com.hm.iou.lawyer.bean.req.LawyerAuthenticationReqBean
-import com.hm.iou.lawyer.bean.req.UpdateLawyerServicePriceReqBean
-import com.hm.iou.lawyer.bean.req.WithDrawMoneyReqBean
+import com.hm.iou.lawyer.bean.req.*
 import com.hm.iou.lawyer.bean.res.*
 import com.hm.iou.sharedata.model.BaseResponse
 import com.hm.iou.sharedata.model.UserThirdPlatformInfo
@@ -46,5 +44,26 @@ interface LawyerService {
 
     @POST("/api/lawyer/v1/withdraw")
     suspend fun withDrawMoney(@Body req: WithDrawMoneyReqBean): BaseResponse<Any>
+
+    @GET("/api/lawyer/v1/lawyer/list")
+    suspend fun getLawyerList(
+        @Query("page") page: Int, @Query("size") size: Int,
+        @Query("yearLimit") yearLimit: Int, @Query("lawyerNameKey") lawyerNameKey: String?
+    ): BaseResponse<LawyerListResBean>
+
+    @POST("/api/lawyer/v1/letter/custApplyLetter")
+    suspend fun createLawyerLetter(@Body reqBean: CreateLawyerLetterReqBean): BaseResponse<CreateLawyerLetterResBean>
+
+    @POST("/api/lawyer/v1/letter/custCancelBill")
+    suspend fun cancelCustLawyerLetter(@Query("billId") billId: String): BaseResponse<Any>
+
+    @GET("/api/lawyer/v1/letter/custLetterDetail")
+    suspend fun getCustLawyerLetterDetail(@Query("billId") billId: String): BaseResponse<CustLetterDetailResBean>
+
+    @POST("/api/lawyer/v1/custBill")
+    suspend fun getCustOrderList(@Body reqBean: PageReqBean): BaseResponse<CustOrderListResBean>
+
+    @POST("/api/lawyer/v1/custEvaluationLawyer")
+    suspend fun ratingLawyer(@Body reqBean: RatingLawyerReqBean): BaseResponse<Any>
 
 }

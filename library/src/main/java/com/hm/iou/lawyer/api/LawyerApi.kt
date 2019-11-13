@@ -1,12 +1,12 @@
 package com.hm.iou.lawyer.api
 
-import com.hm.iou.lawyer.bean.req.LawyerAuthenticationReqBean
-import com.hm.iou.lawyer.bean.req.UpdateLawyerServicePriceReqBean
-import com.hm.iou.lawyer.bean.req.WithDrawMoneyReqBean
+import com.hm.iou.lawyer.bean.req.*
 import com.hm.iou.lawyer.bean.res.*
 import com.hm.iou.network.HttpReqManager
 import com.hm.iou.sharedata.model.BaseResponse
 import com.hm.iou.sharedata.model.UserThirdPlatformInfo
+import retrofit2.http.Body
+import retrofit2.http.Query
 
 /**
  * Created by syl on 2019/8/5.
@@ -109,5 +109,66 @@ object LawyerApi {
         return getService().withDrawMoney(req)
     }
 
+    /**
+     * 查询律师列表
+     *
+     * 1年~3年, yearLimit = 1, 3年~5年, yearLimit = 2, 5年~10年, yearLimit = 3, 10年以上, yearLimit = 4
+     */
+    suspend fun getLawyerList(
+        page: Int,
+        size: Int,
+        yearLimit: Int,
+        lawyerNameKey: String?
+    ): BaseResponse<LawyerListResBean> {
+        return getService().getLawyerList(page, size, yearLimit, lawyerNameKey)
+    }
+
+    /**
+     * 创建律师函
+     */
+    suspend fun createLawyerLetter(reqBean: CreateLawyerLetterReqBean): BaseResponse<CreateLawyerLetterResBean> {
+        return getService().createLawyerLetter(reqBean)
+    }
+
+    /**
+     * 用户取消订单
+     */
+    suspend fun cancelCustLawyerLetter(billId: String): BaseResponse<Any> {
+        return getService().cancelCustLawyerLetter(billId)
+    }
+
+    /**
+     * 获取律师函详情
+     */
+    suspend fun getCustLawyerLetterDetail(billId: String): BaseResponse<CustLetterDetailResBean> {
+        return getService().getCustLawyerLetterDetail(billId)
+    }
+
+    /**
+     * 获取我的订单列表
+     *
+     * @param page 页码，从1开始
+     * @param size 每页大小
+     */
+    suspend fun getCustOrderList(page: Int, size: Int): BaseResponse<CustOrderListResBean> {
+        return getService().getCustOrderList(PageReqBean(page, size))
+    }
+
+    /**
+     * 对律师进行评价
+     */
+    suspend fun ratingLawyer(
+        billId: String,
+        content: String,
+        attitudeScore: Int,
+        professionalScore: Int
+    ): BaseResponse<Any> {
+        val reqBean = RatingLawyerReqBean()
+        reqBean.billId = billId
+        reqBean.content = content
+        reqBean.attitudeScore = attitudeScore
+        reqBean.professionalScore = professionalScore
+        return getService().ratingLawyer(reqBean)
+    }
 
 }

@@ -25,7 +25,7 @@ public class HMApplication extends Application {
         appLike.onCreate(this);
 //        appLike.initServer("http://192.168.1.107:3000", "http://192.168.1.107:3000",
 //                "http://192.168.1.107:3000");
-        appLike.initServer("http://dev.54jietiao.com", "http://dev.54jietiao.com",
+        appLike.initServer("http://branch.54jietiao.com", "http://dev.54jietiao.com",
                 "http://dev.54jietiao.com");
         appLike.setDebug(BuildConfig.DEBUG);
 
