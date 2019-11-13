@@ -13,26 +13,40 @@
         app:backIconIsShow="false"
         app:bottomDividerIsShow="false"
         app:titleBackground="@color/transparent"
-        app:titleText="律师介绍" />
+        app:titleText="服务费用" />
 
-    <EditText
-        android:id="@+id/et_self_introduction"
-        style="@style/UikitEditText.Normal.TextArea"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="left|top"
-        android:hint="请输入30-200字个人简介 "
-        android:lineSpacingMultiplier="1.3"
-        android:maxLength="200"
-        android:minHeight="160dp"
-        android:padding="8dip"
-        android:textColorHint="#CFCFD6" />
+        android:layout_height="50dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="35dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/UikitTextView"
+            android:text="律师函服务费（份）" />
+
+        <EditText
+            android:id="@+id/et_service_money"
+            style="@style/UikitEditText.Normal"
+            android:layout_width="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:hint="报价最低300起"
+            android:textColorHint="#ffcfcfd6"
+            android:textSize="@dimen/textFontSize_14" />
+    </LinearLayout>
+
+    <View style="@style/UikitDivider.Horizontal" />
 
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1" />
+
+    <View style="@style/UikitDivider.Horizontal" />
 
     <com.hm.iou.uikit.HMBottomBarView
         android:id="@+id/bottom_bar"

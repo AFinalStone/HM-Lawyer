@@ -111,7 +111,6 @@ class HomeActivity : HMBaseActivity<HomePresenter>(),
             override fun onClickImageMenu() {
                 showBottomDialog()
             }
-
         })
         iv_lawyer_service_edit.clickWithDuration {
             startActivity<EditLawyerServiceActivity>()
