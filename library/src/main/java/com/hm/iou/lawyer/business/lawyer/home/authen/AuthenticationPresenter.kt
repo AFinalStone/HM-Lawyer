@@ -50,7 +50,7 @@ class AuthenticationPresenter(context: Context, view: AuthenticationContract.Vie
                     headerImageFileId = result?.fileId ?: ""
                 }
                 //律师职业照片
-                mView.showLoadingView("上传律师执业证...")
+                mView.showLoadingView("上传执业证...")
                 val listAuthenImageFileId = ArrayList<String>()
                 for (authenImage in listAuthenImagePath) {
 

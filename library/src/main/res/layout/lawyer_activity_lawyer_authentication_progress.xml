@@ -15,7 +15,7 @@
         app:backIconIsShow="false"
         app:bottomDividerIsShow="false"
         app:titleBackground="@color/transparent"
-        app:titleText="认证审核中" />
+        app:titleText="律师认证" />
 
 
     <View
