@@ -41,7 +41,7 @@ object LawyerApi {
      *
      * @return
      */
-    suspend fun LawyerAuthentication(req: LawyerAuthenticationReqBean): BaseResponse<LawyerAuthenticationResBean> {
+    suspend fun lawyerAuthentication(req: LawyerAuthenticationReqBean): BaseResponse<LawyerAuthenticationResBean> {
         return getService().lawyerAuthentication(req)
     }
 

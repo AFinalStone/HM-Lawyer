@@ -46,6 +46,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
         private const val MAX_CERTIFICATE_OF_HONOR_IMAGE_COUNT = 3
     }
 
+    private var mCertificateStartTime: String = ""//持证日期
     private var mHeaderImagePath: String? = null//头像地址
     private var mAuthenImageFrontPath: String? = null//证件正面
     private var mAuthenImageBackPath: String? = null//证件反面
@@ -277,8 +278,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
         val certificateCode: String = et_certificate_code.text.toString()
         //执业律所
         val lawyerFirmName: String = et_lawyer_firm.text.toString()
-        //持证日期
-        val certificateStartTime: String = tv_certificate_start_time.text.toString()
+
         //个人简介
         val selfIntroduction: String = et_self_introduction.text.toString()
 
@@ -290,7 +290,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
             toastErrorMessage("执业律所必须在5-15个字以内")
             return
         }
-        if (certificateStartTime.isEmpty()) {
+        if (mCertificateStartTime.isEmpty()) {
             toastErrorMessage("请选择持证日期")
             return
         }
@@ -317,7 +317,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
         mPresenter.lawyerAuthentication(
             certificateCode,
             lawyerFirmName,
-            certificateStartTime,
+            mCertificateStartTime,
             selfIntroduction,
             mHeaderImagePath ?: "",
             listAuthenImage,
@@ -333,8 +333,6 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
         val certificateCode = et_certificate_code.text ?: ""
         //执业律所
         val lawyerFirmName = et_lawyer_firm.text ?: ""
-        //持证日期
-        val certificateStartTime = tv_certificate_start_time.text ?: ""
         //个人简介
         val selfIntroduction = et_self_introduction.text ?: ""
 
@@ -348,7 +346,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
             bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
-        if (certificateStartTime.isEmpty()) {
+        if (mCertificateStartTime.isEmpty()) {
             bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
             bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
@@ -386,10 +384,6 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
 
     }
 
-    override fun toAuthenProgressPage() {
-
-    }
-
 
     private fun showDatePicker() {
         if (mDatePicker == null) {
@@ -418,6 +412,8 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
                 .setOnPickerConfirmListener { year, month, day, i3, i4 ->
                     var month = month
                     month++
+                    mCertificateStartTime =
+                        String.format("%d-%s-%s 00:00:00", year, patchZero(month), patchZero(day))
                     val appTime = String.format("%d年%s月%s日", year, patchZero(month), patchZero(day))
                     tv_certificate_start_time.text = appTime
                 }

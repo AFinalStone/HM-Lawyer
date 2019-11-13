@@ -8,6 +8,7 @@ import com.hm.iou.lawyer.business.lawyer.home.authen.AuthenticationActivity
 
 import com.hm.iou.base.ImageGalleryActivity
 import com.hm.iou.lawyer.bean.LetterReceiverBean
+import com.hm.iou.lawyer.business.lawyer.home.authen.AuthenProgressActivity
 
 import com.hm.iou.lawyer.business.lawyer.withdraw.WithDrawActivity
 import com.hm.iou.lawyer.business.user.create.CreateLawyerLetterActivity
@@ -40,9 +41,21 @@ object NavigationHelper {
     fun toBankCardDetail(activity: Activity) {
     }
 
+    /**
+     * 律师页面
+     */
     fun toAuthentication(activity: Activity) {
         val intent = Intent(activity, AuthenticationActivity::class.java)
         activity.startActivity(intent)
+    }
+
+    /**
+     * 律师认证进度
+     */
+    fun toAuthenticationProgress(context: Context, ifAuthenFailed: Boolean) {
+        context.startActivity<AuthenProgressActivity>(
+            AuthenProgressActivity.EXTRA_KEY_IF_AUTHENTICATION_FAILED to ifAuthenFailed
+        )
     }
 
     /**

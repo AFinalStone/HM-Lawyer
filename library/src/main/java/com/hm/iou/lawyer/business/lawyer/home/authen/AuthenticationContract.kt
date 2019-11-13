@@ -21,10 +21,6 @@ class AuthenticationContract {
          */
         fun toAuthenticationPage()
 
-        /**
-         * 进入认证进度页面
-         */
-        fun toAuthenProgressPage()
     }
 
     interface Presenter : BaseContract.BasePresenter {
@@ -42,8 +38,8 @@ class AuthenticationContract {
             certificateStartTime: String,
             selfIntroduction: String,
             headerImagePath: String,
-            listAuthenImage: List<String>,
-            listCertificateImage: MutableList<IouData.FileEntity>?
+            listAuthenImagePath: List<String>,
+            listCertificateImagePath: MutableList<IouData.FileEntity>?
         )
     }
 }
