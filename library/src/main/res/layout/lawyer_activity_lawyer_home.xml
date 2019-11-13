@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/uikit_background">
@@ -10,101 +11,298 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/uikit_topbar_height"
         app:backIconIsShow="false"
-        app:rightIcon="@mipmap/lawyer_ic_search"
-        app:titleText="找律师"
         app:bottomDividerIsShow="false"
-        />
-
-    <LinearLayout
-        android:id="@+id/ll_search_content"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignBottom="@id/topbar"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:visibility="invisible"
-        >
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="15dp"
-            android:layout_weight="1"
-            android:background="@drawable/lawyer_bg_search_lawyer"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="13dp"
-                android:layout_height="13dp"
-                android:layout_marginStart="5dp"
-                android:scaleType="fitXY"
-                android:src="@mipmap/uikit_ic_search_gray" />
-
-            <EditText
-                android:id="@+id/et_search_content"
-                style="@style/UikitEditText"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint=""
-                android:imeOptions="actionSearch"
-                android:paddingLeft="5dip"
-                android:paddingRight="5dip"
-                android:singleLine="true"
-                android:textSize="@dimen/textFontSize_12" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_search_cancel"
-            style="@style/UikitTextView"
-            android:textColor="@color/uikit_text_sub_content"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="?android:attr/selectableItemBackground"
-            android:gravity="center"
-            android:paddingLeft="14dp"
-            android:paddingRight="14dp"
-            android:text="@string/base_cancel"
-            android:textSize="@dimen/textFontSize_14" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:layout_below="@id/topbar"
-        android:background="@color/white"
-        >
-
-        <TextView
-            style="@style/UikitTextView"
-            android:layout_height="match_parent"
-            android:textColor="@color/uikit_text_sub_content"
-            android:textSize="16dp"
-            android:text="年限"
-            android:paddingLeft="30dp"
-            />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/uikit_ic_arrow_bottom_small"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
-            />
-
-    </LinearLayout>
+        app:rightIcon="@mipmap/uikit_ic_more_black"
+        app:titleBackground="@color/transparent"
+        app:titleText="我的主页" />
 
 
     <com.hm.iou.uikit.HMBottomBarView
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="50dip"
-        android:layout_alignParentBottom="true"
-        />
+        android:layout_alignParentBottom="true" />
+
+    <View
+        style="@style/UikitDivider.Horizontal"
+        android:layout_above="@+id/bottom_bar" />
+
+    <com.hm.iou.uikit.HMLoadingView
+        android:id="@+id/loading_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nsv_layer_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_bar"
+        android:layout_below="@id/topbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_year_check_status"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:background="#F5F8FE"
+                android:gravity="center"
+                android:text="年检信息正在审核中"
+                android:textColor="@color/uikit_function_remind" />
+
+            <LinearLayout
+                android:id="@+id/ll_lawyer_profile"
+                android:layout_width="match_parent"
+                android:layout_height="156dp"
+                android:orientation="horizontal">
+
+                <com.hm.iou.uikit.CircleImageView
+                    android:id="@+id/iv_lawyer_avatar"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="35dp"
+                    android:src="@mipmap/uikit_icon_header_unknow" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="30dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_lawyer_name"
+                        style="@style/UikitTextView.Large"
+                        tools:text="张三律师" />
+
+                    <TextView
+                        android:id="@+id/tv_lawyer_age_limit"
+                        style="@style/UikitTextView.Small"
+                        android:layout_marginTop="5dp"
+                        android:drawableLeft="@mipmap/lawyer_ic_clock"
+                        android:drawablePadding="8dp"
+                        android:maxLines="1"
+                        android:textColor="@color/uikit_text_sub_content"
+                        tools:text="执业10年" />
+
+                    <TextView
+                        android:id="@+id/tv_lawyer_company"
+                        style="@style/UikitTextView.Small"
+                        android:layout_marginTop="3dp"
+                        android:drawableLeft="@mipmap/lawyer_ic_house"
+                        android:drawablePadding="8dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/uikit_text_sub_content"
+                        tools:text="杭州泰杭律师事务所" />
+
+                    <TextView
+                        android:id="@+id/tv_lawyer_location"
+                        style="@style/UikitTextView.Small"
+                        android:layout_marginTop="3dp"
+                        android:drawableLeft="@mipmap/lawyer_ic_lawyer_location"
+                        android:drawablePadding="8dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/uikit_text_sub_content"
+                        tools:text="浙江省杭州市余杭区" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/UikitTextView.Auxiliary"
+                            android:layout_width="54dp"
+                            android:layout_height="18dp"
+                            android:layout_marginLeft="4dp"
+                            android:background="@drawable/lawyer_bg_round_border_gray"
+                            android:gravity="center"
+                            android:text="实名认证"
+                            android:textSize="10dp" />
+
+                        <TextView
+                            style="@style/UikitTextView.Auxiliary"
+                            android:layout_width="54dp"
+                            android:layout_height="18dp"
+                            android:layout_marginLeft="6dp"
+                            android:background="@drawable/lawyer_bg_round_border_gray"
+                            android:gravity="center"
+                            android:text="律师认证"
+                            android:textSize="10dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#FFF8F8F9" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/UikitTextView"
+                    android:text="律师服务"
+                    android:textSize="@dimen/textFontSize_15" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:padding="5dp"
+                    android:src="@mipmap/lawyer_ic_lawyer_home_edit" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_lawyer_letter"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/uikit_bg_card_form"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:src="@mipmap/lawyer_ic_lawyer_letter2" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="18dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/UikitTextView"
+                        android:text="律师函"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tv_lawyer_letter_desc"
+                        style="@style/UikitTextView.Auxiliary"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        tools:text="律师函介绍文案" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_lawyer_letter_price"
+                    style="@style/UikitTextView"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="12dp"
+                    tools:text="￥100.00/份" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/UikitTextView"
+                    android:text="律师介绍"
+                    android:textSize="@dimen/textFontSize_15" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:padding="5dp"
+                    android:src="@mipmap/lawyer_ic_lawyer_home_edit" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_lawyer_desc"
+                style="@style/UikitTextView.Auxiliary"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                tools:text="律师函介绍文案" />
+
+            <View
+                style="@style/UikitDivider.Horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/UikitTextView"
+                    android:text="荣誉资质"
+                    android:textSize="@dimen/textFontSize_15" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:padding="5dp"
+                    android:src="@mipmap/lawyer_ic_lawyer_home_edit" />
+            </LinearLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_lawyer_honor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:overScrollMode="never" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </RelativeLayout>

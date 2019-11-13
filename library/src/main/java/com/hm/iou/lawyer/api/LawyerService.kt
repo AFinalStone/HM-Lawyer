@@ -1,13 +1,15 @@
 package com.hm.iou.lawyer.api
 
 import com.hm.iou.lawyer.bean.req.LawyerAuthenticationReqBean
-import com.hm.iou.lawyer.bean.res.GetLawyerHomeStatusResBean
-import com.hm.iou.lawyer.bean.res.LawyerAuthenticationResBean
+import com.hm.iou.lawyer.bean.req.UpdateLawyerServicePriceReqBean
+import com.hm.iou.lawyer.bean.req.WithDrawMoneyReqBean
+import com.hm.iou.lawyer.bean.res.*
 import com.hm.iou.sharedata.model.BaseResponse
 import com.hm.iou.sharedata.model.UserThirdPlatformInfo
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 
 /**
@@ -21,7 +23,28 @@ interface LawyerService {
     @GET("/api/lawyer/v1/lawyer/auth/process")
     suspend fun getLawyerHomeStatus(): BaseResponse<GetLawyerHomeStatusResBean>
 
+    @GET("/api/lawyer/v1/lawyer/detail")
+    suspend fun getLawyerHomeDetail(@Query("lawyerId") lawyerId: String): BaseResponse<GetLawyerHomeDetailResBean>
+
     @POST("/api/lawyer/v1/lawyer/auth/create")
     suspend fun lawyerAuthentication(@Body req: LawyerAuthenticationReqBean): BaseResponse<LawyerAuthenticationResBean>
+
+    @POST("/api/lawyer/v1/lawyer/auth/update")
+    suspend fun updateLawyerAuthenticationInfo(@Body req: LawyerAuthenticationReqBean): BaseResponse<LawyerAuthenticationResBean>
+
+    @POST("/api/lawyer/v1/lawyer/service/price/update")
+    suspend fun updateLawyerServicePrice(@Body req: UpdateLawyerServicePriceReqBean): BaseResponse<Any>
+
+    @GET("/api/lawyer/v1/lawyer/workbench")
+    suspend fun getLawyerWorkBench(): BaseResponse<GetLawyerWorkBenchResBean>
+
+    @GET("/api/lawyer/v1/wallet")
+    suspend fun getLawyerWallet(): BaseResponse<GetLawyerWalletResBean>
+
+    @GET("/api/lawyer/v1/fee/calc")
+    suspend fun calcLawyerWithDrawRate(@Query("fen") fen: Int): BaseResponse<CalcaLawyerWithDrawRateResBean>
+
+    @POST("/api/lawyer/v1/withdraw")
+    suspend fun withDrawMoney(@Body req: WithDrawMoneyReqBean): BaseResponse<Any>
 
 }

@@ -47,7 +47,7 @@ class WithDrawActivity : HMBaseActivity<WithDrawPresenter>(),
         tv_common_question.setOnClickListener {
 
         }
-        bottomBar.setOnTitleClickListener {
+        bottom_bar.setOnTitleClickListener {
             if (tv_bank_card.length() == 0) {
                 toastErrorMessage("请绑定银行卡")
                 return@setOnTitleClickListener
@@ -128,18 +128,18 @@ class WithDrawActivity : HMBaseActivity<WithDrawPresenter>(),
 
     private fun checkValue() {
         if (tv_bank_card.length() == 0) {
-            bottomBar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
-            bottomBar.setTitleTextColor(R.color.uikit_text_auxiliary)
+            bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
         if (mWithDrawTotalMoney < MIN_MONEY) {
-            bottomBar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
-            bottomBar.setTitleTextColor(R.color.uikit_text_auxiliary)
+            bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
 
-        bottomBar.setTitleBackgournd(R.drawable.uikit_shape_common_btn_normal)
-        bottomBar.setTitleTextColor(R.color.uikit_text_main_content)
+        bottom_bar.setTitleBackgournd(R.drawable.uikit_shape_common_btn_normal)
+        bottom_bar.setTitleTextColor(R.color.uikit_text_main_content)
     }
 
 }

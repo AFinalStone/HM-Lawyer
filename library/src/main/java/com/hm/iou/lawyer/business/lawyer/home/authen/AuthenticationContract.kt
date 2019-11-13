@@ -1,6 +1,7 @@
 package com.hm.iou.lawyer.business.lawyer.home.authen
 
 import com.hm.iou.base.mvp.BaseContract
+import com.hm.iou.database.table.IouData
 import com.hm.iou.lawyer.bean.req.LawyerAuthenticationReqBean
 
 /**
@@ -20,10 +21,6 @@ class AuthenticationContract {
          */
         fun toAuthenticationPage()
 
-        /**
-         * 进入认证进度页面
-         */
-        fun toAuthenProgressPage()
     }
 
     interface Presenter : BaseContract.BasePresenter {
@@ -35,6 +32,14 @@ class AuthenticationContract {
         /**
          * 律师认证
          */
-        fun lawyerAuthentication(req: LawyerAuthenticationReqBean)
+        fun lawyerAuthentication(
+            certificateCode: String,
+            lawyerFirmName: String,
+            certificateStartTime: String,
+            selfIntroduction: String,
+            headerImagePath: String,
+            listAuthenImagePath: List<String>,
+            listCertificateImagePath: MutableList<IouData.FileEntity>?
+        )
     }
 }

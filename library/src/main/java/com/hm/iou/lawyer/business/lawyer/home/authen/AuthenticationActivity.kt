@@ -28,6 +28,7 @@ import com.hm.iou.uikit.datepicker.TimePickerDialog
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_authentication.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * 律师认证
@@ -45,6 +46,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
         private const val MAX_CERTIFICATE_OF_HONOR_IMAGE_COUNT = 3
     }
 
+    private var mCertificateStartTime: String = ""//持证日期
     private var mHeaderImagePath: String? = null//头像地址
     private var mAuthenImageFrontPath: String? = null//证件正面
     private var mAuthenImageBackPath: String? = null//证件反面
@@ -129,7 +131,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
             }
         }
         //提交认证
-        bottomBar.setOnTitleClickListener {
+        bottom_bar.setOnTitleClickListener {
             doSubmit()
         }
     }
@@ -273,13 +275,12 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
 
     private fun doSubmit() {
         //执业证号
-        val certificateCode = et_certificate_code.text ?: ""
+        val certificateCode: String = et_certificate_code.text.toString()
         //执业律所
-        val lawyerFirmName = et_lawyer_firm.text ?: ""
-        //持证日期
-        val certificateStartTime = tv_certificate_start_time.text ?: ""
+        val lawyerFirmName: String = et_lawyer_firm.text.toString()
+
         //个人简介
-        val selfIntroduction = et_self_introduction.text ?: ""
+        val selfIntroduction: String = et_self_introduction.text.toString()
 
         if (certificateCode.length < 17) {
             toastErrorMessage("请输入正确的执业证号")
@@ -289,7 +290,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
             toastErrorMessage("执业律所必须在5-15个字以内")
             return
         }
-        if (certificateStartTime.isEmpty()) {
+        if (mCertificateStartTime.isEmpty()) {
             toastErrorMessage("请选择持证日期")
             return
         }
@@ -309,9 +310,19 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
             toastErrorMessage("请上传律师执业证年检页")
             return
         }
-
-//        val req = LawyerAuthenticationReqBean()
-//        mPresenter.lawyerAuthentication()
+        //认证照片
+        val listAuthenImage = ArrayList<String>()
+        listAuthenImage.add(mAuthenImageFrontPath ?: "")
+        listAuthenImage.add(mAuthenImageBackPath ?: "")
+        mPresenter.lawyerAuthentication(
+            certificateCode,
+            lawyerFirmName,
+            mCertificateStartTime,
+            selfIntroduction,
+            mHeaderImagePath ?: "",
+            listAuthenImage,
+            mListPhotoPath
+        )
     }
 
     /**
@@ -322,48 +333,46 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
         val certificateCode = et_certificate_code.text ?: ""
         //执业律所
         val lawyerFirmName = et_lawyer_firm.text ?: ""
-        //持证日期
-        val certificateStartTime = tv_certificate_start_time.text ?: ""
         //个人简介
         val selfIntroduction = et_self_introduction.text ?: ""
 
         if (certificateCode.length < 17) {
-            bottomBar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
-            bottomBar.setTitleTextColor(R.color.uikit_text_auxiliary)
+            bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
         if (lawyerFirmName.length < 5) {
-            bottomBar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
-            bottomBar.setTitleTextColor(R.color.uikit_text_auxiliary)
+            bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
-        if (certificateStartTime.isEmpty()) {
-            bottomBar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
-            bottomBar.setTitleTextColor(R.color.uikit_text_auxiliary)
+        if (mCertificateStartTime.isEmpty()) {
+            bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
         if (selfIntroduction.length < 30) {
-            bottomBar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
-            bottomBar.setTitleTextColor(R.color.uikit_text_auxiliary)
+            bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
         if (mHeaderImagePath == null) {
-            bottomBar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
-            bottomBar.setTitleTextColor(R.color.uikit_text_auxiliary)
+            bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
         if (mAuthenImageFrontPath == null) {
-            bottomBar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
-            bottomBar.setTitleTextColor(R.color.uikit_text_auxiliary)
+            bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
         if (mAuthenImageBackPath == null) {
-            bottomBar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
-            bottomBar.setTitleTextColor(R.color.uikit_text_auxiliary)
+            bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
-        bottomBar.setTitleBackgournd(R.drawable.uikit_shape_common_btn_normal)
-        bottomBar.setTitleTextColor(R.color.uikit_text_main_content)
+        bottom_bar.setTitleBackgournd(R.drawable.uikit_shape_common_btn_normal)
+        bottom_bar.setTitleTextColor(R.color.uikit_text_main_content)
     }
 
 
@@ -372,10 +381,6 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
     }
 
     override fun toAuthenticationPage() {
-
-    }
-
-    override fun toAuthenProgressPage() {
 
     }
 
@@ -407,6 +412,8 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
                 .setOnPickerConfirmListener { year, month, day, i3, i4 ->
                     var month = month
                     month++
+                    mCertificateStartTime =
+                        String.format("%d-%s-%s 00:00:00", year, patchZero(month), patchZero(day))
                     val appTime = String.format("%d年%s月%s日", year, patchZero(month), patchZero(day))
                     tv_certificate_start_time.text = appTime
                 }

@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.hm.iou.base.utils.RxUtil
+import com.hm.iou.lawyer.business.lawyer.home.HomeActivity
+import com.hm.iou.lawyer.business.lawyer.home.authen.AuthenProgressActivity
 import com.hm.iou.lawyer.business.lawyer.home.prepare.HomePrepareActivity
 import com.hm.iou.lawyer.business.lawyer.workbench.WorkBenchActivity
 import com.hm.iou.logger.Logger
@@ -56,10 +58,17 @@ class MainActivity : AppCompatActivity() {
             startActivity<TabActivity>()
         }
 
-        btn_lawyer_home.setOnClickListener {
+        btn_lawyer_home_prepare.setOnClickListener {
             Router.getInstance()
                 .buildWithUrl("hmiou://m.54jietiao.com/lawyer/lawyer_home")
                 .navigation(this@MainActivity)
+        }
+
+        btn_lawyer_home.setOnClickListener {
+            startActivity<HomeActivity>()
+        }
+        btn_lawyer_authentication_progress.setOnClickListener {
+            startActivity<AuthenProgressActivity>(AuthenProgressActivity.EXTRA_KEY_IF_AUTHENTICATION_FAILED to true)
         }
 
     }
