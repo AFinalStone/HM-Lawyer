@@ -1,0 +1,138 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.hm.iou.uikit.HMTopBarView
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/uikit_topbar_height"
+        app:backIconIsShow="false"
+        app:bottomDividerIsShow="false"
+        app:rightText="联系客服"
+        app:titleBackground="@color/transparent"
+        app:titleText="律师评价" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottomBar"
+        android:layout_below="@id/topBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/UikitTextView"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:text="服务评价"
+                android:textSize="16dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp">
+
+                <EditText
+                    android:id="@+id/et_rating_desc"
+                    style="@style/UikitEditText.Normal.TextArea"
+                    android:layout_height="160dp"
+                    android:gravity="left|top"
+                    android:hint="请输入5个字以上的评价"
+                    android:padding="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_rating_desc"
+                    style="@style/UikitTextView"
+                    android:layout_alignRight="@id/et_rating_desc"
+                    android:layout_alignBottom="@id/et_rating_desc"
+                    android:layout_margin="8dp"
+                    android:text="0/50"
+                    android:textColor="#FFCFCFD6" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#FFF8F8F9" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    style="@style/UikitTextView"
+                    android:text="服务评分"
+                    android:textSize="16dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/UikitTextView.Auxiliary"
+                        android:text="服务态度" />
+
+                    <com.hm.iou.uikit.HMRatingBar
+                        android:id="@+id/rating_order_attitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        app:canRating="true"
+                        app:rating="5" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/UikitTextView.Auxiliary"
+                        android:text="专业知识" />
+
+                    <com.hm.iou.uikit.HMRatingBar
+                        android:id="@+id/rating_order_professional"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        app:canRating="true"
+                        app:rating="5" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.hm.iou.uikit.HMBottomBarView
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        app:bottomTitleText="提交"
+        app:enable="false"
+        />
+
+    <View
+        style="@style/UikitDivider.Horizontal"
+        android:layout_above="@+id/bottomBar" />
+
+</RelativeLayout>

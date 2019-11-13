@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.business.NavigationHelper
+import com.hm.iou.lawyer.business.user.CommImageAdapter
 import com.hm.iou.tools.ImageLoader
 import com.hm.iou.tools.kt.clickWithDuration
 import com.hm.iou.tools.kt.extraDelegate
@@ -115,11 +116,9 @@ class LawyerDetailActivity : HMBaseActivity<LawyerDetailPresenter>(), LawyerDeta
     override fun showLawyerHonorImage(list: List<String>) {
         rv_lawyer_honor.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        val adapter = HonorImageAdapter()
+        val adapter = CommImageAdapter(this)
         adapter.setNewData(list)
         rv_lawyer_honor.adapter = adapter
-//
-//        rv_lawyer_honor.addItemDecoration(HMGrayDividerItemDecoration)
         adapter.setOnItemClickListener { adapter, _, position ->
             val list = adapter.data as? List<String>
             list?.let {
@@ -128,18 +127,5 @@ class LawyerDetailActivity : HMBaseActivity<LawyerDetailPresenter>(), LawyerDeta
         }
     }
 
-    inner class HonorImageAdapter :
-        BaseQuickAdapter<String, BaseViewHolder>(R.layout.lawyer_item_lawyer_honor_img) {
-
-        override fun convert(helper: BaseViewHolder?, item: String?) {
-            helper ?: return
-            item ?: return
-            ImageLoader.getInstance(this@LawyerDetailActivity)
-                .displayImage(
-                    item, helper.itemView as ImageView, R.drawable.jietiao_bg_loading_progress,
-                    R.drawable.uikit_bg_pic_loading_error
-                )
-        }
-    }
 
 }

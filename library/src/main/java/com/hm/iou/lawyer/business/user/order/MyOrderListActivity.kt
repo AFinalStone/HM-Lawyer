@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
+import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.uikit.HMLoadMoreView
 import kotlinx.android.synthetic.main.lawyer_activity_user_order_list.*
 
@@ -34,7 +35,9 @@ class MyOrderListActivity : HMBaseActivity<MyOrderListPresenter>(), MyOrderListC
         }, rv_order_list)
         mOrderAdapter.setOnItemClickListener { adapter, _, position ->
             val item = adapter.getItem(position) as IOrderItem?
-
+            item?.let {
+                NavigationHelper.toUserOrderDetailPage(this, it.getOrderId() ?: "")
+            }
         }
         mPresenter.getFirstPage()
     }

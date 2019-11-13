@@ -4,11 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import com.hm.iou.base.comm.HMTextChangeListener
+import com.hm.iou.base.constants.HMConstants
 import com.hm.iou.base.mvp.BaseContract
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.bean.LetterReceiverBean
+import com.hm.iou.tools.StringUtil
 import com.hm.iou.tools.kt.clickWithDuration
 import com.hm.iou.uikit.datepicker.CityPickerDialog
 import kotlinx.android.synthetic.main.lawyer_activity_letter_address.*
@@ -50,11 +52,12 @@ class InputReceiverAddressActivity : HMBaseActivity<HMBasePresenter<BaseContract
                 checkInputValues()
             }
         })
+/*      身份证不是必填项
         et_letter_idno.addTextChangedListener(object : HMTextChangeListener() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 checkInputValues()
             }
-        })
+        })*/
         et_letter_mobile.addTextChangedListener(object : HMTextChangeListener() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 checkInputValues()
@@ -82,6 +85,12 @@ class InputReceiverAddressActivity : HMBaseActivity<HMBasePresenter<BaseContract
         }
 
         bottomBar.setOnTitleClickListener {
+            val idNo = et_letter_idno.text.trim().toString()
+            if (idNo.isNotEmpty() && !StringUtil.matchRegex(idNo, "^[0-9]{17}([0-9]|x|X)$")) {
+                toastMessage("请输入正确的身份证号码")
+                return@setOnTitleClickListener
+            }
+
             val data = LetterReceiverBean()
             data.receiverName = et_letter_name.text.trim().toString()
             data.receiverIdCardNum = et_letter_idno.text.trim().toString()
@@ -98,7 +107,6 @@ class InputReceiverAddressActivity : HMBaseActivity<HMBasePresenter<BaseContract
 
     private fun checkInputValues() {
         if (et_letter_name.text.trim().isEmpty() ||
-            et_letter_idno.text.trim().isEmpty() ||
             et_letter_mobile.text.trim().isEmpty() ||
             tv_letter_city.text.trim().isEmpty() ||
             et_letter_addr.text.trim().isEmpty()
