@@ -15,6 +15,8 @@ import com.hm.iou.lawyer.bean.LetterReceiverBean
 import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.comm.IouImageUploadAdapter
 import com.hm.iou.router.Router
+import com.hm.iou.sharedata.UserManager
+import com.hm.iou.sharedata.model.UserInfo
 import com.hm.iou.tools.kt.clickWithDuration
 import com.hm.iou.tools.kt.extraDelegate
 import com.hm.iou.tools.kt.putValue
@@ -186,6 +188,11 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
             }
         }
 
+        val userInfo = UserManager.getInstance(this).userInfo
+        et_letter_name.setText(userInfo.name)
+        et_letter_name.setSelection(et_letter_name.length())
+        et_letter_mobile.setText(userInfo.mobile)
+
         if (!mLawyerId.isNullOrEmpty() && (mPrice ?: 0) > 0) {
             et_letter_price.setText("${mPrice}元")
             et_letter_price.isEnabled = false
@@ -193,6 +200,11 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
 
         bottom_bar.setOnTitleClickListener {
 
+        }
+
+        bottom_bar.setOnTitleLongClickListener {
+
+            return@setOnTitleLongClickListener true
         }
     }
 

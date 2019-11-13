@@ -14,23 +14,23 @@ interface FindLawyerContract {
         /**
          * 是否通过年限来查找
          */
-        fun showInitLoading(findByName: Boolean)
+        fun showInitLoading(isFindByAgeLimit: Boolean)
 
-        fun hideInitLoading(findByName: Boolean)
+        fun hideInitLoading(isFindByAgeLimit: Boolean)
 
-        fun showLoadingError(msg: String, findByName: Boolean)
+        fun showLoadingError(msg: String, isFindByAgeLimit: Boolean)
 
-        fun showDataEmpty(findByName: Boolean)
+        fun showDataEmpty(isFindByAgeLimit: Boolean)
 
-        fun clearList(findByName: Boolean)
+        fun clearList(isFindByAgeLimit: Boolean)
 
-        fun showLawyers(list: List<ILawyerItem>, findByName: Boolean)
+        fun showLawyers(list: List<ILawyerItem>, isFindByAgeLimit: Boolean)
 
-        fun showLoadMoreEnd(findByName: Boolean)
+        fun showLoadMoreEnd(isFindByAgeLimit: Boolean)
 
-        fun showLoadMoreComplete(findByName: Boolean)
+        fun showLoadMoreComplete(isFindByAgeLimit: Boolean)
 
-        fun showRecyclerView(visibility: Int, findByName: Boolean)
+        fun showRecyclerView(visibility: Int, isFindByAgeLimit: Boolean)
     }
 
     interface Presenter : BaseContract.BasePresenter {

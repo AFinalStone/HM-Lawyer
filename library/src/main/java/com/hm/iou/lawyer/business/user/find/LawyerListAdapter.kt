@@ -33,7 +33,7 @@ class LawyerListAdapter(val context: Context) :
 
 interface ILawyerItem {
 
-    fun getLawyerId(): String
+    fun getLawyerId(): String?
 
     fun getAvatar(): String?
 
