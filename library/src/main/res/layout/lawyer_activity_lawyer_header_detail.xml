@@ -13,6 +13,7 @@
         android:layout_height="@dimen/uikit_topbar_height"
         app:backIcon="@mipmap/uikit_ic_close_white"
         app:bottomDividerIsShow="false"
+        app:rightText="修改"
         app:rightTextColor="@color/white"
         app:titleBackground="@color/transparent"
         app:titleColor="@color/white"

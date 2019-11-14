@@ -128,24 +128,38 @@ class HomeActivity : HMBaseActivity<HomePresenter>(),
             }
         })
         iv_lawyer_avatar.clickWithDuration {
-            Router.getInstance()
-                .buildWithUrl("hmiou://m.54jietiao.com/person/user_avatar")
-                .navigation(mContext)
+            val intent = Intent(mContext, EditLawyerHeaderActivity::class.java)
+            mDetail?.image?.let {
+                intent.putExtra(EditLawyerHeaderActivity.EXTRA_KEY_LAWYER_HEADE, it)
+            }
+            startActivity(intent)
         }
         iv_lawyer_service_edit.clickWithDuration {
             val lawYerServicePrice = mDetail?.services?.get(0)?.price
             val lawYerServiceId = mDetail?.services?.get(0)?.serviceId
             val intent = Intent(mContext, EditLawyerServicePriceActivity::class.java)
-            intent.putExtra(
-                EditLawyerServicePriceActivity.EXTRA_KEY_SERVICE_PRICE,
-                lawYerServicePrice
-            )
-            intent.putExtra(EditLawyerServicePriceActivity.EXTRA_KEY_SERVICE_ID, lawYerServiceId)
+            lawYerServicePrice?.let {
+                intent.putExtra(
+                    EditLawyerServicePriceActivity.EXTRA_KEY_SERVICE_PRICE,
+                    lawYerServicePrice
+                )
+            }
+            lawYerServiceId?.let {
+                intent.putExtra(
+                    EditLawyerServicePriceActivity.EXTRA_KEY_SERVICE_ID,
+                    lawYerServiceId
+                )
+            }
             startActivity(intent)
         }
         iv_lawyer_self_info_edit.clickWithDuration {
             val intent = Intent(mContext, EditLawyerSelfIntroduceActivity::class.java)
-            intent.putExtra(EditLawyerSelfIntroduceActivity.EXTRA_KEY_SELF_INTRODUCE, mDetail?.info)
+            mDetail?.info?.let {
+                intent.putExtra(
+                    EditLawyerSelfIntroduceActivity.EXTRA_KEY_SELF_INTRODUCE,
+                    mDetail?.info
+                )
+            }
             startActivity(intent)
         }
         iv_lawyer_honor_edit.clickWithDuration {
