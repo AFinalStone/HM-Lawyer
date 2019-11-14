@@ -273,7 +273,7 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
     private fun toCreateLawyerLetter(innerUser: Boolean) {
         val name = et_letter_name.text.trim().toString()
         val mobile = et_letter_mobile.text.trim().toString()
-        val price = if (mPrice != null && (mPrice ?: 0) > 0) mPrice!! else (et_letter_price.text.trim().toString().toIntOrNull() ?: 0)
+        val price = if ((!mLawyerId.isNullOrEmpty()) && mPrice != null && (mPrice ?: 0) > 0) mPrice!! else (et_letter_price.text.trim().toString().toIntOrNull() ?: 0)
         val desc = et_letter_desc.text.trim().toString()
 
         if (price < 300 || price > 10000) {
