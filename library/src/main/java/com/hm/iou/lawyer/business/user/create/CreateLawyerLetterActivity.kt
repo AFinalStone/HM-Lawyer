@@ -260,8 +260,8 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
             val price = if (mPrice != null && (mPrice ?: 0) > 0) mPrice!! else (et_letter_price.text.trim().toString().toIntOrNull() ?: 0)
             val desc = et_letter_desc.text.trim().toString()
 
-            if (price < 300) {
-                toastMessage("最低报价为300元")
+            if (price < 300 || price > 10000) {
+                toastMessage("报价输入范围不正确")
                 return@setOnTitleLongClickListener true
             }
 

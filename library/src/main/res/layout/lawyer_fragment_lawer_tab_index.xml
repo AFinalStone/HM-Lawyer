@@ -48,6 +48,13 @@
         </RelativeLayout>
 
         <TextView
+            style="@style/UikitTextView"
+            android:text="律师"
+            android:textSize="@dimen/uikit_main_title_text_size"
+            android:layout_gravity="center"
+            />
+
+        <TextView
             android:id="@+id/tv_lawyer_workbench"
             style="@style/UikitTextView"
             android:layout_height="match_parent"
