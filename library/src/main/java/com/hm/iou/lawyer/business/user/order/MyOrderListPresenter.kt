@@ -2,8 +2,15 @@ package com.hm.iou.lawyer.business.user.order
 
 import android.content.Context
 import com.hm.iou.base.mvp.HMBasePresenter
+import com.hm.iou.lawyer.api.LawyerApi
+import com.hm.iou.lawyer.bean.res.CustOrderItemBean
+import com.hm.iou.lawyer.dict.OrderStatus
+import com.hm.iou.network.exception.ApiException
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by hjy on 2019/11/12
@@ -20,19 +27,21 @@ class MyOrderListPresenter(context: Context, view: MyOrderListContract.View) :
     private var mPageNo = 1
     private val mDataList: MutableList<IOrderItem> = mutableListOf()
 
+    private var mNextPageJob: Job? = null
+
     override fun getFirstPage() {
+        mNextPageJob?.cancel()
         launch {
             try {
                 if (mDataList.isEmpty())
                     mView.showInitLoading(true)
+                val result = handleResponse(LawyerApi.getCustOrderList(1, PAGE_SIZE))
 
-                delay(2000)
-
+                val dataList = result?.list
                 mPageNo = 1
                 mDataList.clear()
-                val list = getData()
+                val list = convertData(dataList)
                 var currSize = list.size
-
                 mDataList.addAll(list)
                 mView.clearOrderList()
                 mView.showOrderList(mDataList)
@@ -48,33 +57,36 @@ class MyOrderListPresenter(context: Context, view: MyOrderListContract.View) :
                 }
             } catch (e: Exception) {
                 handleException(e, showCommError = false, showBusinessError = false)
-                if (mDataList.isEmpty())
-                    mView.showInitError(e.message)
                 mView.finishRefresh()
+                if (mDataList.isEmpty()) {
+                    mView.showInitError(e.message)
+                } else {
+                    mView.toastMessage(if (e is ApiException) e.message else "数据加载失败，请重试")
+                }
             }
         }
     }
 
     override fun getNextPage() {
-        launch {
+        mNextPageJob?.cancel()
+        mNextPageJob = launch {
             try {
-                delay(2000)
-
-                val list = getData()
+                val list = convertData(
+                    handleResponse(
+                        LawyerApi.getCustOrderList(
+                            mPageNo + 1,
+                            PAGE_SIZE
+                        )
+                    )?.list
+                )
                 var currSize = list.size
                 mDataList.addAll(list)
-
                 mView.showOrderList(mDataList)
-                mView.finishRefresh()
-                if (mDataList.isEmpty()) {
-                    mView.showDataEmpty(true)
-                }
                 if (currSize < PAGE_SIZE) {
                     mView.showLoadMoreEnd()
                 } else {
                     mView.showLoadMoreComplete()
                 }
-
                 mPageNo++
             } catch (e: Exception) {
                 handleException(e, showCommError = false, showBusinessError = false)
@@ -83,34 +95,56 @@ class MyOrderListPresenter(context: Context, view: MyOrderListContract.View) :
         }
     }
 
-    private fun getData(): List<IOrderItem> {
-        val list = mutableListOf<IOrderItem>()
-        for (index in 1..10) {
-            list.add(object : IOrderItem {
+    private fun convertData(list: List<CustOrderItemBean>?): List<IOrderItem> {
+        val dataList = mutableListOf<IOrderItem>()
+        list ?: return dataList
+        val sdf1 = SimpleDateFormat("yyyy.MM.dd HH:mm")
+        val sdf2 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        list.forEach { item ->
+            dataList.add(object : IOrderItem {
+
+                var formatTime: String? = null
+
                 override fun getOrderId(): String? {
-                    return "123"
+                    return item.billId
                 }
 
                 override fun getTime(): String? {
-                    return "2019.11.11 12:00"
+                    if (formatTime.isNullOrEmpty()) {
+                        try {
+                            formatTime = sdf1.format(sdf2.parse(item.createTime))
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                    return formatTime
                 }
 
                 override fun getDesc(): String? {
-                    return "朋友准备向我借钱，但是我不知道该怎么写借条，所以请各位律师帮忙代写一份借条。"
+                    return item.caseDescription
                 }
 
-                override fun getTypeStr(): String? = "发律师函"
+                override fun getTypeStr(): String? {
+                    return "律师函"
+                }
 
                 override fun getPrice(): String? {
-                    return "报价：￥100"
+                    return "报价：¥${item.price}"
                 }
 
+                //2待接单，3进行中，4已完成，5已取消
                 override fun getStatusStr(): String? {
-                    return "已接单"
+                    return when (item.status) {
+                        OrderStatus.WAIT.status -> "待接单"
+                        OrderStatus.ONGOING.status -> "已接单"
+                        OrderStatus.COMPLETE.status -> "已完成"
+                        OrderStatus.CANCEL.status -> "已取消"
+                        else -> ""
+                    }
                 }
             })
         }
-        return list
+        return dataList
     }
 
 }

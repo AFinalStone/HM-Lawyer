@@ -56,6 +56,7 @@
                     android:layout_alignBottom="@id/et_rating_desc"
                     android:layout_margin="8dp"
                     android:text="0/50"
+                    android:maxLength="50"
                     android:textColor="#FFCFCFD6" />
             </RelativeLayout>
 

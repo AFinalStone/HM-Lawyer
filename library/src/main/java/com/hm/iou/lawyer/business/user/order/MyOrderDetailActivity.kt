@@ -10,6 +10,8 @@ import com.hm.iou.lawyer.business.user.CommImageAdapter
 import com.hm.iou.tools.ImageLoader
 import com.hm.iou.tools.kt.clickWithDuration
 import com.hm.iou.tools.kt.extraDelegate
+import com.hm.iou.uikit.HMTopBarView
+import com.hm.iou.uikit.dialog.HMAlertDialog
 import kotlinx.android.synthetic.main.lawyer_activity_user_order_detail.*
 import kotlinx.android.synthetic.main.lawyer_activity_user_order_detail.iv_lawyer_avatar
 import kotlinx.android.synthetic.main.lawyer_activity_user_order_detail.tv_lawyer_age_limit
@@ -206,5 +208,41 @@ class MyOrderDetailActivity : HMBaseActivity<MyOrderDetailPresenter>(), MyOrderD
         bottomBar.setOnTitleClickListener {
             callback()
         }
+    }
+
+    override fun showTopBarMenu(menuText: String, callback: () -> Unit) {
+        topBar.setRightText(menuText)
+        topBar.setOnMenuClickListener(object : HMTopBarView.OnTopBarMenuClickListener {
+            override fun onClickTextMenu() {
+                callback()
+            }
+
+            override fun onClickImageMenu() {
+            }
+        })
+    }
+
+    override fun showCommDialog(
+        title: String?,
+        msg: String?,
+        posBtn: String?,
+        negBtn: String?,
+        callback: (pos: Boolean) -> Unit
+    ) {
+        HMAlertDialog.Builder(this)
+            .setTitle(title)
+            .setMessage(msg)
+            .setPositiveButton(posBtn)
+            .setNegativeButton(negBtn)
+            .setOnClickListener(object : HMAlertDialog.OnClickListener {
+                override fun onNegClick() {
+                    callback(false)
+                }
+
+                override fun onPosClick() {
+                    callback(true)
+                }
+            })
+            .create().show()
     }
 }

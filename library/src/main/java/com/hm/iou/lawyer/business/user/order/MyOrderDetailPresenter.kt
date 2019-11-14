@@ -2,9 +2,18 @@ package com.hm.iou.lawyer.business.user.order
 
 import android.content.Context
 import com.hm.iou.base.mvp.HMBasePresenter
+import com.hm.iou.lawyer.api.LawyerApi
+import com.hm.iou.lawyer.bean.res.CustLetterDetailResBean
 import com.hm.iou.lawyer.business.NavigationHelper
+import com.hm.iou.lawyer.dict.OrderStatus
+import com.hm.iou.lawyer.event.RatingLawyerSuccEvent
+import com.hm.iou.network.exception.ApiException
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created by hjy on 2019/11/12
@@ -15,55 +24,172 @@ class MyOrderDetailPresenter(context: Context, view: MyOrderDetailContract.View)
     HMBasePresenter<MyOrderDetailContract.View>(context, view),
     MyOrderDetailContract.Presenter {
 
+    private var mOrderId: String? = null
+    private var mDetailInfo: CustLetterDetailResBean? = null
+
+    init {
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
+    }
+
     override fun getOrderDetail(orderId: String) {
+        mOrderId = orderId
         launch {
             mView.showInitLoading(true)
             try {
-                delay(2000)
+                val data = handleResponse(LawyerApi.getCustLawyerLetterDetail(orderId))
+                mDetailInfo = data
+                data ?: return@launch
 
-                mView.showOrderStatus("订单已完成")
-                mView.showOrderPrice("￥100.00")
-                mView.showOrHideTimeView(true)
-                mView.showOrderCompleteTime("2019.11.23 12:10:10")
-                mView.showOrHideLawyerInfoView(true)
-                mView.showLawyerInfo(
-                    "http://b-ssl.duitang.com/uploads/item/201707/10/20170710070015_XjiQM.jpeg",
-                    "张三律师", "执业7年", "杭州泰杭律师事务所"
-                )
-
-                mView.showLetterReceiverInfo(
-                    "张三", "15967132742", "429006198609252111",
-                    "浙江省杭州市余杭区竹海水韵"
-                )
-                mView.showOrderDesc("朋友准备向我借钱，但是不知道借条是否合法，想请律师查看。")
-                val list = listOf(
-                    "http://b-ssl.duitang.com/uploads/item/201707/10/20170710070015_XjiQM.jpeg",
-                    "http://b-ssl.duitang.com/uploads/item/201707/10/20170710070015_XjiQM.jpeg",
-                    "http://b-ssl.duitang.com/uploads/item/201707/10/20170710070015_XjiQM.jpeg"
-                )
+                when(data.status) {
+                    OrderStatus.WAIT.status -> {
+                        mView.showOrderStatus("等待${data.lawyerAbout?.run { name }}律师接单")
+                        mView.showOrHideTimeView(false)
+                    }
+                    OrderStatus.ONGOING.status -> {
+                        mView.showOrderStatus("律师已接单")
+                        mView.showOrHideTimeView(false)
+                    }
+                    OrderStatus.COMPLETE.status -> {
+                        mView.showOrderStatus("订单已完成")
+                        mView.showOrHideTimeView(true)
+                        mView.showOrderCompleteTime(data.doDate?.replace("-", "."))
+                    }
+                    OrderStatus.CANCEL.status -> {
+                        mView.showOrderStatus("订单已取消")
+                        mView.showOrHideTimeView(true)
+                        mView.showOrderCancelTime(
+                            data.doDate?.replace("-", "."),
+                            "您的退款将在3个工作日内退回支付账户"
+                        )
+                    }
+                    else -> {
+                        mView.showOrderStatus("")
+                    }
+                }
+                mView.showOrderPrice("¥ ${data.price}")
+                if (data.lawyerAbout != null) {
+                    mView.showOrHideLawyerInfoView(true)
+                    data.lawyerAbout?.let {
+                        mView.showLawyerInfo(it.image, "${it.name}律师","执业${it.lawYear}年", it.lawFirm)
+                    }
+                } else {
+                    mView.showOrHideLawyerInfoView(false)
+                }
+                data.receiveInfo?.let {
+                    mView.showLetterReceiverInfo(
+                        it.receiverName,
+                        it.receiverMobile,
+                        it.receiverIdCardNum,
+                        "${it.receiverCityDetail}${it.receiverDetailAddress}"
+                    )
+                }
+                mView.showOrderDesc(data.caseDescription)
+                val list = mutableListOf<String>()
+                data.fileList?.run {
+                    forEach { item ->
+                        if (!(item.url).isNullOrEmpty())
+                            list.add(item.url!!)
+                    }
+                }
                 mView.showOrderImages(list)
 
-                mView.showOrHideExpressInfoView(true)
-                mView.showExpressName("顺丰快递")
-                mView.showExpressNo("128318273123")
-                mView.showExpressImg(list)
+                val expressInfo = data.letterFinishInfo
+                if (expressInfo == null) {
+                    mView.showOrHideExpressInfoView(false)
+                } else {
+                    mView.showOrHideExpressInfoView(true)
+                    mView.showExpressName(expressInfo.expressName)
+                    mView.showExpressNo(expressInfo.expressNumber)
+                    mView.showExpressImg(expressInfo.finishImgs)
+                }
 
-                mView.showOrHideServiceRatingView(true)
+                val serviceRating = data.evaluation
+                if (serviceRating == null) {
+                    mView.showOrHideServiceRatingView(false)
+                } else {
+                    mView.showOrHideServiceRatingView(true)
+                    mView.showServiceAttitudeRating(serviceRating.attitudeScore)
+                    mView.showServiceProfessionalRating(serviceRating.professionalScore)
+                }
 
-                mView.showOrHideBottomBtn(true)
-                mView.showBottomBtn("评论律师") {
-                    NavigationHelper.toRatingLawyerPage(mContext, "123")
+                when(data.status) {
+                    OrderStatus.WAIT.status -> {
+                        mView.showTopBarMenu("取消订单") {
+                            //点击取消
+                            mView.showCommDialog(null, "是否取消该订单") {
+                                if (!it) {
+                                    cancelOrder(mOrderId ?: "")
+                                }
+                            }
+                        }
+                    }
+                    OrderStatus.COMPLETE.status -> {
+                        if (serviceRating == null) {
+                            mView.showOrHideBottomBtn(true)
+                            mView.showBottomBtn("评论律师") {
+                                NavigationHelper.toRatingLawyerPage(mContext, orderId)
+                            }
+                        }
+                    }
+                    OrderStatus.CANCEL.status -> {
+                        mView.showOrHideBottomBtn(true)
+                        mView.showBottomBtn("重新下单") {
+                            mDetailInfo?.let {
+                                NavigationHelper.toCreateLawyerLetter(mContext, it)
+                            }
+                        }
+                    }
+                    else -> {
+                        mView.showTopBarMenu("") {}
+                        mView.showOrHideBottomBtn(false)
+                    }
                 }
 
                 mView.showInitLoading(false)
             } catch (e: Exception) {
                 handleException(e, showBusinessError = false, showCommError = false)
-                mView.showInitFail(e.message)
+                if (e is ApiException) {
+                    mView.showInitFail(e.message)
+                } else {
+                    mView.showInitFail("数据加载失败，请重试")
+                }
             }
         }
     }
 
     override fun toSeeLawyerInfo() {
-        NavigationHelper.toLawyerDetailPage(mContext, "123")
+        mDetailInfo?.lawyerAbout?.lawyerId?.let {
+            NavigationHelper.toLawyerDetailPage(mContext, it)
+        }
     }
+
+    /**
+     * 取消订单
+     */
+    private fun cancelOrder(orderId: String) {
+        launch {
+            mView.showLoadingView()
+            try {
+                handleResponse(LawyerApi.cancelCustLawyerLetter(orderId))
+                mView.dismissLoadingView()
+                getOrderDetail(orderId)
+            } catch (e: Exception) {
+                mView.dismissLoadingView()
+                handleException(e)
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventRatingLawyerSucc(event: RatingLawyerSuccEvent) {
+        if (mOrderId == event.billId) {
+            getOrderDetail(mOrderId ?: "")
+        }
+    }
+
 }

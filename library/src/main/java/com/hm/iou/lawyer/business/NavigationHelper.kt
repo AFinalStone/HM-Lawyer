@@ -3,11 +3,14 @@ package com.hm.iou.lawyer.business
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Parcelable
 
 import com.hm.iou.lawyer.business.lawyer.home.authen.AuthenticationActivity
 
 import com.hm.iou.base.ImageGalleryActivity
+import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.bean.LetterReceiverBean
+import com.hm.iou.lawyer.bean.res.CustLetterDetailResBean
 import com.hm.iou.lawyer.business.lawyer.home.HomeActivity
 import com.hm.iou.lawyer.business.lawyer.home.authen.AuthenProgressActivity
 
@@ -20,7 +23,9 @@ import com.hm.iou.lawyer.business.user.lawyer.LawyerDetailActivity
 import com.hm.iou.lawyer.business.user.order.MyOrderDetailActivity
 import com.hm.iou.lawyer.business.user.order.MyOrderListActivity
 import com.hm.iou.lawyer.business.user.order.RatingLawyerActivity
+import com.hm.iou.router.Router
 import com.hm.iou.tools.kt.startActivity
+import com.umeng.commonsdk.stateless.UMSLEnvelopeBuild.mContext
 
 /**
  * @author : 借条管家-shilei
@@ -102,11 +107,21 @@ object NavigationHelper {
     }
 
     /**
+     * 重新创建律师函
+     */
+    fun toCreateLawyerLetter(context: Context, data: CustLetterDetailResBean) {
+        context.startActivity<CreateLawyerLetterActivity>(
+            CreateLawyerLetterActivity.EXTRA_KEY_LAWYER_ID to (data.lawyerAbout?.lawyerId ?: ""),
+            CreateLawyerLetterActivity.EXTRA_KEY_PRICE to (data.price)
+        )
+    }
+
+    /**
      * 输入收件人地址页面
      */
     fun toInputReceiverAddress(context: Activity, reqCode: Int, data: LetterReceiverBean?) {
         val intent = Intent(context, InputReceiverAddressActivity::class.java)
-        intent.putExtra("receiver", data)
+        intent.putExtra("receiver", data as? Parcelable)
         context.startActivityForResult(intent, reqCode)
     }
 
@@ -140,6 +155,19 @@ object NavigationHelper {
         context.startActivity<RatingLawyerActivity>(
             RatingLawyerActivity.EXTRA_KEY_ORDER_ID to orderId
         )
+    }
+
+    /**
+     * 支付律师函
+     */
+    fun toPayLawyerLetter(context: Context, innerUser: Boolean, billId: String, money: String, reqCode: Int) {
+        Router.getInstance().buildWithUrl("hmiou://m.54jietiao.com/pay/lawyer_letter_pay")
+            .withString("package_title", "律师函服务费")
+            .withString("package_money", money)
+            .withString("package_content", context.getString(R.string.lawyer_pay_info))
+            .withString("bill_id", billId)
+            .withString("inner_user", if (innerUser) "1" else "")
+            .navigation(context, reqCode)
     }
 
 }

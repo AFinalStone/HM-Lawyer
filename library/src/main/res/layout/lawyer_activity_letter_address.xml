@@ -30,13 +30,13 @@
 
             <TextView
                 style="@style/UikitTextView"
-                android:text="收件人姓名" />
+                android:text="收函人姓名" />
 
             <EditText
                 android:id="@+id/et_letter_name"
                 style="@style/UikitEditText.Normal"
                 android:gravity="right|center_vertical"
-                android:hint="请输入收件人姓名"
+                android:hint="请输入收函人姓名"
                 android:maxLength="8"
                 android:singleLine="true" />
 
@@ -78,7 +78,7 @@
                 android:id="@+id/et_letter_mobile"
                 style="@style/UikitEditText.InputMobile"
                 android:gravity="right|center_vertical"
-                android:hint="请输入收件人联系方式" />
+                android:hint="请输入收函人联系方式" />
 
         </LinearLayout>
 
@@ -100,7 +100,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:gravity="right|center_vertical"
-                android:hint="请输入收件人所在地区"
+                android:hint="请输入收函人所在地区"
                 android:singleLine="true" />
 
             <ImageView
@@ -126,7 +126,7 @@
                 style="@style/UikitEditText.Normal"
                 android:layout_marginLeft="10dp"
                 android:gravity="right|center_vertical"
-                android:hint="请输入收件人详细地址"
+                android:hint="请输入收函人详细地址"
                 android:maxLength="40" />
 
         </LinearLayout>
