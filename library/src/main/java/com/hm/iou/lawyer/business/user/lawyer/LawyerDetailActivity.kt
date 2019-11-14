@@ -112,7 +112,9 @@ class LawyerDetailActivity : HMBaseActivity<LawyerDetailPresenter>(), LawyerDeta
                     data?.let {
                         if (data.serviceName?.contains("律师函") == true) {
                             NavigationHelper.toCreateLawyerLetter(this@LawyerDetailActivity,
-                                mLawyerId, 300)
+                                mLawyerId, data.price)
+                        } else {
+                            toastMessage("敬请期待")
                         }
                     }
                 }
