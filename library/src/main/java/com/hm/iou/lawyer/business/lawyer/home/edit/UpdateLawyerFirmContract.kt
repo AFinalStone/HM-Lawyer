@@ -4,19 +4,21 @@ import com.hm.iou.base.mvp.BaseContract
 import com.hm.iou.database.table.IouData
 
 /**
- * 律师首页前置页面
+ * 更换执业机构
  */
-class EditLawyerHonorContract {
+class UpdateLawyerFirmContract {
 
     interface View : BaseContract.BaseView {
     }
 
     interface Presenter : BaseContract.BasePresenter {
         /**
-         * 律师认证
+         * 更换执业律所
          */
         fun updateLawyerAuthenticationInfo(
-            listCertificateImagePath: MutableList<IouData.FileEntity>
+            licenseNumber: String,
+            lawFirm: String,
+            listAuthenImagePath: List<String>
         )
     }
 }

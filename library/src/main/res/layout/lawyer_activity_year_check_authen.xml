@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <com.hm.iou.uikit.HMTopBarView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/uikit_topbar_height"
+        app:backIconIsShow="false"
+        app:bottomDividerIsShow="false"
+        app:titleBackground="@color/transparent"
+        app:titleText="年检认证" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <RelativeLayout
+            android:layout_width="226dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:id="@+id/iv_authen_photo_front"
+                android:layout_width="226dp"
+                android:layout_height="160dp"
+                android:background="@drawable/lawyer_bg_upload_image"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:id="@+id/iv_add_authen_photo_front"
+                android:layout_width="226dp"
+                android:layout_height="160dp"
+                android:src="@mipmap/lawyer_ic_lawyer_authen_front_image" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            style="@style/UikitTextView"
+            android:layout_height="50dp"
+            android:text="上传律师执业证姓名照片页" />
+
+        <RelativeLayout
+            android:layout_width="226dp"
+            android:layout_height="160dp">
+
+            <ImageView
+                android:id="@+id/iv_authen_photo_back"
+                android:layout_width="226dp"
+                android:layout_height="160dp"
+                android:background="@drawable/lawyer_bg_upload_image"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:id="@+id/iv_add_authen_photo_back"
+                android:layout_width="226dp"
+                android:layout_height="160dp"
+                android:src="@mipmap/lawyer_ic_lawyer_authen_back_image" />
+
+        </RelativeLayout>
+
+        <TextView
+            style="@style/UikitTextView"
+            android:layout_height="50dp"
+            android:text="上传律师执业证年检页" />
+    </LinearLayout>
+
+    <View style="@style/UikitDivider.Horizontal" />
+
+
+    <com.hm.iou.uikit.HMBottomBarView
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        app:bottomTitleBackground="@drawable/uikit_selector_btn_minor_small"
+        app:bottomTitleColor="@color/uikit_text_auxiliary"
+        app:bottomTitleText="提交认证" />
+
+</LinearLayout>

@@ -24,5 +24,8 @@ class HomeContract {
          * 初始化
          */
         fun init()
+
+
+        fun onResume()
     }
 }

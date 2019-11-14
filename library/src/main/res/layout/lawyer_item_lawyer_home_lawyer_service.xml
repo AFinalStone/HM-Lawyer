@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="85dp"
-    android:layout_marginLeft="15dp"
     android:layout_marginTop="10dp"
-    android:layout_marginRight="15dp"
     android:background="@drawable/uikit_bg_card_form"
     android:orientation="horizontal">
 
@@ -15,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="16dp"
+        android:adjustViewBounds="true"
         android:src="@mipmap/lawyer_ic_lawyer_letter2" />
 
     <LinearLayout

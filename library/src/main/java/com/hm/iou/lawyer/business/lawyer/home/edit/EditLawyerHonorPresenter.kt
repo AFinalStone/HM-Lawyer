@@ -1,15 +1,18 @@
 package com.hm.iou.lawyer.business.lawyer.home.edit
 
 import android.content.Context
+import android.text.TextUtils
+import com.hm.iou.base.file.FileApi
+import com.hm.iou.base.file.FileBizType
 import com.hm.iou.base.mvp.HMBasePresenter
+import com.hm.iou.database.table.IouData
 import com.hm.iou.lawyer.api.LawyerApi
-import com.hm.iou.lawyer.business.NavigationHelper
-import com.hm.iou.lawyer.business.lawyer.home.HomeActivity
-import com.hm.iou.lawyer.business.lawyer.home.authen.AuthenProgressActivity
-import com.hm.iou.lawyer.dict.UpdateLawFirmStatusType
-import com.hm.iou.lawyer.dict.UpdateYeaCheckStatusType
-import com.hm.iou.tools.kt.startActivity
+import com.hm.iou.lawyer.bean.req.UpdateLawyerAuthenticationInfReqBean
+import com.hm.iou.lawyer.event.UpdateAuthenInfoEvent
+import com.hm.iou.logger.Logger
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
+import java.io.File
 
 /**
  * @author : 借条管家-shilei
@@ -20,6 +23,46 @@ import kotlinx.coroutines.launch
 class EditLawyerHonorPresenter(context: Context, view: EditLawyerHonorContract.View) :
     HMBasePresenter<EditLawyerHonorContract.View>(context, view),
     EditLawyerHonorContract.Presenter {
+
+    override fun updateLawyerAuthenticationInfo(listCertificateImagePath: MutableList<IouData.FileEntity>) {
+        launch {
+            try {
+                Logger.d("长度" + listCertificateImagePath.size)
+                mView.showLoadingView()
+                //荣誉证书
+                val listCertificateImageFileId = ArrayList<String>()
+                mView.showLoadingView("上传荣誉证书...")
+                val iterator = listCertificateImagePath.iterator()
+                while (iterator.hasNext()) {
+                    val next = iterator.next()
+                    val filedId = next.id ?: ""
+                    val filedUrl = next.value ?: ""
+                    Logger.d("filedId==${filedId}  filedUrl==${filedUrl}")
+                    if (TextUtils.isEmpty(filedId)) {
+                        val file = File(next.value.replace("file://", ""))
+                        val result = handleResponse(
+                            FileApi.uploadImageByCoroutine(
+                                file,
+                                FileBizType.Lawyer
+                            )
+                        )
+                        listCertificateImageFileId.add(result?.fileId ?: "")
+                    } else {
+                        listCertificateImageFileId.add(filedId)
+                    }
+                }
+                val req = UpdateLawyerAuthenticationInfReqBean()
+                req.honors = listCertificateImageFileId
+                val result = handleResponse(LawyerApi.updateLawyerAuthenticationInfo(req))
+                mView.dismissLoadingView()
+                EventBus.getDefault().post(UpdateAuthenInfoEvent())
+                mView.closeCurrPage()
+            } catch (e: Exception) {
+                mView.dismissLoadingView()
+                handleException(e)
+            }
+        }
+    }
 
 
 }

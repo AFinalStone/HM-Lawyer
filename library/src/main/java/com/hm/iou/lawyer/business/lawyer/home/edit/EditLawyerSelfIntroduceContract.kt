@@ -11,6 +11,11 @@ class EditLawyerSelfIntroduceContract {
     }
 
     interface Presenter : BaseContract.BasePresenter {
-
+        /**
+         * 更新律师认证信息
+         */
+        fun updateLawyerAuthenticationInfo(
+            selfIntroduction: String
+        )
     }
 }

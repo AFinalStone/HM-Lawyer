@@ -60,7 +60,7 @@ object LawyerApi {
      *
      * @return
      */
-    suspend fun updateLawyerAuthenticationInfo(req: LawyerAuthenticationReqBean): BaseResponse<LawyerAuthenticationResBean> {
+    suspend fun updateLawyerAuthenticationInfo(req: UpdateLawyerAuthenticationInfReqBean): BaseResponse<LawyerAuthenticationResBean> {
         return getService().updateLawyerAuthenticationInfo(req)
     }
 
@@ -69,7 +69,8 @@ object LawyerApi {
      *
      * @return
      */
-    suspend fun updateLawyerServicePrice(req: UpdateLawyerServicePriceReqBean): BaseResponse<Any> {
+    suspend fun updateLawyerServicePrice(price: Int, serviceId: Int): BaseResponse<Any> {
+        val req = UpdateLawyerServicePriceReqBean(price, serviceId)
         return getService().updateLawyerServicePrice(req)
     }
 

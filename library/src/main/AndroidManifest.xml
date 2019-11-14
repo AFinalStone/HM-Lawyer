@@ -12,6 +12,7 @@
         <activity
             android:name=".business.lawyer.home.HomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
@@ -66,7 +67,15 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".business.lawyer.home.edit.EditLawyerServiceActivity"
+            android:name=".business.lawyer.home.edit.EditLawyerServicePriceActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.lawyer.home.edit.UpdateLawyerFirmActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.lawyer.home.edit.YearCheckAuthenActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 

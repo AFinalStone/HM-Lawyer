@@ -9,7 +9,6 @@ import com.hm.iou.base.mvp.HMBaseActivity
 class HomePrepareActivity : HMBaseActivity<HomePreparePresenter>(),
     HomePrepareContract.View {
 
-
     override fun getLayoutId(): Int = 0
 
     override fun initPresenter(): HomePreparePresenter =

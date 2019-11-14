@@ -10,10 +10,13 @@ import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.base.photo.CompressPictureUtil
 import com.hm.iou.database.table.IouData
 import com.hm.iou.lawyer.R
+import com.hm.iou.lawyer.bean.res.HonorBean
 import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.comm.IouImageUploadAdapter
+import com.hm.iou.logger.Logger
 import com.hm.iou.router.Router
-import kotlinx.android.synthetic.main.lawyer_activity_lawyer_authentication.*
+import com.hm.iou.tools.kt.extraDelegate
+import kotlinx.android.synthetic.main.lawyer_activity_edit_lawyer_honor.*
 
 /**
  * 荣誉资质
@@ -22,13 +25,18 @@ class EditLawyerHonorActivity : HMBaseActivity<EditLawyerHonorPresenter>(),
     EditLawyerHonorContract.View {
 
     companion object {
+        const val EXTRA_KEY_LAWYER_HONOR = "lawyer_honor"
         private const val MAX_CERTIFICATE_OF_HONOR_IMAGE_COUNT = 3
         private const val REQ_CODE_SELECT_CERTIFICATE_IMAGE = 100
         private const val REQ_CODE_CERTIFICATE_IMAGE_GALLERY = 101
     }
 
+    private val mListHonors: ArrayList<HonorBean>? by extraDelegate(
+        EXTRA_KEY_LAWYER_HONOR,
+        null
+    )
+    private var mLawyerHonorList: MutableList<IouData.FileEntity> = mutableListOf()
 
-    private var mListPhotoPath: MutableList<IouData.FileEntity>? = null
     private val mHonorImageAdapter =
         IouImageUploadAdapter(this, MAX_CERTIFICATE_OF_HONOR_IMAGE_COUNT)//荣誉证书
 
@@ -39,9 +47,9 @@ class EditLawyerHonorActivity : HMBaseActivity<EditLawyerHonorPresenter>(),
 
     override fun initEventAndData(savedInstanceState: Bundle?) {
         //荣誉资质照片
-        rv_certificate_of_honor.layoutManager =
+        rv_lawyer_honor.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rv_certificate_of_honor.adapter = mHonorImageAdapter
+        rv_lawyer_honor.adapter = mHonorImageAdapter
         mHonorImageAdapter.setOnItemClickListener { adapter, _, position ->
             val viewType = adapter.getItemViewType(position)
             if (viewType == IouImageUploadAdapter.ITEM_TYPE_ADD) {
@@ -62,6 +70,24 @@ class EditLawyerHonorActivity : HMBaseActivity<EditLawyerHonorPresenter>(),
                 )
             }
         }
+        //提交认证
+        bottom_bar.setOnTitleClickListener {
+            if (mLawyerHonorList.isNullOrEmpty()) {
+                toastErrorMessage("请至少上传一张照片")
+                return@setOnTitleClickListener
+            }
+            mPresenter.updateLawyerAuthenticationInfo(mLawyerHonorList)
+        }
+        mListHonors?.let {
+            for (honor in it) {
+                Logger.d("honor的picid==${honor.picId}  honor的url==${honor.url}")
+                val entity = IouData.FileEntity()
+                entity.id = honor.picId
+                entity.value = honor.url
+                mLawyerHonorList.add(entity)
+                mHonorImageAdapter.addData(entity.value)
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -73,15 +99,13 @@ class EditLawyerHonorActivity : HMBaseActivity<EditLawyerHonorPresenter>(),
                     val pathList = data.getStringArrayListExtra("extra_result_selection_path")
                     if (pathList != null && pathList.isNotEmpty()) {
                         CompressPictureUtil.compressPic(this, pathList) { list ->
-                            if (mListPhotoPath == null) {
-                                mListPhotoPath = mutableListOf()
-                            }
                             for (file in list) {
                                 val entity = IouData.FileEntity()
                                 entity.value = "file://" + file.absolutePath
-                                mListPhotoPath!!.add(entity)
+                                mLawyerHonorList.add(entity)
                                 mHonorImageAdapter.addData(entity.value)
                             }
+                            checkValue()
                         }
                     }
                 }
@@ -96,7 +120,7 @@ class EditLawyerHonorActivity : HMBaseActivity<EditLawyerHonorPresenter>(),
                         data.getStringArrayListExtra(ImageGalleryActivity.EXTRA_KEY_DELETE_URLS)
                     if (delList == null || delList.isEmpty())
                         return
-                    mListPhotoPath?.let {
+                    mLawyerHonorList.let {
                         for (url in delList) {
                             val it = it.iterator()
                             while (it.hasNext()) {
@@ -107,9 +131,22 @@ class EditLawyerHonorActivity : HMBaseActivity<EditLawyerHonorPresenter>(),
                         }
                     }
                     mHonorImageAdapter.deleteUrl(delList)
+                    checkValue()
                 }
             }
         }
+    }
+
+    /**
+     * 校验结果
+     */
+    private fun checkValue() {
+        if (mLawyerHonorList.isNullOrEmpty()) {
+            bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
+        }
+        bottom_bar.setTitleBackgournd(R.drawable.uikit_shape_common_btn_normal)
+        bottom_bar.setTitleTextColor(R.color.uikit_text_main_content)
     }
 
 }

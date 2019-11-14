@@ -134,6 +134,8 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
         bottom_bar.setOnTitleClickListener {
             doSubmit()
         }
+        et_certificate_code.requestFocus()
+        showSoftKeyboard()
     }
 
 
@@ -278,7 +280,6 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
         val certificateCode: String = et_certificate_code.text.toString()
         //执业律所
         val lawyerFirmName: String = et_lawyer_firm.text.toString()
-
         //个人简介
         val selfIntroduction: String = et_self_introduction.text.toString()
 
@@ -329,19 +330,12 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
      * 校验结果
      */
     private fun checkValue() {
-        //执业证号
-        val certificateCode = et_certificate_code.text ?: ""
-        //执业律所
-        val lawyerFirmName = et_lawyer_firm.text ?: ""
-        //个人简介
-        val selfIntroduction = et_self_introduction.text ?: ""
-
-        if (certificateCode.length < 17) {
+        if (et_certificate_code.length() < 17) {
             bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
             bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
-        if (lawyerFirmName.length < 5) {
+        if (et_lawyer_firm.length() < 5) {
             bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
             bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
@@ -351,7 +345,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
             bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
-        if (selfIntroduction.length < 30) {
+        if (et_self_introduction.length() < 30) {
             bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
             bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return

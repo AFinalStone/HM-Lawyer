@@ -1,5 +1,6 @@
 package com.hm.iou.lawyer.business.user.lawyer
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -11,6 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
+import com.hm.iou.lawyer.bean.res.HonorBean
 import com.hm.iou.lawyer.bean.res.LawyerServiceBean
 import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.user.CommImageAdapter
@@ -104,15 +106,18 @@ class LawyerDetailActivity : HMBaseActivity<LawyerDetailPresenter>(), LawyerDeta
         list?.run {
             forEach { item ->
                 val view = inflateLayout(R.layout.lawyer_layout_layout_service, null, false)
-                val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(85))
+                val layoutParams =
+                    LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(85))
                 ll_lawyer_service.addView(view, layoutParams)
                 layoutParams.bottomMargin = dp2px(8)
                 view.clickWithDuration {
                     val data = it.tag as? LawyerServiceBean
                     data?.let {
                         if (data.serviceName?.contains("律师函") == true) {
-                            NavigationHelper.toCreateLawyerLetter(this@LawyerDetailActivity,
-                                mLawyerId, data.price)
+                            NavigationHelper.toCreateLawyerLetter(
+                                this@LawyerDetailActivity,
+                                mLawyerId, data.price
+                            )
                         } else {
                             toastMessage("敬请期待")
                         }
@@ -132,16 +137,32 @@ class LawyerDetailActivity : HMBaseActivity<LawyerDetailPresenter>(), LawyerDeta
         tv_lawyer_desc.text = desc
     }
 
-    override fun showLawyerHonorImage(list: List<String>?) {
+    override fun showLawyerHonorImage(list: List<HonorBean>?) {
         rv_lawyer_honor.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        val adapter = CommImageAdapter(this)
+        val adapter = LawyerHonorAdapter(this)
         adapter.setNewData(list)
         rv_lawyer_honor.adapter = adapter
         adapter.setOnItemClickListener { adapter, _, position ->
-            val list = adapter.data as? List<String>
-            list?.let {
-                NavigationHelper.toImageGalleryPage(this, list, position)
+            val list: List<HonorBean> = adapter.data as List<HonorBean>
+            val listUrl = ArrayList<String>()
+            for (honor in list) {
+                listUrl.add(honor?.url ?: "")
+            }
+            NavigationHelper.toImageGalleryPage(this, listUrl, position)
+        }
+    }
+
+    class LawyerHonorAdapter : BaseQuickAdapter<HonorBean, BaseViewHolder> {
+
+        constructor(context: Context) : super(R.layout.lawyer_item_lawyer_home_lawyer_honor) {
+            this@LawyerHonorAdapter.mContext = context
+        }
+
+        override fun convert(helper: BaseViewHolder?, item: HonorBean?) {
+            val ivLogo = helper?.getView<ImageView>(R.id.iv_image)
+            ivLogo?.let {
+                ImageLoader.getInstance(mContext).displayImage(item?.url, ivLogo)
             }
         }
     }

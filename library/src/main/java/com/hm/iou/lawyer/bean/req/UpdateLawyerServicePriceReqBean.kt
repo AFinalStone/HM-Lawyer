@@ -8,5 +8,5 @@ package com.hm.iou.lawyer.bean.req
  */
 data class UpdateLawyerServicePriceReqBean(
     val price: Int,//价格
-    val serviceId: String//执业律所
+    val serviceId: Int//服务id
 )

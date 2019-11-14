@@ -35,6 +35,8 @@
             android:layout_marginStart="20dp"
             android:layout_weight="1"
             android:hint="报价最低300起"
+            android:inputType="number"
+            android:maxLength="5"
             android:textColorHint="#ffcfcfd6"
             android:textSize="@dimen/textFontSize_14" />
     </LinearLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/uikit_background">
+    android:background="@color/white">
 
     <com.hm.iou.uikit.HMTopBarView
         android:id="@+id/topbar"
@@ -41,7 +41,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_year_check_status"
+                android:id="@+id/tv_check_status"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:background="#F5F8FE"
@@ -149,7 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="12dp"
                 android:gravity="center_vertical"
@@ -167,9 +167,9 @@
 
                 <ImageView
                     android:id="@+id/iv_lawyer_service_edit"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:padding="5dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:padding="9dp"
                     android:src="@mipmap/lawyer_ic_lawyer_home_edit" />
             </LinearLayout>
 
@@ -177,8 +177,8 @@
                 android:id="@+id/rv_lawyer_service"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginBottom="20dp"
                 android:overScrollMode="never" />
 
@@ -186,7 +186,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="12dp"
                 android:gravity="center_vertical"
@@ -204,9 +204,9 @@
 
                 <ImageView
                     android:id="@+id/iv_lawyer_self_info_edit"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:padding="5dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:padding="9dp"
                     android:src="@mipmap/lawyer_ic_lawyer_home_edit" />
             </LinearLayout>
 
@@ -227,7 +227,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="12dp"
                 android:gravity="center_vertical"
@@ -245,9 +245,9 @@
 
                 <ImageView
                     android:id="@+id/iv_lawyer_honor_edit"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:padding="5dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:padding="9dp"
                     android:src="@mipmap/lawyer_ic_lawyer_home_edit" />
             </LinearLayout>
 
@@ -271,7 +271,7 @@
         android:layout_height="match_parent"
         android:layout_above="@id/view_divider"
         android:layout_below="@id/topbar"
-        android:background="@color/uikit_background"
+        android:background="@color/white"
         android:visibility="invisible" />
 
 </RelativeLayout>

@@ -1,5 +1,7 @@
 package com.hm.iou.lawyer.bean.res
 
+import java.io.Serializable
+
 /**
  * @author : 借条管家-shilei
  * @version : 0.0.1
@@ -9,7 +11,7 @@ package com.hm.iou.lawyer.bean.res
 data class GetLawyerHomeDetailResBean(
     val authName: String?,//姓名
     val holdingYearCount: Int?,//执业年数
-    val honors: List<String>?,//荣誉资质
+    val honors: ArrayList<HonorBean>?,//荣誉资质
     val image: String?,//个人形象照
     val info: String?,//个人简介
     val lawFirm: String?,//执业律所
@@ -25,3 +27,9 @@ data class LawyerServiceBean(
     val servicePrice: String?,//服务价格中问描述
     val price: Int = 0      //服务价格，单位"元"
 )
+
+class HonorBean : Serializable {
+    var picId: String? = null//图片id
+    var url: String? = null//图片链接
+
+}

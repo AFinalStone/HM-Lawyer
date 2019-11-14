@@ -2,21 +2,21 @@ package com.hm.iou.lawyer.business.lawyer.home.edit
 
 import com.hm.iou.base.mvp.BaseContract
 import com.hm.iou.database.table.IouData
+import java.io.File
 
 /**
  * 律师首页前置页面
  */
-class EditLawyerHonorContract {
+class EditLawyerHeaderContract {
 
     interface View : BaseContract.BaseView {
+
+        fun showUserAvatar(url: String)
+
     }
 
     interface Presenter : BaseContract.BasePresenter {
-        /**
-         * 律师认证
-         */
-        fun updateLawyerAuthenticationInfo(
-            listCertificateImagePath: MutableList<IouData.FileEntity>
-        )
+
+        fun uploadHeader(file: File)
     }
 }

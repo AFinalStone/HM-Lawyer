@@ -28,7 +28,7 @@ interface LawyerService {
     suspend fun lawyerAuthentication(@Body req: LawyerAuthenticationReqBean): BaseResponse<LawyerAuthenticationResBean>
 
     @POST("/api/lawyer/v1/lawyer/auth/update")
-    suspend fun updateLawyerAuthenticationInfo(@Body req: LawyerAuthenticationReqBean): BaseResponse<LawyerAuthenticationResBean>
+    suspend fun updateLawyerAuthenticationInfo(@Body req: UpdateLawyerAuthenticationInfReqBean): BaseResponse<LawyerAuthenticationResBean>
 
     @POST("/api/lawyer/v1/lawyer/service/price/update")
     suspend fun updateLawyerServicePrice(@Body req: UpdateLawyerServicePriceReqBean): BaseResponse<Any>

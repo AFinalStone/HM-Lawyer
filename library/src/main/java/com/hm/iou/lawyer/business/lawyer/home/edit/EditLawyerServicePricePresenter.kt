@@ -3,7 +3,6 @@ package com.hm.iou.lawyer.business.lawyer.home.edit
 import android.content.Context
 import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.api.LawyerApi
-import com.hm.iou.lawyer.bean.req.UpdateLawyerAuthenticationInfReqBean
 import com.hm.iou.lawyer.event.UpdateAuthenInfoEvent
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -14,21 +13,15 @@ import org.greenrobot.eventbus.EventBus
  * @Date : 2019-11-08 15:19
  * @E-Mail : afinalstone@foxmail.com
  */
-class EditLawyerSelfIntroducePresenter(
-    context: Context,
-    view: EditLawyerSelfIntroduceContract.View
-) :
-    HMBasePresenter<EditLawyerSelfIntroduceContract.View>(context, view),
-    EditLawyerSelfIntroduceContract.Presenter {
+class EditLawyerServicePricePresenter(context: Context, view: EditLawyerServicePriceContract.View) :
+    HMBasePresenter<EditLawyerServicePriceContract.View>(context, view),
+    EditLawyerServicePriceContract.Presenter {
 
-    override fun updateLawyerAuthenticationInfo(selfIntroduction: String) {
+    override fun updateLawyerServicePrice(price: Int, serviceId: Int) {
         launch {
             try {
                 mView.showLoadingView()
-                val req = UpdateLawyerAuthenticationInfReqBean()
-                req.info = selfIntroduction
-                val result =
-                    handleResponse(LawyerApi.updateLawyerAuthenticationInfo(req))
+                val result = handleResponse(LawyerApi.updateLawyerServicePrice(price, serviceId))
                 mView.dismissLoadingView()
                 EventBus.getDefault().post(UpdateAuthenInfoEvent())
                 mView.closeCurrPage()
@@ -36,8 +29,8 @@ class EditLawyerSelfIntroducePresenter(
                 mView.dismissLoadingView()
                 handleException(e)
             }
-        }
 
+        }
     }
 
 
