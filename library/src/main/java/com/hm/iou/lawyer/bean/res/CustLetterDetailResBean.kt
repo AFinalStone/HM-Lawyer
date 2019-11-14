@@ -1,9 +1,10 @@
 package com.hm.iou.lawyer.bean.res
-import com.hm.iou.database.table.IouData
+
 import com.hm.iou.lawyer.bean.LetterReceiverBean
+import java.io.Serializable
 
 
-class CustLetterDetailResBean {
+class CustLetterDetailResBean : Serializable {
 
     var billId: String? = null
     var caseDescription: String? = null
@@ -20,19 +21,19 @@ class CustLetterDetailResBean {
 
 }
 
-class FileInfo {
+class FileInfo : Serializable {
     var id: String? = null
     var url: String? = null
 }
 
-class LawyerEvaluation {
+class LawyerEvaluation : Serializable {
 
     var attitudeScore: Int = 0
     var professionalScore: Int = 0
 
 }
 
-class LawyerAbout {
+class LawyerAbout : Serializable {
 
     var image: String? = null
     var lawFirm: String? = null
@@ -42,7 +43,7 @@ class LawyerAbout {
 
 }
 
-class LetterFinishInfo {
+class LetterFinishInfo : Serializable {
 
     var expressName: String? = null
     var expressNumber: String? = null

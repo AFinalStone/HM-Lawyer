@@ -7,11 +7,14 @@ import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.base.utils.RouterUtil
 import com.hm.iou.lawyer.R
+import com.hm.iou.lawyer.api.LawyerApi
+import com.hm.iou.lawyer.event.RatingLawyerSuccEvent
 import com.hm.iou.tools.kt.extraDelegate
 import com.hm.iou.uikit.HMTopBarView
 import kotlinx.android.synthetic.main.lawyer_activity_rating_lawyer.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 import kotlin.Exception
 
 /**
@@ -68,15 +71,16 @@ class RatingLawyerActivity : HMBaseActivity<HMBasePresenter<BaseContract.BaseVie
 
     private fun submitRating(desc: String, r1: Int, r2: Int) {
         launch {
+            showLoadingView()
             try {
-                showLoadingView()
-
-                delay(2000)
-
-
+                mPresenter.handleResponse(LawyerApi.ratingLawyer(mOrderId ?: "", desc, r1, r2))
                 dismissLoadingView()
+                toastMessage("评价成功")
+                EventBus.getDefault().register(RatingLawyerSuccEvent(mOrderId))
+                finish()
             } catch (e: Exception) {
                 dismissLoadingView()
+                mPresenter.handleException(e)
             }
         }
     }

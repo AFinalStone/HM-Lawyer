@@ -2,6 +2,7 @@ package com.hm.iou.lawyer.business.lawyer.home.edit
 
 import android.content.Context
 import com.hm.iou.base.mvp.HMBasePresenter
+import java.io.File
 
 /**
  * @author : 借条管家-shilei
@@ -12,6 +13,8 @@ import com.hm.iou.base.mvp.HMBasePresenter
 class EditLawyerHeaderPresenter(context: Context, view: EditLawyerHeaderContract.View) :
     HMBasePresenter<EditLawyerHeaderContract.View>(context, view),
     EditLawyerHeaderContract.Presenter {
+    override fun uploadHeader(file: File) {
+    }
 
 
 }

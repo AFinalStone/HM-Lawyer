@@ -122,7 +122,7 @@
                 <TextView
                     style="@style/UikitTextView"
                     android:layout_gravity="center_vertical"
-                    android:text="收件人信息" />
+                    android:text="收函人信息" />
 
                 <TextView
                     android:id="@+id/tv_letter_receiver_info"
@@ -132,7 +132,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:hint="收件人地址"
+                    android:hint="请完善收函人信息"
                     android:maxLines="1" />
 
                 <ImageView
@@ -149,7 +149,7 @@
                 style="@style/UikitTextView"
                 android:layout_height="50dp"
                 android:layout_gravity="center_vertical"
-                android:text="收件人信息" />
+                android:text="案件描述" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -161,6 +161,7 @@
                     android:layout_height="160dp"
                     android:gravity="left|top"
                     android:hint="请简单介绍下您的案件问题"
+                    android:maxLength="500"
                     android:padding="10dp" />
 
                 <TextView

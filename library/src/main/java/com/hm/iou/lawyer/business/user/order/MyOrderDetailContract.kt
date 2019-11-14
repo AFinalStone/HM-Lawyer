@@ -87,6 +87,13 @@ interface MyOrderDetailContract {
         fun showOrHideBottomBtn(show: Boolean)
 
         fun showBottomBtn(btnText: String, callback: () -> Unit)
+
+        fun showTopBarMenu(menuText: String, callback: () -> Unit)
+
+        fun showCommDialog(
+            title: String?, msg: String?, posBtn: String? = "取消",
+            negBtn: String? = "确定", callback: (pos: Boolean) -> Unit
+        )
     }
 
     interface Presenter : BaseContract.BasePresenter {
