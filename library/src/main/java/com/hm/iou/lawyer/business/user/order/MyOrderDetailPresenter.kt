@@ -120,6 +120,7 @@ class MyOrderDetailPresenter(context: Context, view: MyOrderDetailContract.View)
 
                 when(data.status) {
                     OrderStatus.WAIT.status -> {
+                        mView.showOrHideBottomBtn(false)
                         mView.showTopBarMenu("取消订单") {
                             //点击取消
                             mView.showCommDialog(null, "是否取消该订单") {
@@ -130,15 +131,19 @@ class MyOrderDetailPresenter(context: Context, view: MyOrderDetailContract.View)
                         }
                     }
                     OrderStatus.COMPLETE.status -> {
+                        mView.showTopBarMenu("") {}
                         if (serviceRating == null) {
                             mView.showOrHideBottomBtn(true)
                             mView.showBottomBtn("评论律师") {
                                 NavigationHelper.toRatingLawyerPage(mContext, orderId)
                             }
+                        } else {
+                            mView.showOrHideBottomBtn(false)
                         }
                     }
                     OrderStatus.CANCEL.status -> {
                         mView.showOrHideBottomBtn(true)
+                        mView.showTopBarMenu("") {}
                         mView.showBottomBtn("重新下单") {
                             mDetailInfo?.let {
                                 NavigationHelper.toCreateLawyerLetter(mContext, it)
