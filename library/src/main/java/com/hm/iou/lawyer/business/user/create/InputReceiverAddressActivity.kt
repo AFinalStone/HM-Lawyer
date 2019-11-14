@@ -3,6 +3,7 @@ package com.hm.iou.lawyer.business.user.create
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import com.hm.iou.base.comm.HMTextChangeListener
 import com.hm.iou.base.constants.HMConstants
 import com.hm.iou.base.mvp.BaseContract
@@ -97,7 +98,7 @@ class InputReceiverAddressActivity : HMBaseActivity<HMBasePresenter<BaseContract
             data.receiverCityDetail = tv_letter_city.text.trim().toString()
             data.receiverDetailAddress = et_letter_addr.text.trim().toString()
             val intent = Intent()
-            intent.putExtra("receiver", data)
+            intent.putExtra("receiver", data as Parcelable)
             setResult(Activity.RESULT_OK, intent)
             finish()
         }
