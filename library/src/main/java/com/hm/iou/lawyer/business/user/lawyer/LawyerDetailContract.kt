@@ -1,6 +1,7 @@
 package com.hm.iou.lawyer.business.user.lawyer
 
 import com.hm.iou.base.mvp.BaseContract
+import com.hm.iou.lawyer.bean.res.LawyerServiceBean
 
 /**
  * Created by hjy on 2019/11/12
@@ -27,19 +28,15 @@ interface LawyerDetailContract {
 
         fun showLawyerLocation(location: String?)
 
-        fun showLawyerLetterDesc(desc: String?)
-
-        fun showLawyerLetterPrice(price: String?)
+        fun showLawyerService(list: List<LawyerServiceBean>?)
 
         fun showLawyerDesc(desc: String?)
 
-        fun showLawyerHonorImage(list: List<String>)
+        fun showLawyerHonorImage(list: List<String>?)
     }
 
     interface Presenter : BaseContract.BasePresenter {
 
         fun getLawyerDetailInfo(lawyerId: String)
-
-        fun toCreateLawyerLetter()
     }
 }

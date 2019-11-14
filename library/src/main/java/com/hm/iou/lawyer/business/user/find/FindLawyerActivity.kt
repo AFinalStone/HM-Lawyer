@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.InputFilter
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.business.NavigationHelper
@@ -23,7 +22,7 @@ import kotlinx.android.synthetic.main.lawyer_layout_search_by_name.*
  */
 class FindLawyerActivity : HMBaseActivity<FindLawyerPresenter>(), FindLawyerContract.View {
 
-    private var mLayoutSeachByName: View? = null
+    private var mLayoutSearchByName: View? = null
     private var mAgeLimitPopWindow: LawyerAgeLimitPopWindow? = null
 
     private val mAdapter: LawyerListAdapter = LawyerListAdapter(this)
@@ -39,7 +38,7 @@ class FindLawyerActivity : HMBaseActivity<FindLawyerPresenter>(), FindLawyerCont
 
             override fun onClickImageMenu() {
                 ensureInitSearchByNameView()
-                mLayoutSeachByName!!.visibility = View.VISIBLE
+                mLayoutSearchByName!!.visibility = View.VISIBLE
                 et_search_content.setSelection(et_search_content.length())
                 et_search_content.requestFocus()
                 showSoftKeyboard(et_search_content)
@@ -70,7 +69,7 @@ class FindLawyerActivity : HMBaseActivity<FindLawyerPresenter>(), FindLawyerCont
         mAdapter.setOnItemClickListener { adapter, _, position ->
             val item = adapter.getItem(position) as? ILawyerItem
             item?.let {
-                NavigationHelper.toLawyerDetailPage(this, it.getLawyerId())
+                NavigationHelper.toLawyerDetailPage(this, it.getLawyerId() ?: "")
             }
         }
 
@@ -86,8 +85,8 @@ class FindLawyerActivity : HMBaseActivity<FindLawyerPresenter>(), FindLawyerCont
         super.onBackPressed()
     }
 
-    override fun showInitLoading(findByName: Boolean) {
-        if (findByName) {
+    override fun showInitLoading(isFindByAgeLimit: Boolean) {
+        if (isFindByAgeLimit) {
             loading_view.showDataLoading()
         } else {
             ensureInitSearchByNameView()
@@ -95,8 +94,8 @@ class FindLawyerActivity : HMBaseActivity<FindLawyerPresenter>(), FindLawyerCont
         }
     }
 
-    override fun hideInitLoading(findByName: Boolean) {
-        if (findByName) {
+    override fun hideInitLoading(isFindByAgeLimit: Boolean) {
+        if (isFindByAgeLimit) {
             loading_view.visibility = View.GONE
         } else {
             ensureInitSearchByNameView()
@@ -104,8 +103,8 @@ class FindLawyerActivity : HMBaseActivity<FindLawyerPresenter>(), FindLawyerCont
         }
     }
 
-    override fun showLoadingError(msg: String, findByName: Boolean) {
-        if (findByName) {
+    override fun showLoadingError(msg: String, isFindByAgeLimit: Boolean) {
+        if (isFindByAgeLimit) {
             loading_view.showDataFail(msg) {
                 mPresenter.getNextPageByAgeLimit()
             }
@@ -117,8 +116,8 @@ class FindLawyerActivity : HMBaseActivity<FindLawyerPresenter>(), FindLawyerCont
         }
     }
 
-    override fun showDataEmpty(findByName: Boolean) {
-        if (findByName) {
+    override fun showDataEmpty(isFindByAgeLimit: Boolean) {
+        if (isFindByAgeLimit) {
             loading_view.showDataEmpty("该律师不存在哦~~")
         } else {
             ensureInitSearchByNameView()
@@ -126,8 +125,8 @@ class FindLawyerActivity : HMBaseActivity<FindLawyerPresenter>(), FindLawyerCont
         }
     }
 
-    override fun clearList(findByName: Boolean) {
-        if (findByName) {
+    override fun clearList(isFindByAgeLimit: Boolean) {
+        if (isFindByAgeLimit) {
             mAdapter.setNewData(null)
         } else {
             ensureInitSearchByNameView()
@@ -135,8 +134,8 @@ class FindLawyerActivity : HMBaseActivity<FindLawyerPresenter>(), FindLawyerCont
         }
     }
 
-    override fun showLawyers(list: List<ILawyerItem>, findByName: Boolean) {
-        if (findByName) {
+    override fun showLawyers(list: List<ILawyerItem>, isFindByAgeLimit: Boolean) {
+        if (isFindByAgeLimit) {
             mAdapter.addData(list)
         } else {
             ensureInitSearchByNameView()
@@ -144,8 +143,8 @@ class FindLawyerActivity : HMBaseActivity<FindLawyerPresenter>(), FindLawyerCont
         }
     }
 
-    override fun showLoadMoreEnd(findByName: Boolean) {
-        if (findByName) {
+    override fun showLoadMoreEnd(isFindByAgeLimit: Boolean) {
+        if (isFindByAgeLimit) {
             mAdapter.loadMoreEnd()
         } else {
             ensureInitSearchByNameView()
@@ -153,8 +152,8 @@ class FindLawyerActivity : HMBaseActivity<FindLawyerPresenter>(), FindLawyerCont
         }
     }
 
-    override fun showLoadMoreComplete(findByName: Boolean) {
-        if (findByName) {
+    override fun showLoadMoreComplete(isFindByAgeLimit: Boolean) {
+        if (isFindByAgeLimit) {
             mAdapter.loadMoreComplete()
         } else {
             ensureInitSearchByNameView()
@@ -162,8 +161,8 @@ class FindLawyerActivity : HMBaseActivity<FindLawyerPresenter>(), FindLawyerCont
         }
     }
 
-    override fun showRecyclerView(visibility: Int, findByName: Boolean) {
-        if (findByName) {
+    override fun showRecyclerView(visibility: Int, isFindByAgeLimit: Boolean) {
+        if (isFindByAgeLimit) {
             rv_search_list.visibility = visibility
         } else {
             ensureInitSearchByNameView()
@@ -172,8 +171,8 @@ class FindLawyerActivity : HMBaseActivity<FindLawyerPresenter>(), FindLawyerCont
     }
 
     private fun ensureInitSearchByNameView() {
-        if (mLayoutSeachByName == null) {
-            mLayoutSeachByName = vs_search_by_name.inflate()
+        if (mLayoutSearchByName == null) {
+            mLayoutSearchByName = vs_search_by_name.inflate()
             et_search_content.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     // 先隐藏键盘
@@ -192,7 +191,7 @@ class FindLawyerActivity : HMBaseActivity<FindLawyerPresenter>(), FindLawyerCont
             filterList.add(InputFilter.LengthFilter(5))
             et_search_content.filters = filterList.toTypedArray()
             tv_search_cancel.clickWithDuration {
-                mLayoutSeachByName!!.visibility = View.GONE
+                mLayoutSearchByName!!.visibility = View.GONE
                 hideSoftKeyboard()
             }
 
@@ -207,7 +206,7 @@ class FindLawyerActivity : HMBaseActivity<FindLawyerPresenter>(), FindLawyerCont
             mAdapterFindByName.setOnItemClickListener { adapter, _, position ->
                 val item = adapter.getItem(position) as? ILawyerItem
                 item?.let {
-                    NavigationHelper.toLawyerDetailPage(this, it.getLawyerId())
+                    NavigationHelper.toLawyerDetailPage(this, it.getLawyerId() ?: "")
                 }
             }
         }
