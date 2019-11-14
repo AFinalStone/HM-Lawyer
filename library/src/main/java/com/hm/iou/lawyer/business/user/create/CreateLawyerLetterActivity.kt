@@ -9,6 +9,7 @@ import com.hm.iou.base.ImageGalleryActivity
 import com.hm.iou.base.comm.HMTextChangeListener
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.base.photo.CompressPictureUtil
+import com.hm.iou.base.utils.RouterUtil
 import com.hm.iou.database.table.IouData
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.bean.LetterReceiverBean
@@ -17,7 +18,6 @@ import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.comm.IouImageUploadAdapter
 import com.hm.iou.router.Router
 import com.hm.iou.sharedata.UserManager
-import com.hm.iou.sharedata.model.UserInfo
 import com.hm.iou.tools.kt.clickWithDuration
 import com.hm.iou.tools.kt.extraDelegate
 import com.hm.iou.tools.kt.putValue
@@ -129,7 +129,7 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
                     val receiverInfo = data.getParcelableExtra<LetterReceiverBean>("receiver")
                     mReceiverInfo = receiverInfo
                     mReceiverInfo?.let {
-                        tv_letter_receiver_info.text = it.receiverName
+                        tv_letter_receiver_info.text = "${it.receiverName}/${it.receiverMobile}"
                     }
                 }
             }
@@ -144,10 +144,10 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
     private fun initViews() {
         topbar.setOnMenuClickListener(object : HMTopBarView.OnTopBarMenuClickListener {
             override fun onClickTextMenu() {
-
             }
 
             override fun onClickImageMenu() {
+                RouterUtil.clickMenuLink(this@CreateLawyerLetterActivity, "https://h5.54jietiao.com/appTopic/articleDetail.html?articleId=39")
             }
         })
 
@@ -208,9 +208,12 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
         et_letter_name.setSelection(et_letter_name.length())
         et_letter_mobile.setText(userInfo.mobile)
 
+        //如果带有律师信息，则报价金额不能修改
+        var hasLawyer = false
         if (!mLawyerId.isNullOrEmpty() && (mPrice ?: 0) > 0) {
             et_letter_price.setText("${mPrice}元")
             et_letter_price.isEnabled = false
+            hasLawyer = true
         }
 
         //如果是重新创建，则会带过来原来的订单信息
@@ -220,9 +223,13 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
             et_letter_name.setSelection(et_letter_name.length())
             et_letter_mobile.setText(data.mobile)
 
+            if (!hasLawyer) {
+                et_letter_price.setText(data.price.toString())
+            }
+
             mReceiverInfo = data.receiveInfo
             mReceiverInfo?.let {
-                tv_letter_receiver_info.text = it.receiverName
+                tv_letter_receiver_info.text = "${it.receiverName}/${it.receiverMobile}"
             }
             et_letter_desc.setText(data.caseDescription)
 
@@ -241,31 +248,11 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
         }
 
         bottom_bar.setOnTitleClickListener {
-            val name = et_letter_name.text.trim().toString()
-            val mobile = et_letter_mobile.text.trim().toString()
-            val price = if (mPrice != null && (mPrice ?: 0) > 0) mPrice!! else (et_letter_price.text.trim().toString().toIntOrNull() ?: 0)
-            val desc = et_letter_desc.text.trim().toString()
-
-            if (price < 300) {
-                toastMessage("最低报价为300元")
-                return@setOnTitleClickListener
-            }
-
-            mPresenter.createLawyerLetter(name, mobile, mLawyerId, price, mReceiverInfo, desc, mFileList, false)
+            toCreateLawyerLetter(false)
         }
 
         bottom_bar.setOnTitleLongClickListener {
-            val name = et_letter_name.text.trim().toString()
-            val mobile = et_letter_mobile.text.trim().toString()
-            val price = if (mPrice != null && (mPrice ?: 0) > 0) mPrice!! else (et_letter_price.text.trim().toString().toIntOrNull() ?: 0)
-            val desc = et_letter_desc.text.trim().toString()
-
-            if (price < 300) {
-                toastMessage("最低报价为300元")
-                return@setOnTitleLongClickListener true
-            }
-
-            mPresenter.createLawyerLetter(name, mobile, mLawyerId, price, mReceiverInfo, desc, mFileList, true)
+            toCreateLawyerLetter(true)
             return@setOnTitleLongClickListener true
         }
     }
@@ -281,6 +268,20 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
             return
         }
         bottom_bar.isEnabled = true
+    }
+
+    private fun toCreateLawyerLetter(innerUser: Boolean) {
+        val name = et_letter_name.text.trim().toString()
+        val mobile = et_letter_mobile.text.trim().toString()
+        val price = if ((!mLawyerId.isNullOrEmpty()) && mPrice != null && (mPrice ?: 0) > 0) mPrice!! else (et_letter_price.text.trim().toString().toIntOrNull() ?: 0)
+        val desc = et_letter_desc.text.trim().toString()
+
+        if (price < 300 || price > 10000) {
+            toastMessage("报价输入范围不正确")
+            return
+        }
+
+        mPresenter.createLawyerLetter(name, mobile, mLawyerId, price, mReceiverInfo, desc, mFileList, innerUser)
     }
 
 }

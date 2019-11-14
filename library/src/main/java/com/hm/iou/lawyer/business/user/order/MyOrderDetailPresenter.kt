@@ -7,6 +7,7 @@ import com.hm.iou.lawyer.bean.res.CustLetterDetailResBean
 import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.dict.OrderStatus
 import com.hm.iou.lawyer.event.RatingLawyerSuccEvent
+import com.hm.iou.lawyer.event.UserOrderStatusChangedEvent
 import com.hm.iou.network.exception.ApiException
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
@@ -47,7 +48,7 @@ class MyOrderDetailPresenter(context: Context, view: MyOrderDetailContract.View)
 
                 when(data.status) {
                     OrderStatus.WAIT.status -> {
-                        mView.showOrderStatus("等待${data.lawyerAbout?.run { name }}律师接单")
+                        mView.showOrderStatus("等待${data.lawyerAbout?.run { name } ?: ""}律师接单")
                         mView.showOrHideTimeView(false)
                     }
                     OrderStatus.ONGOING.status -> {
@@ -119,6 +120,7 @@ class MyOrderDetailPresenter(context: Context, view: MyOrderDetailContract.View)
 
                 when(data.status) {
                     OrderStatus.WAIT.status -> {
+                        mView.showOrHideBottomBtn(false)
                         mView.showTopBarMenu("取消订单") {
                             //点击取消
                             mView.showCommDialog(null, "是否取消该订单") {
@@ -129,15 +131,19 @@ class MyOrderDetailPresenter(context: Context, view: MyOrderDetailContract.View)
                         }
                     }
                     OrderStatus.COMPLETE.status -> {
+                        mView.showTopBarMenu("") {}
                         if (serviceRating == null) {
                             mView.showOrHideBottomBtn(true)
                             mView.showBottomBtn("评论律师") {
                                 NavigationHelper.toRatingLawyerPage(mContext, orderId)
                             }
+                        } else {
+                            mView.showOrHideBottomBtn(false)
                         }
                     }
                     OrderStatus.CANCEL.status -> {
                         mView.showOrHideBottomBtn(true)
+                        mView.showTopBarMenu("") {}
                         mView.showBottomBtn("重新下单") {
                             mDetailInfo?.let {
                                 NavigationHelper.toCreateLawyerLetter(mContext, it)
@@ -177,6 +183,7 @@ class MyOrderDetailPresenter(context: Context, view: MyOrderDetailContract.View)
             try {
                 handleResponse(LawyerApi.cancelCustLawyerLetter(orderId))
                 mView.dismissLoadingView()
+                EventBus.getDefault().post(UserOrderStatusChangedEvent())
                 getOrderDetail(orderId)
             } catch (e: Exception) {
                 mView.dismissLoadingView()

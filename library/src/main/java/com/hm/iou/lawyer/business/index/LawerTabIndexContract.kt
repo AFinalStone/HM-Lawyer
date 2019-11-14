@@ -34,5 +34,10 @@ interface LawerTabIndexContract {
          * 获取banner
          */
         fun getTopBanner()
+
+        /**
+         * 判断是否认证律师
+         */
+        fun judgeIsAuthLawyer()
     }
 }
