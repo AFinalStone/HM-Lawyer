@@ -5,10 +5,15 @@ import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.bean.res.CustOrderItemBean
 import com.hm.iou.lawyer.dict.OrderStatus
+import com.hm.iou.lawyer.event.AddLawyerLetterEvent
+import com.hm.iou.lawyer.event.UserOrderStatusChangedEvent
 import com.hm.iou.network.exception.ApiException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,6 +33,15 @@ class MyOrderListPresenter(context: Context, view: MyOrderListContract.View) :
     private val mDataList: MutableList<IOrderItem> = mutableListOf()
 
     private var mNextPageJob: Job? = null
+
+    init {
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
+    }
 
     override fun getFirstPage() {
         mNextPageJob?.cancel()
@@ -145,6 +159,18 @@ class MyOrderListPresenter(context: Context, view: MyOrderListContract.View) :
             })
         }
         return dataList
+    }
+
+    //订单状态更改了之后，比如用户取消了该订单
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventOrderStatusChanged(event: UserOrderStatusChangedEvent) {
+        getFirstPage()
+    }
+
+    //创建成功之后，刷新页面
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventCreateLawyerLetter(event: AddLawyerLetterEvent) {
+        getFirstPage()
     }
 
 }

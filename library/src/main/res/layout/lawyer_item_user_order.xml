@@ -46,6 +46,8 @@
         android:layout_marginTop="10dp"
         android:lineSpacingExtra="2dp"
         android:textColor="@color/uikit_text_sub_content"
+        android:maxLines="2"
+        android:ellipsize="end"
         tools:text="朋友准备向我借钱，但是我不知道该怎么写借条，所以请各位律师帮忙代写一份借条。" />
 
     <RelativeLayout

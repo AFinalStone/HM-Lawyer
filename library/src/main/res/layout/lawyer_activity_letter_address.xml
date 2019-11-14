@@ -131,6 +131,8 @@
 
         </LinearLayout>
 
+        <View style="@style/UikitDivider.Horizontal" />
+
     </LinearLayout>
 
     <com.hm.iou.uikit.HMBottomBarView

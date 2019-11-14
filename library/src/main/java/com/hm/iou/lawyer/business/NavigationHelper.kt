@@ -112,7 +112,8 @@ object NavigationHelper {
     fun toCreateLawyerLetter(context: Context, data: CustLetterDetailResBean) {
         context.startActivity<CreateLawyerLetterActivity>(
             CreateLawyerLetterActivity.EXTRA_KEY_LAWYER_ID to (data.lawyerAbout?.lawyerId ?: ""),
-            CreateLawyerLetterActivity.EXTRA_KEY_PRICE to (data.price)
+            CreateLawyerLetterActivity.EXTRA_KEY_PRICE to (data.price),
+            CreateLawyerLetterActivity.EXTRA_KEY_ORDER to data
         )
     }
 

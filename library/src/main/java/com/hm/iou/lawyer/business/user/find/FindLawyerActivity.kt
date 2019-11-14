@@ -188,7 +188,7 @@ class FindLawyerActivity : HMBaseActivity<FindLawyerPresenter>(), FindLawyerCont
                 return@setOnEditorActionListener false
             }
             val filterList = mutableListOf<InputFilter>()
-            filterList.add(InputFilter.LengthFilter(5))
+            filterList.add(InputFilter.LengthFilter(10))
             et_search_content.filters = filterList.toTypedArray()
             tv_search_cancel.clickWithDuration {
                 mLayoutSearchByName!!.visibility = View.GONE

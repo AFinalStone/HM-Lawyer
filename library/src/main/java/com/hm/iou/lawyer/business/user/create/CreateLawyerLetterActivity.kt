@@ -9,6 +9,7 @@ import com.hm.iou.base.ImageGalleryActivity
 import com.hm.iou.base.comm.HMTextChangeListener
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.base.photo.CompressPictureUtil
+import com.hm.iou.base.utils.RouterUtil
 import com.hm.iou.database.table.IouData
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.bean.LetterReceiverBean
@@ -17,7 +18,6 @@ import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.comm.IouImageUploadAdapter
 import com.hm.iou.router.Router
 import com.hm.iou.sharedata.UserManager
-import com.hm.iou.sharedata.model.UserInfo
 import com.hm.iou.tools.kt.clickWithDuration
 import com.hm.iou.tools.kt.extraDelegate
 import com.hm.iou.tools.kt.putValue
@@ -129,7 +129,7 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
                     val receiverInfo = data.getParcelableExtra<LetterReceiverBean>("receiver")
                     mReceiverInfo = receiverInfo
                     mReceiverInfo?.let {
-                        tv_letter_receiver_info.text = it.receiverName
+                        tv_letter_receiver_info.text = "${it.receiverName}/${it.receiverMobile}"
                     }
                 }
             }
@@ -144,7 +144,7 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
     private fun initViews() {
         topbar.setOnMenuClickListener(object : HMTopBarView.OnTopBarMenuClickListener {
             override fun onClickTextMenu() {
-
+                RouterUtil.clickMenuLink(this@CreateLawyerLetterActivity, "https://h5.54jietiao.com/appTopic/articleDetail.html?articleId=39")
             }
 
             override fun onClickImageMenu() {
@@ -222,7 +222,7 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
 
             mReceiverInfo = data.receiveInfo
             mReceiverInfo?.let {
-                tv_letter_receiver_info.text = it.receiverName
+                tv_letter_receiver_info.text = "${it.receiverName}/${it.receiverMobile}"
             }
             et_letter_desc.setText(data.caseDescription)
 

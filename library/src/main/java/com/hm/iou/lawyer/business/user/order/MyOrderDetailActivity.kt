@@ -2,6 +2,7 @@ package com.hm.iou.lawyer.business.user.order
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Gravity
 import android.view.View
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
@@ -128,7 +129,7 @@ class MyOrderDetailActivity : HMBaseActivity<MyOrderDetailPresenter>(), MyOrderD
             tv_order_receiver_idno.visibility = View.GONE
         } else {
             tv_order_receiver_idno.visibility = View.VISIBLE
-            tv_order_receiver_idno.text = idNo
+            tv_order_receiver_idno.text = "身份证号码 $idNo"
         }
         tv_order_receiver_addr.text = address
     }
@@ -232,6 +233,7 @@ class MyOrderDetailActivity : HMBaseActivity<MyOrderDetailPresenter>(), MyOrderD
         HMAlertDialog.Builder(this)
             .setTitle(title)
             .setMessage(msg)
+            .setMessageGravity(Gravity.CENTER)
             .setPositiveButton(posBtn)
             .setNegativeButton(negBtn)
             .setOnClickListener(object : HMAlertDialog.OnClickListener {

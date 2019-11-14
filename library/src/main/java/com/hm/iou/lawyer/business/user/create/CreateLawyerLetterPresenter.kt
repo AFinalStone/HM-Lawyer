@@ -13,6 +13,7 @@ import com.hm.iou.lawyer.bean.req.CreateLawyerLetterReqBean
 import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.user.create.CreateLawyerLetterActivity.Companion.REQ_PAY_LAWYER_LETTER
 import com.hm.iou.lawyer.dict.LawyerLetterSource
+import com.hm.iou.lawyer.event.AddLawyerLetterEvent
 import com.hm.iou.router.Router
 import com.hm.iou.tools.StringUtil
 import kotlinx.coroutines.launch
@@ -109,6 +110,7 @@ class CreateLawyerLetterPresenter(context: Context, view: CreateLawyerLetterCont
     }
 
     override fun createOrderSuccess() {
+        EventBus.getDefault().post(AddLawyerLetterEvent())
         NavigationHelper.toUserOrderDetailPage(mContext, mBillId ?: "")
         mView.closeCurrPage()
     }
