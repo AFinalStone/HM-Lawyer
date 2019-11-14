@@ -4,6 +4,7 @@ import android.content.Context
 import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.bean.req.UpdateLawyerAuthenticationInfReqBean
+import com.hm.iou.lawyer.dict.UpdateLawyerAuthenInfoType
 import com.hm.iou.lawyer.event.UpdateAuthenInfoEvent
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -27,6 +28,7 @@ class EditLawyerSelfIntroducePresenter(
                 mView.showLoadingView()
                 val req = UpdateLawyerAuthenticationInfReqBean()
                 req.info = selfIntroduction
+                req.type = UpdateLawyerAuthenInfoType.SELF_INTRODUCE.type
                 val result =
                     handleResponse(LawyerApi.updateLawyerAuthenticationInfo(req))
                 mView.dismissLoadingView()

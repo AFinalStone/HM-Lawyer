@@ -11,10 +11,8 @@ import com.hm.iou.base.ImageGalleryActivity
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.bean.LetterReceiverBean
 import com.hm.iou.lawyer.bean.res.CustLetterDetailResBean
-import com.hm.iou.lawyer.business.lawyer.home.HomeActivity
-import com.hm.iou.lawyer.business.lawyer.home.authen.AuthenProgressActivity
 
-import com.hm.iou.lawyer.business.lawyer.withdraw.WithDrawActivity
+import com.hm.iou.lawyer.business.lawyer.workbench.withdraw.WithDrawActivity
 import com.hm.iou.lawyer.business.user.create.CreateLawyerLetterActivity
 import com.hm.iou.lawyer.business.user.create.InputReceiverAddressActivity
 import com.hm.iou.lawyer.business.user.create.LawyerLetterDescActivity
@@ -25,7 +23,6 @@ import com.hm.iou.lawyer.business.user.order.MyOrderListActivity
 import com.hm.iou.lawyer.business.user.order.RatingLawyerActivity
 import com.hm.iou.router.Router
 import com.hm.iou.tools.kt.startActivity
-import com.umeng.commonsdk.stateless.UMSLEnvelopeBuild.mContext
 
 /**
  * @author : 借条管家-shilei

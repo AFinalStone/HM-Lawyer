@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
+    android:background="@drawable/uikit_bg_card_form"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingTop="15dp"
+    android:paddingRight="15dp"
+    android:paddingBottom="15dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:id="@+id/iv_header"
+            android:layout_width="40dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:src="@mipmap/uikit_icon_header_unknow" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/UikitEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="11dp"
+            android:text="木子李" />
+
+        <TextView
+            android:id="@+id/tv_order_time"
+            style="@style/UikitTextView.Auxiliary"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="30dp"
+            tools:text="2019.11.11 12:00" />
+
+        <TextView
+            android:id="@+id/tv_order_type"
+            style="@style/UikitTextView"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/uikit_bg_round_border_gray"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="发律师函"
+            android:textColor="@color/uikit_text_sub_content"
+            android:textSize="@dimen/textFontSize_13" />
+
+
+    </RelativeLayout>
+
+    <View style="@style/UikitDivider.Horizontal" />
+
+    <TextView
+        android:id="@+id/tv_order_desc"
+        style="@style/UikitTextView"
+        android:layout_marginTop="10dp"
+        android:lineSpacingExtra="2dp"
+        android:textColor="@color/uikit_text_sub_content"
+        tools:text="朋友准备向我借钱，但是我不知道该怎么写借条，所以请各位律师帮忙代写一份借条。" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/tv_order_price"
+            style="@style/UikitTextView"
+            android:textSize="@dimen/textFontSize_16"
+            tools:text="¥100" />
+
+        <TextView
+            android:id="@+id/tv_order_status"
+            style="@style/UikitTextView"
+            android:layout_alignParentRight="true"
+            tools:text="待接单" />
+
+    </RelativeLayout>
+
+</LinearLayout>

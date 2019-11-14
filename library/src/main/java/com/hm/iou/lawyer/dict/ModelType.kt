@@ -1,4 +1,4 @@
-package com.hm.iou.lawyer.business.lawyer.workbench
+package com.hm.iou.lawyer.dict
 
 /**
  * @author : 借条管家-shilei

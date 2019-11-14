@@ -31,12 +31,28 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".business.lawyer.wallet.WalletActivity"
+            android:name="com.hm.iou.lawyer.business.lawyer.workbench.wallet.WalletActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".business.lawyer.withdraw.WithDrawActivity"
+            android:name="com.hm.iou.lawyer.business.lawyer.workbench.withdraw.WithDrawActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.hm.iou.lawyer.business.lawyer.workbench.order.OrderDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.hm.iou.lawyer.business.lawyer.workbench.list.LetterOrderListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.hm.iou.lawyer.business.lawyer.workbench.list.InviteOrderListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.hm.iou.lawyer.business.lawyer.workbench.list.MyOrderListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 

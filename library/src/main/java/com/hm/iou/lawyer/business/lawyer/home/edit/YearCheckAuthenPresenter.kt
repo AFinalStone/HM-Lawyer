@@ -7,6 +7,7 @@ import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.bean.req.UpdateLawyerAuthenticationInfReqBean
 import com.hm.iou.lawyer.business.lawyer.home.prepare.HomePrepareActivity
+import com.hm.iou.lawyer.dict.UpdateLawyerAuthenInfoType
 import com.hm.iou.tools.kt.startActivity
 import kotlinx.coroutines.launch
 import java.io.File
@@ -38,6 +39,7 @@ class YearCheckAuthenPresenter(context: Context, view: YearCheckAuthenContract.V
                 mView.showLoadingView("年检认证...")
                 val req = UpdateLawyerAuthenticationInfReqBean()
                 req.authCerts = listAuthenImageFileId
+                req.type = UpdateLawyerAuthenInfoType.YEAR_CHECK_INFO.type
                 val lawyerAuthenResult =
                     handleResponse(LawyerApi.updateLawyerAuthenticationInfo(req))
                 mView.dismissLoadingView()

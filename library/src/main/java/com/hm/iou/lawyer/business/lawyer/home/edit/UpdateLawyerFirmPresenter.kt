@@ -7,6 +7,7 @@ import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.bean.req.UpdateLawyerAuthenticationInfReqBean
 import com.hm.iou.lawyer.business.lawyer.home.prepare.HomePrepareActivity
+import com.hm.iou.lawyer.dict.UpdateLawyerAuthenInfoType
 import com.hm.iou.tools.kt.startActivity
 import kotlinx.coroutines.launch
 import java.io.File
@@ -39,11 +40,12 @@ class UpdateLawyerFirmPresenter(context: Context, view: UpdateLawyerFirmContract
                     listAuthenImageFileId.add(result?.fileId ?: "")
                 }
                 //开始认证
-                mView.showLoadingView("年检认证...")
+                mView.showLoadingView("更新中...")
                 val req = UpdateLawyerAuthenticationInfReqBean()
                 req.licenseNumber = licenseNumber
                 req.lawFirm = lawFirm
                 req.authCerts = listAuthenImageFileId
+                req.type = UpdateLawyerAuthenInfoType.LAWYER_FIRM.type
                 val lawyerAuthenResult =
                     handleResponse(LawyerApi.updateLawyerAuthenticationInfo(req))
                 mView.dismissLoadingView()

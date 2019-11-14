@@ -8,6 +8,7 @@ import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.database.table.IouData
 import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.bean.req.UpdateLawyerAuthenticationInfReqBean
+import com.hm.iou.lawyer.dict.UpdateLawyerAuthenInfoType
 import com.hm.iou.lawyer.event.UpdateAuthenInfoEvent
 import com.hm.iou.logger.Logger
 import kotlinx.coroutines.launch
@@ -53,6 +54,7 @@ class EditLawyerHonorPresenter(context: Context, view: EditLawyerHonorContract.V
                 }
                 val req = UpdateLawyerAuthenticationInfReqBean()
                 req.honors = listCertificateImageFileId
+                req.type = UpdateLawyerAuthenInfoType.LAWYER_HONOR.type
                 val result = handleResponse(LawyerApi.updateLawyerAuthenticationInfo(req))
                 mView.dismissLoadingView()
                 EventBus.getDefault().post(UpdateAuthenInfoEvent())

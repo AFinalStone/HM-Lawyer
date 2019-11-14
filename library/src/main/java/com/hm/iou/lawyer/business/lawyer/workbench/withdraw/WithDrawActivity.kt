@@ -1,4 +1,4 @@
-package com.hm.iou.lawyer.business.lawyer.withdraw
+package com.hm.iou.lawyer.business.lawyer.workbench.withdraw
 
 import android.os.Bundle
 import android.view.LayoutInflater

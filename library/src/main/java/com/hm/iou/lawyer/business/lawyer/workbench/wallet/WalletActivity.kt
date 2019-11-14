@@ -1,10 +1,10 @@
-package com.hm.iou.lawyer.business.lawyer.wallet
+package com.hm.iou.lawyer.business.lawyer.workbench.wallet
 
 import android.content.Intent
 import android.os.Bundle
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
-import com.hm.iou.lawyer.business.lawyer.withdraw.WithDrawActivity
+import com.hm.iou.lawyer.business.lawyer.workbench.withdraw.WithDrawActivity
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_wallet.*
 
 /**

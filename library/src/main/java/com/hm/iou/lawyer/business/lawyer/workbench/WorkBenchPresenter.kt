@@ -2,6 +2,7 @@ package com.hm.iou.lawyer.business.lawyer.workbench
 
 import android.content.Context
 import com.hm.iou.base.mvp.HMBasePresenter
+import com.hm.iou.lawyer.dict.ModelType
 
 /**
  * @author : 借条管家-shilei
@@ -49,15 +50,6 @@ class WorkBenchPresenter(context: Context, view: WorkBenchContract.View) :
         mView.showWaiteToDoList(mListDataWaiteToDo)
 
         //显示订单
-        mListDataLawyerOrder.add(object : IMenuItem {
-            override fun getIIcon(): Int = -1
-
-            override fun getIModel(): ModelType = ModelType.LAWYER_ORDER_CONSULT
-
-            override fun getIRedDotNum(): String = "1"
-
-            override fun ifShowRedDot(): Boolean = true
-        })
         mListDataLawyerOrder.add(object : IMenuItem {
             override fun getIIcon(): Int = -1
 

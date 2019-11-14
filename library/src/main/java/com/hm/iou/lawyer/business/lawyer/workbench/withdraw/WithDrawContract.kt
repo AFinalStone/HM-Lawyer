@@ -1,4 +1,4 @@
-package com.hm.iou.lawyer.business.lawyer.withdraw
+package com.hm.iou.lawyer.business.lawyer.workbench.withdraw
 
 import com.hm.iou.base.mvp.BaseContract
 

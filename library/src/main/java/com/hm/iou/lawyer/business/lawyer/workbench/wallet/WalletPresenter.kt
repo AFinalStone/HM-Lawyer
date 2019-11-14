@@ -1,4 +1,4 @@
-package com.hm.iou.lawyer.business.lawyer.wallet
+package com.hm.iou.lawyer.business.lawyer.workbench.wallet
 
 import android.content.Context
 import com.hm.iou.base.mvp.HMBasePresenter

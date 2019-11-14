@@ -1,5 +1,7 @@
 package com.hm.iou.lawyer.business.lawyer.workbench
 
+import com.hm.iou.lawyer.dict.ModelType
+
 /**
  * @author : 借条管家-shilei
  * @version : 0.0.1

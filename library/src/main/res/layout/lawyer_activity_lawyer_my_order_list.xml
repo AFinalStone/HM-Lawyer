@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/uikit_background"
+    android:orientation="vertical">
+
+    <com.hm.iou.uikit.HMTopBarView
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/uikit_topbar_height"
+        app:backIcon="@mipmap/uikit_icon_close_black"
+        app:bottomDividerIsShow="false"
+        app:titleText="我的订单" />
+
+    <com.hm.iou.uikit.HMDiynamicPagerIndicator
+        android:id="@+id/tab_my_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingTop="10dip"
+        app:indicatorLineEndColor="#ffcfcfd6"
+        app:indicatorLineHeight="2dip"
+        app:indicatorLineMarginBottom="5dip"
+        app:indicatorLineMarginTop="5dip"
+        app:indicatorLineScrollMode="transform"
+        app:indicatorLineStartColor="#ffcfcfd6"
+        app:indicatorLineWidth="15dip"
+        app:pagerIndicatorMode="fixed"
+        app:tabNormalTextColor="@color/uikit_text_auxiliary"
+        app:tabNormalTextSize="@dimen/textFontSize_14"
+        app:tabPadding="0px"
+        app:tabSelectedTextColor="@color/uikit_text_main_content"
+        app:tabSelectedTextSize="@dimen/textFontSize_14" />
+
+    <View style="@style/UikitDivider.Horizontal" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_my_order"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

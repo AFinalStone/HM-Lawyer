@@ -6,6 +6,7 @@ import com.hm.iou.base.file.FileBizType
 import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.bean.req.UpdateLawyerAuthenticationInfReqBean
+import com.hm.iou.lawyer.dict.UpdateLawyerAuthenInfoType
 import com.hm.iou.logger.Logger
 import kotlinx.coroutines.launch
 import java.io.File
@@ -34,6 +35,7 @@ class EditLawyerHeaderPresenter(context: Context, view: EditLawyerHeaderContract
                     mView.showLoadingView("设置头像")
                     val req = UpdateLawyerAuthenticationInfReqBean()
                     req.image = headerImageFileId
+                    req.type = UpdateLawyerAuthenInfoType.HEADER.type
                     handleResponse(LawyerApi.updateLawyerAuthenticationInfo(req))
                     mView.dismissLoadingView()
                     mView.showUserAvatar(headerImageUrl)

@@ -14,4 +14,5 @@ class UpdateLawyerAuthenticationInfReqBean {
     var image: String? = null//个人形象照id
     var authCerts: List<String>? = null//执业证
     var honors: List<String>? = null//荣誉资质
+    var type: Int? = null//更新的类型
 }
