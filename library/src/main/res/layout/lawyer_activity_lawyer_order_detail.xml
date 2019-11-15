@@ -140,7 +140,7 @@
                     <TextView
                         android:id="@+id/tv_order_operate_time"
                         style="@style/UikitTextView.Auxiliary"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         tools:text="2019.11.12 12:100:19" />
 
