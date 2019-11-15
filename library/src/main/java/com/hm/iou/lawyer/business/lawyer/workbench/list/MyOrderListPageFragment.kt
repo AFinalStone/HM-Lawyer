@@ -11,6 +11,7 @@ import com.hm.iou.lawyer.dict.LawyerOrderTabStatus
 import com.hm.iou.tools.kt.getValue
 import com.hm.iou.tools.kt.putValue
 import com.hm.iou.uikit.HMLoadMoreView
+import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_my_order_page_list.*
 
 /**
@@ -126,7 +127,7 @@ class MyOrderListPageFragment : HMBaseFragment<MyOrderListPagePresenter>(),
     }
 
     override fun finishRefresh() {
-        smartrl_order_list.finishRefresh()
+        mContentView?.findViewById<SmartRefreshLayout>(R.id.smartrl_order_list)?.finishRefresh()
     }
 
     override fun showLoadMoreFail() {
