@@ -41,7 +41,10 @@ class HomePresenter(context: Context, view: HomeContract.View) :
                 val userId = UserManager.getInstance(mContext).userId
                 val result = handleResponse(LawyerApi.getLawyerHomeDetail(userId))
                 mView.hideInitView()
-                result?.let {
+                if (result == null) {
+                    mView.toastErrorMessage("发生异常")
+                    mView.closeCurrPage()
+                } else {
                     mView.showDetail(result)
                 }
             } catch (e: Exception) {

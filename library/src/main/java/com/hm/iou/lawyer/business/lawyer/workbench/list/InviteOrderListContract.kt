@@ -26,6 +26,7 @@ class InviteOrderListContract {
         fun showLoadMoreEnd()
 
         fun showLoadMoreComplete()
+
     }
 
     interface Presenter : BaseContract.BasePresenter {

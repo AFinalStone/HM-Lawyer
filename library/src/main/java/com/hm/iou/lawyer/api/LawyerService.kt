@@ -78,11 +78,26 @@ interface LawyerService {
     @POST("/api/lawyer/v1/letter/lawyerInviteWaitList")
     suspend fun getLawyerInviteList(@Body reqBean: GetLawyerInviteOrderListReqBean): BaseResponse<LawyerOrderListResBean>
 
-    @POST("/api/lawyer/v1/letter/canAcceptBill")
-    suspend fun checkLawyerCanAcceptOrder(@Body reqBean: LawyerCanAcceptOrderReqBean): BaseResponse<LawyerCanAcceptOrderResBean>
-
     @POST("/api/lawyer/v1/letter/lawyerLetterDetail")
     suspend fun getLawyerLetterDetail(@Body reqBean: GetLawyerLetterDetailReqBean): BaseResponse<LawyerLetterDetailBean>
+
+    @GET("/api/lawyer/v1/letter/canAcceptBill")
+    suspend fun checkLawyerCanAcceptOrder(@Query("billId") billId: String): BaseResponse<CheckLawyerCanAcceptOrderResBean>
+
+    @GET("/api/lawyer/v1/letter/lawyerAcceptBill")
+    suspend fun lawyerAcceptOrder(@Query("billId") billId: String): BaseResponse<Any>
+
+    @GET("/api/lawyer/v1/letter/lawyerCancelBill")
+    suspend fun lawyerCancelOrder(@Query("billId") billId: String): BaseResponse<Any>
+
+    @GET("/api/lawyer/v1/letter/lawyerRefuseBill")
+    suspend fun lawyerRefuseOrder(@Query("billId") billId: String): BaseResponse<Any>
+
+    @GET("/api/lawyer/v1/express/list")
+    suspend fun getMailList(): BaseResponse<ArrayList<String>>
+
+    @POST("/api/lawyer/v1/letter/lawyerFinishLetter")
+    suspend fun lawyerFinishOrder(@Body reqBean: LawyerFinishOrderReqBean): BaseResponse<Any>
 
 
 }

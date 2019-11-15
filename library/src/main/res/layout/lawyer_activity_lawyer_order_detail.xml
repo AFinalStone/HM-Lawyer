@@ -12,13 +12,80 @@
         app:backIconIsShow="false"
         app:bottomDividerIsShow="false"
         app:titleBackground="@color/transparent"
-        app:titleText="律师函订单" />
+        app:titleText="律师函需求详情" />
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="15dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/uikit_bg_item_ripple"
+            android:padding="16dp"
+            android:src="@mipmap/uikit_ic_arrow_left_black" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_more"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@mipmap/lawyer_ic_more"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="0dp" />
+
+        <TextView
+            android:id="@+id/tv_operate_01"
+            style="@style/UikitTextView"
+            android:layout_width="74dp"
+            android:layout_height="30dp"
+            android:background="@drawable/iouqrcode_bg_lawyer_order_detail_bottom"
+            android:gravity="center"
+            android:text="联系TA"
+            android:textColor="#ff575b62"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="0dp" />
+
+        <TextView
+            android:id="@+id/tv_operate_02"
+            style="@style/UikitTextView"
+            android:layout_width="74dp"
+            android:layout_height="30dp"
+            android:background="@drawable/uikit_shape_common_btn_selector"
+            android:gravity="center"
+            android:text="立即接单"
+            android:textColor="#ff575b62"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_bottom_divider"
+        style="@style/UikitDivider.Horizontal"
+        android:layout_above="@+id/ll_bottom" />
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nsv_order_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bottomBar"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/view_bottom_divider"
         android:layout_below="@id/topBar">
 
         <LinearLayout
@@ -54,30 +121,35 @@
 
                 </RelativeLayout>
 
-                <View style="@style/UikitDivider.Horizontal" />
+                <View
+                    android:id="@+id/view_order_status"
+                    style="@style/UikitDivider.Horizontal" />
 
                 <RelativeLayout
-                    android:id="@+id/rl_order_cancel_time"
+                    android:id="@+id/rl_order_operate_time"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:gravity="center_vertical">
 
                     <TextView
-                        android:id="@+id/tv_order_cancel_label"
+                        android:id="@+id/tv_order_operate_label"
                         style="@style/UikitTextView"
-                        tools:text="取消时间" />
+                        android:layout_centerVertical="true"
+                        tools:text="操作时间" />
 
                     <TextView
-                        android:id="@+id/tv_order_cancel_time"
+                        android:id="@+id/tv_order_operate_time"
                         style="@style/UikitTextView.Auxiliary"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         tools:text="2019.11.12 12:100:19" />
 
                 </RelativeLayout>
 
                 <View
-                    android:id="@+id/view_divider_cancel_time"
+                    android:id="@+id/view_order_operate_time"
                     style="@style/UikitDivider.Horizontal" />
+
 
                 <RelativeLayout
                     android:id="@+id/rl_customer_info"
@@ -116,6 +188,7 @@
                     </RelativeLayout>
 
                     <TextView
+                        android:id="@+id/tv_price"
                         style="@style/UikitTextView.Large"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
@@ -168,7 +241,7 @@
 
 
             <LinearLayout
-                android:id="@+id/ll_order_rating"
+                android:id="@+id/ll_order_receiver_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -214,24 +287,69 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_mail_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/uikit_bg_card_form"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    style="@style/UikitTextView"
+                    android:layout_height="40dp"
+                    android:text="快递信息" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_mail_company_name"
+                        style="@style/UikitTextView.Auxiliary"
+                        tools:text="顺丰快递" />
+
+                    <TextView
+                        android:id="@+id/tv_mail_numbr"
+                        style="@style/UikitTextView.Auxiliary"
+                        android:layout_marginLeft="20dp"
+                        tools:text="13456816850" />
+
+                </LinearLayout>
+
+                <View android:id="@+id/view_divider_letter"
+                    style="@style/UikitDivider.Horizontal" />
+
+                <TextView
+                    android:id="@+id/tv_letter_label"
+                    style="@style/UikitTextView"
+                    android:layout_height="40dp"
+                    android:text="律师函信息" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_letter_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:overScrollMode="never" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <com.hm.iou.uikit.HMLoadingView
         android:id="@+id/loading_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
-
-    <com.hm.iou.uikit.HMBottomBarView
-        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="50dip"
-        android:layout_alignParentBottom="true" />
-
-    <View
-        style="@style/UikitDivider.Horizontal"
-        android:layout_above="@+id/bottomBar" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/view_bottom_divider"
+        android:layout_below="@id/topBar"
+        android:background="@color/uikit_background"
+        tools:visibility="invisible" />
 
 </RelativeLayout>

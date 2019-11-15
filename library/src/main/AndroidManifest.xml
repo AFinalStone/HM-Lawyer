@@ -44,6 +44,10 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.hm.iou.lawyer.business.lawyer.workbench.order.LawyerFinishOrderActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.hm.iou.lawyer.business.lawyer.workbench.list.LetterOrderListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />

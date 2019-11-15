@@ -6,7 +6,7 @@ package com.hm.iou.lawyer.dict
  * @Date : 2019-11-11 10:06
  * @E-Mail : afinalstone@foxmail.com
  */
-enum class LawyerOrderStatus(val status: Int, val statusName: String) {
+enum class LawyerOrderTabStatus(val status: Int, val statusName: String) {
 
     ALL(0, "全部"),
     LOADING(3, "进行中"),
@@ -17,7 +17,7 @@ enum class LawyerOrderStatus(val status: Int, val statusName: String) {
         /**
          * 通过类型获取实例
          */
-        fun getInstanceByType(status: Int): LawyerOrderStatus {
+        fun getInstanceByStatus(status: Int): LawyerOrderTabStatus {
             return when (status) {
                 ALL.status -> ALL
                 LOADING.status -> LOADING

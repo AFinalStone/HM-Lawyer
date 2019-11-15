@@ -143,89 +143,79 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         //个人证件照片
-        if (REQ_CODE_SELECT_HEADER_IMAGE == requestCode) {
-            if (Activity.RESULT_OK == resultCode) {
-                data?.let {
-                    iv_add_header_image.visibility = INVISIBLE
-                    val path = data.getStringExtra("extra_result_selection_path_first")
-                    Logger.d("头像camera path: $mHeaderImageBean")
-                    CompressPictureUtil.compressPic(
-                        mContext, path
-                    ) { file ->
-                        mHeaderImageBean = ImageUrlFileIdBean()
-                        val picPath = "file://" + file.absolutePath
-                        mHeaderImageBean?.url = picPath
-                        ImageLoader.getInstance(mContext)
-                            .displayImage(picPath, iv_header_image)
-                        checkValue()
-                    }
-
+        if (REQ_CODE_SELECT_HEADER_IMAGE == requestCode && Activity.RESULT_OK == resultCode) {
+            data?.let {
+                iv_add_header_image.visibility = INVISIBLE
+                val path = data.getStringExtra("extra_result_selection_path_first")
+                Logger.d("头像camera path: $mHeaderImageBean")
+                CompressPictureUtil.compressPic(
+                    mContext, path
+                ) { file ->
+                    mHeaderImageBean = ImageUrlFileIdBean()
+                    val picPath = "file://" + file.absolutePath
+                    mHeaderImageBean?.url = picPath
+                    ImageLoader.getInstance(mContext)
+                        .displayImage(picPath, iv_header_image)
+                    checkValue()
                 }
 
             }
             return
         }
         //证件正面照片
-        if (REQ_CODE_SELECT_AUTHEN_IMAGE_FRONT == requestCode) {
-            if (Activity.RESULT_OK == resultCode) {
-                data?.let {
-                    iv_add_authen_photo_front.visibility = INVISIBLE
-                    val path = data.getStringExtra("extra_result_selection_path_first")
-                    Logger.d("证件正面camera path: $path")
-                    CompressPictureUtil.compressPic(
-                        mContext, path
-                    ) { file ->
-                        mAuthenImageFrontBean = ImageUrlFileIdBean()
-                        val picPath = "file://" + file.absolutePath
-                        mAuthenImageFrontBean?.url = picPath
-                        ImageLoader.getInstance(mContext)
-                            .displayImage(picPath, iv_authen_photo_front)
-                        checkValue()
-                    }
+        if (REQ_CODE_SELECT_AUTHEN_IMAGE_FRONT == requestCode && Activity.RESULT_OK == resultCode) {
+            data?.let {
+                iv_add_authen_photo_front.visibility = INVISIBLE
+                val path = data.getStringExtra("extra_result_selection_path_first")
+                Logger.d("证件正面camera path: $path")
+                CompressPictureUtil.compressPic(
+                    mContext, path
+                ) { file ->
+                    mAuthenImageFrontBean = ImageUrlFileIdBean()
+                    val picPath = "file://" + file.absolutePath
+                    mAuthenImageFrontBean?.url = picPath
+                    ImageLoader.getInstance(mContext)
+                        .displayImage(picPath, iv_authen_photo_front)
+                    checkValue()
                 }
-
             }
+
             return
         }
         //证件反面照片
-        if (REQ_CODE_SELECT_AUTHEN_IMAGE_BACK == requestCode) {
-            if (Activity.RESULT_OK == resultCode) {
-                data?.let {
-                    iv_add_authen_photo_back.visibility = INVISIBLE
-                    val path = data.getStringExtra("extra_result_selection_path_first")
-                    Logger.d("证件反面camera path: $path")
-                    CompressPictureUtil.compressPic(
-                        mContext, path
-                    ) { file ->
-                        mAuthenImageBackBean = ImageUrlFileIdBean()
-                        val picPath = "file://" + file.absolutePath
-                        mAuthenImageBackBean?.url = picPath
-                        ImageLoader.getInstance(mContext)
-                            .displayImage(picPath, iv_authen_photo_back)
+        if (REQ_CODE_SELECT_AUTHEN_IMAGE_BACK == requestCode && Activity.RESULT_OK == resultCode) {
+            data?.let {
+                iv_add_authen_photo_back.visibility = INVISIBLE
+                val path = data.getStringExtra("extra_result_selection_path_first")
+                Logger.d("证件反面camera path: $path")
+                CompressPictureUtil.compressPic(
+                    mContext, path
+                ) { file ->
+                    mAuthenImageBackBean = ImageUrlFileIdBean()
+                    val picPath = "file://" + file.absolutePath
+                    mAuthenImageBackBean?.url = picPath
+                    ImageLoader.getInstance(mContext)
+                        .displayImage(picPath, iv_authen_photo_back)
 
-                        checkValue()
-                    }
+                    checkValue()
                 }
-
             }
             return
         }
         //荣誉证书
         if (REQ_CODE_SELECT_CERTIFICATE_IMAGE == requestCode && Activity.RESULT_OK == resultCode) {
-            if (resultCode == Activity.RESULT_OK) {
-                data?.let {
-                    val pathList = data.getStringArrayListExtra("extra_result_selection_path")
-                    if (pathList != null && pathList.isNotEmpty()) {
-                        CompressPictureUtil.compressPic(this, pathList) { list ->
-                            if (mListHonorImageBean == null) {
-                                mListHonorImageBean = mutableListOf()
-                            }
-                            for (file in list) {
-                                val entity = IouData.FileEntity()
-                                entity.value = "file://" + file.absolutePath
-                                mListHonorImageBean!!.add(entity)
-                                mHonorImageAdapter.addData(entity.value)
-                            }
+            data?.let {
+                val pathList = data.getStringArrayListExtra("extra_result_selection_path")
+                if (pathList != null && pathList.isNotEmpty()) {
+                    CompressPictureUtil.compressPic(this, pathList) { list ->
+                        if (mListHonorImageBean == null) {
+                            mListHonorImageBean = mutableListOf()
+                        }
+                        for (file in list) {
+                            val entity = IouData.FileEntity()
+                            entity.value = "file://" + file.absolutePath
+                            mListHonorImageBean!!.add(entity)
+                            mHonorImageAdapter.addData(entity.value)
                         }
                     }
                 }
@@ -233,25 +223,23 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
             return
         }
         //荣誉证书画廊
-        if (REQ_CODE_CERTIFICATE_IMAGE_GALLERY == requestCode) {
-            if (resultCode == Activity.RESULT_OK) {
-                data?.let {
-                    val delList =
-                        data.getStringArrayListExtra(ImageGalleryActivity.EXTRA_KEY_DELETE_URLS)
-                    if (delList == null || delList.isEmpty())
-                        return
-                    mListHonorImageBean?.let {
-                        for (url in delList) {
-                            val iiteratort = it.iterator()
-                            while (iiteratort.hasNext()) {
-                                if (!TextUtils.isEmpty(url) && url == iiteratort.next().value) {
-                                    iiteratort.remove()
-                                }
+        if (REQ_CODE_CERTIFICATE_IMAGE_GALLERY == requestCode && resultCode == Activity.RESULT_OK) {
+            data?.let {
+                val delList =
+                    data.getStringArrayListExtra(ImageGalleryActivity.EXTRA_KEY_DELETE_URLS)
+                if (delList == null || delList.isEmpty())
+                    return
+                mListHonorImageBean?.let {
+                    for (url in delList) {
+                        val iterator = it.iterator()
+                        while (iterator.hasNext()) {
+                            if (!TextUtils.isEmpty(url) && url == iterator.next().value) {
+                                iterator.remove()
                             }
                         }
                     }
-                    mHonorImageAdapter.deleteUrl(delList)
                 }
+                mHonorImageAdapter.deleteUrl(delList)
             }
         }
     }

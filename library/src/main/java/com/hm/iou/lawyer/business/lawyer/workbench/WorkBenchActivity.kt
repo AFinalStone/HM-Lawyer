@@ -9,7 +9,7 @@ import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.lawyer.workbench.list.InviteOrderListActivity
 import com.hm.iou.lawyer.business.lawyer.workbench.list.LetterOrderListActivity
 import com.hm.iou.lawyer.business.lawyer.workbench.list.MyOrderListActivity
-import com.hm.iou.lawyer.dict.LawyerOrderStatus
+import com.hm.iou.lawyer.dict.LawyerOrderTabStatus
 import com.hm.iou.lawyer.dict.ModelType
 import com.hm.iou.lawyer.dict.UpdateWalletBalanceEvent
 import com.hm.iou.uikit.HMTopBarView
@@ -65,25 +65,25 @@ class WorkBenchActivity : HMBaseActivity<WorkBenchPresenter>(),
                     ModelType.WAIT_TO_LOADING -> {
                         intent.putExtra(
                             MyOrderListActivity.EXTRA_KEY_TAB_TYPE,
-                            LawyerOrderStatus.LOADING.status.toString()
+                            LawyerOrderTabStatus.LOADING.status.toString()
                         )
                     }
                     ModelType.WAIT_TO_FINISH -> {
                         intent.putExtra(
                             MyOrderListActivity.EXTRA_KEY_TAB_TYPE,
-                            LawyerOrderStatus.FINISH.status.toString()
+                            LawyerOrderTabStatus.FINISH.status.toString()
                         )
                     }
                     ModelType.WAIT_TO_ALL_ORDER -> {
                         intent.putExtra(
                             MyOrderListActivity.EXTRA_KEY_TAB_TYPE,
-                            LawyerOrderStatus.ALL.status.toString()
+                            LawyerOrderTabStatus.ALL.status.toString()
                         )
                     }
                     else ->
                         intent.putExtra(
                             MyOrderListActivity.EXTRA_KEY_TAB_TYPE,
-                            LawyerOrderStatus.ALL.status.toString()
+                            LawyerOrderTabStatus.ALL.status.toString()
                         )
                 }
                 startActivity(intent)
