@@ -5,8 +5,6 @@ import com.hm.iou.lawyer.bean.res.*
 import com.hm.iou.network.HttpReqManager
 import com.hm.iou.sharedata.model.BaseResponse
 import com.hm.iou.sharedata.model.UserThirdPlatformInfo
-import retrofit2.http.Body
-import retrofit2.http.Query
 
 /**
  * Created by syl on 2019/8/5.
@@ -152,7 +150,7 @@ object LawyerApi {
      * @param size 每页大小
      */
     suspend fun getCustOrderList(page: Int, size: Int): BaseResponse<CustOrderListResBean> {
-        return getService().getCustOrderList(PageReqBean(page, size))
+        return getService().getCustOrderList(CustOrderPageReqBean(page, size))
     }
 
     /**
@@ -170,6 +168,18 @@ object LawyerApi {
         reqBean.attitudeScore = attitudeScore
         reqBean.professionalScore = professionalScore
         return getService().ratingLawyer(reqBean)
+    }
+
+    /**
+     * 律师模块我的订单列表
+     */
+    suspend fun getLawyerMyOrderList(
+        page: Int,
+        size: Int,
+        status: Int
+    ): BaseResponse<LawyerMyOrderListResBean> {
+        val reqBean = LawyerMyOrderPageReqBean(page, size, status)
+        return getService().getLawyerMyOrderList(reqBean)
     }
 
 }

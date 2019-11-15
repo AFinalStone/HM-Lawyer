@@ -61,9 +61,12 @@ interface LawyerService {
     suspend fun getCustLawyerLetterDetail(@Query("billId") billId: String): BaseResponse<CustLetterDetailResBean>
 
     @POST("/api/lawyer/v1/custBill")
-    suspend fun getCustOrderList(@Body reqBean: PageReqBean): BaseResponse<CustOrderListResBean>
+    suspend fun getCustOrderList(@Body reqBean: CustOrderPageReqBean): BaseResponse<CustOrderListResBean>
 
     @POST("/api/lawyer/v1/custEvaluationLawyer")
     suspend fun ratingLawyer(@Body reqBean: RatingLawyerReqBean): BaseResponse<Any>
+
+    @POST("/api/lawyer/v1/lawyerBill")
+    suspend fun getLawyerMyOrderList(@Body reqBean: LawyerMyOrderPageReqBean): BaseResponse<LawyerMyOrderListResBean>
 
 }
