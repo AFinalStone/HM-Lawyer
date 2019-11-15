@@ -17,7 +17,8 @@ import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.base.photo.CompressPictureUtil
 import com.hm.iou.database.table.IouData
 import com.hm.iou.lawyer.R
-import com.hm.iou.lawyer.bean.req.LawyerAuthenticationReqBean
+import com.hm.iou.lawyer.bean.res.ImageUrlFileIdBean
+import com.hm.iou.lawyer.bean.res.LawyerAuthenticationResBean
 import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.comm.IouImageUploadAdapter
 import com.hm.iou.logger.Logger
@@ -35,7 +36,6 @@ import kotlin.collections.ArrayList
  */
 class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
     AuthenticationContract.View, View.OnClickListener {
-
     companion object {
         private const val REQ_CODE_SELECT_HEADER_IMAGE = 100
         private const val REQ_CODE_SELECT_AUTHEN_IMAGE_FRONT = 101
@@ -47,10 +47,10 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
     }
 
     private var mCertificateStartTime: String = ""//持证日期
-    private var mHeaderImagePath: String? = null//头像地址
-    private var mAuthenImageFrontPath: String? = null//证件正面
-    private var mAuthenImageBackPath: String? = null//证件反面
-    private var mListPhotoPath: MutableList<IouData.FileEntity>? = null
+    private var mHeaderImageBean: ImageUrlFileIdBean? = null//头像地址
+    private var mAuthenImageFrontBean: ImageUrlFileIdBean? = null//证件正面
+    private var mAuthenImageBackBean: ImageUrlFileIdBean? = null//证件反面
+    private var mListHonorImageBean: MutableList<IouData.FileEntity>? = null
     private val mHonorImageAdapter =
         IouImageUploadAdapter(this, MAX_CERTIFICATE_OF_HONOR_IMAGE_COUNT)//荣誉证书
     private var mDatePicker: Dialog? = null
@@ -62,6 +62,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
 
     override fun initEventAndData(savedInstanceState: Bundle?) {
         initView()
+        mPresenter.init()
     }
 
     private fun initView() {
@@ -147,13 +148,15 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
                 data?.let {
                     iv_add_header_image.visibility = INVISIBLE
                     val path = data.getStringExtra("extra_result_selection_path_first")
-                    Logger.d("头像camera path: $mHeaderImagePath")
+                    Logger.d("头像camera path: $mHeaderImageBean")
                     CompressPictureUtil.compressPic(
                         mContext, path
                     ) { file ->
-                        mHeaderImagePath = file.absolutePath
+                        mHeaderImageBean = ImageUrlFileIdBean()
+                        val picPath = "file://" + file.absolutePath
+                        mHeaderImageBean?.url = picPath
                         ImageLoader.getInstance(mContext)
-                            .displayImage("file://$mHeaderImagePath", iv_header_image)
+                            .displayImage(picPath, iv_header_image)
                         checkValue()
                     }
 
@@ -172,9 +175,11 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
                     CompressPictureUtil.compressPic(
                         mContext, path
                     ) { file ->
-                        mAuthenImageFrontPath = file.absolutePath
+                        mAuthenImageFrontBean = ImageUrlFileIdBean()
+                        val picPath = "file://" + file.absolutePath
+                        mAuthenImageFrontBean?.url = picPath
                         ImageLoader.getInstance(mContext)
-                            .displayImage("file://$mAuthenImageFrontPath", iv_authen_photo_front)
+                            .displayImage(picPath, iv_authen_photo_front)
                         checkValue()
                     }
                 }
@@ -192,9 +197,12 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
                     CompressPictureUtil.compressPic(
                         mContext, path
                     ) { file ->
-                        mAuthenImageBackPath = file.absolutePath
+                        mAuthenImageBackBean = ImageUrlFileIdBean()
+                        val picPath = "file://" + file.absolutePath
+                        mAuthenImageBackBean?.url = picPath
                         ImageLoader.getInstance(mContext)
-                            .displayImage("file://$mAuthenImageBackPath", iv_authen_photo_back)
+                            .displayImage(picPath, iv_authen_photo_back)
+
                         checkValue()
                     }
                 }
@@ -209,13 +217,13 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
                     val pathList = data.getStringArrayListExtra("extra_result_selection_path")
                     if (pathList != null && pathList.isNotEmpty()) {
                         CompressPictureUtil.compressPic(this, pathList) { list ->
-                            if (mListPhotoPath == null) {
-                                mListPhotoPath = mutableListOf()
+                            if (mListHonorImageBean == null) {
+                                mListHonorImageBean = mutableListOf()
                             }
                             for (file in list) {
                                 val entity = IouData.FileEntity()
                                 entity.value = "file://" + file.absolutePath
-                                mListPhotoPath!!.add(entity)
+                                mListHonorImageBean!!.add(entity)
                                 mHonorImageAdapter.addData(entity.value)
                             }
                         }
@@ -232,12 +240,12 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
                         data.getStringArrayListExtra(ImageGalleryActivity.EXTRA_KEY_DELETE_URLS)
                     if (delList == null || delList.isEmpty())
                         return
-                    mListPhotoPath?.let {
+                    mListHonorImageBean?.let {
                         for (url in delList) {
-                            val it = it.iterator()
-                            while (it.hasNext()) {
-                                if (!TextUtils.isEmpty(url) && url == it.next().value) {
-                                    it.remove()
+                            val iiteratort = it.iterator()
+                            while (iiteratort.hasNext()) {
+                                if (!TextUtils.isEmpty(url) && url == iiteratort.next().value) {
+                                    iiteratort.remove()
                                 }
                             }
                         }
@@ -274,6 +282,57 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
         }
     }
 
+    override fun showDetail(detail: LawyerAuthenticationResBean) {
+        et_certificate_code.setText(detail.licenseNumber ?: "")
+        et_lawyer_firm.setText(detail.lawFirm ?: "")
+        var certificateStartTime = ""
+        try {
+            val sdf01 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            val sdf02 = SimpleDateFormat("yyyy年MM月dd日")
+            val date = sdf01.parse(detail.holdingDate)
+            certificateStartTime = sdf02.format(date)
+            mCertificateStartTime = detail.holdingDate ?: ""
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        tv_certificate_start_time.text = certificateStartTime
+        et_self_introduction.setText(detail.info ?: "")
+        //个人证件照
+        mHeaderImageBean = detail.image
+        ImageLoader.getInstance(mContext)
+            .displayImage(mHeaderImageBean?.url, iv_header_image, R.mipmap.uikit_icon_header_unknow)
+        //认证照片
+        val listAuthen = detail.authCerts
+        try {
+            mAuthenImageFrontBean = listAuthen?.get(0)
+            ImageLoader.getInstance(mContext).displayImage(
+                mAuthenImageFrontBean?.url,
+                iv_authen_photo_front,
+                R.mipmap.uikit_icon_header_unknow
+            )
+            mAuthenImageBackBean = listAuthen?.get(1)
+            ImageLoader.getInstance(mContext)
+                .displayImage(
+                    mAuthenImageBackBean?.url,
+                    iv_authen_photo_back,
+                    R.mipmap.uikit_icon_header_unknow
+                )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        //荣誉资质
+        val listHonor = detail.authCerts
+        if (!listHonor.isNullOrEmpty()) {
+            for (file in listHonor) {
+                val entity = IouData.FileEntity()
+                entity.id = file.picId
+                entity.value = file.url
+                mListHonorImageBean?.add(entity)
+                mHonorImageAdapter.addData(entity.value)
+            }
+        }
+    }
+
 
     private fun doSubmit() {
         //执业证号
@@ -299,30 +358,35 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
             toastErrorMessage("个人简介必须在30-200字以内")
             return
         }
-        if (mHeaderImagePath == null) {
+        if (mHeaderImageBean == null) {
             toastErrorMessage("请上传个人形象照片")
             return
         }
-        if (mAuthenImageFrontPath == null) {
+        if (mAuthenImageFrontBean == null) {
             toastErrorMessage("请上传律师执业证姓名照片页")
             return
         }
-        if (mAuthenImageBackPath == null) {
+        if (mAuthenImageBackBean == null) {
             toastErrorMessage("请上传律师执业证年检页")
             return
         }
         //认证照片
-        val listAuthenImage = ArrayList<String>()
-        listAuthenImage.add(mAuthenImageFrontPath ?: "")
-        listAuthenImage.add(mAuthenImageBackPath ?: "")
+        val listAuthenImage = ArrayList<ImageUrlFileIdBean>()
+        mAuthenImageFrontBean?.let {
+            listAuthenImage.add(it)
+        }
+        mAuthenImageBackBean?.let {
+            listAuthenImage.add(it)
+        }
         mPresenter.lawyerAuthentication(
             certificateCode,
             lawyerFirmName,
             mCertificateStartTime,
             selfIntroduction,
-            mHeaderImagePath ?: "",
-            listAuthenImage,
-            mListPhotoPath
+            mHeaderImageBean,
+            mAuthenImageFrontBean,
+            mAuthenImageBackBean,
+            mListHonorImageBean
         )
     }
 
@@ -350,32 +414,23 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
             bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
-        if (mHeaderImagePath == null) {
+        if (mHeaderImageBean == null) {
             bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
             bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
-        if (mAuthenImageFrontPath == null) {
+        if (mAuthenImageFrontBean == null) {
             bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
             bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
-        if (mAuthenImageBackPath == null) {
+        if (mAuthenImageBackBean == null) {
             bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
             bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
             return
         }
         bottom_bar.setTitleBackgournd(R.drawable.uikit_shape_common_btn_normal)
         bottom_bar.setTitleTextColor(R.color.uikit_text_main_content)
-    }
-
-
-    override fun toLawyerHomePage() {
-
-    }
-
-    override fun toAuthenticationPage() {
-
     }
 
 

@@ -1,7 +1,7 @@
 package com.hm.iou.lawyer.business.user.lawyer
 
 import com.hm.iou.base.mvp.BaseContract
-import com.hm.iou.lawyer.bean.res.HonorBean
+import com.hm.iou.lawyer.bean.res.ImageUrlFileIdBean
 import com.hm.iou.lawyer.bean.res.LawyerServiceBean
 
 /**
@@ -33,7 +33,7 @@ interface LawyerDetailContract {
 
         fun showLawyerDesc(desc: String?)
 
-        fun showLawyerHonorImage(list: List<HonorBean>?)
+        fun showLawyerHonorImage(list: List<ImageUrlFileIdBean>?)
     }
 
     interface Presenter : BaseContract.BasePresenter {

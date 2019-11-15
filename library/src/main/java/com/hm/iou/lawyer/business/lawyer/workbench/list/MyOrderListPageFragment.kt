@@ -1,10 +1,12 @@
 package com.hm.iou.lawyer.business.lawyer.workbench.list
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.hm.iou.base.mvp.HMBaseFragment
 import com.hm.iou.lawyer.R
+import com.hm.iou.lawyer.business.lawyer.workbench.order.OrderDetailActivity
 import com.hm.iou.lawyer.dict.LawyerOrderStatus
 import com.hm.iou.tools.kt.getValue
 import com.hm.iou.tools.kt.putValue
@@ -44,6 +46,10 @@ class MyOrderListPageFragment : HMBaseFragment<MyOrderListPagePresenter>(),
         MyOrderListPagePresenter(mActivity!!, this)
 
     override fun initEventAndData(savedInstanceState: Bundle?) {
+        mOrderStatus = arguments?.get(KEY_ORDER_STATUS) as LawyerOrderStatus
+        if (mOrderStatus == null) {
+            mOrderStatus = LawyerOrderStatus.ALL
+        }
         if (savedInstanceState != null) {
             mOrderStatus = savedInstanceState.getValue(KEY_ORDER_STATUS) ?: LawyerOrderStatus.ALL
         }
@@ -61,11 +67,24 @@ class MyOrderListPageFragment : HMBaseFragment<MyOrderListPagePresenter>(),
         mOrderAdapter?.setOnItemClickListener { adapter, _, position ->
             val item = adapter.getItem(position) as IOrderItem?
             item?.let {
-                //TODO
-                //                NavigationHelper.toUserOrderDetailPage(this, it.getOrderId() ?: "")
+                val intent = Intent(mActivity, OrderDetailActivity::class.java)
+                val orderId = item.getOrderId()
+                orderId?.let {
+                    intent.putExtra(OrderDetailActivity.EXTRA_KEY_ORDER_ID, it)
+                }
+                val relationId = item.getRelationId()
+                relationId?.let {
+                    intent.putExtra(OrderDetailActivity.EXTRA_KEY_RELATION_ID, it)
+                }
+                startActivity(intent)
             }
         }
-        mPresenter.getFirstPage()
+        mPresenter.init(mOrderStatus)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mPresenter.onResume()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

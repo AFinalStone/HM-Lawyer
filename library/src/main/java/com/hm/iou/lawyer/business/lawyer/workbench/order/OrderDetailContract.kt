@@ -16,6 +16,6 @@ class OrderDetailContract {
         /**
          * 初始化
          */
-        fun init()
+        fun getOrderDetail(orderId: String, relationId: Int?)
     }
 }

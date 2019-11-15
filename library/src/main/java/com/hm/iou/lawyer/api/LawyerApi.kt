@@ -54,6 +54,15 @@ object LawyerApi {
     }
 
     /**
+     * 获取律师认证失败的信息
+     *
+     * @return
+     */
+    suspend fun getLawyerAuthenticationFailedInfo(): BaseResponse<LawyerAuthenticationResBean> {
+        return getService().getLawyerAuthenticationFailedInfo()
+    }
+
+    /**
      * 更新律师认证的相关信息
      *
      * @return
@@ -177,9 +186,42 @@ object LawyerApi {
         page: Int,
         size: Int,
         status: Int
-    ): BaseResponse<LawyerMyOrderListResBean> {
-        val reqBean = LawyerMyOrderPageReqBean(page, size, status)
+    ): BaseResponse<LawyerOrderListResBean> {
+        val reqBean = GetLawyerMyOrderListReqBean(page, size, status)
         return getService().getLawyerMyOrderList(reqBean)
+    }
+
+    /**
+     * 律师模块律师函订单列表
+     */
+    suspend fun getLawyerLetterList(
+        page: Int,
+        size: Int
+    ): BaseResponse<LawyerOrderListResBean> {
+        val reqBean = GetLawyerLetterOrderListReqBean(page, size)
+        return getService().getLawyerLetterList(reqBean)
+    }
+
+    /**
+     * 律师模块邀请接单订单列表
+     */
+    suspend fun getLawyerInviteList(
+        page: Int,
+        size: Int
+    ): BaseResponse<LawyerOrderListResBean> {
+        val reqBean = GetLawyerInviteOrderListReqBean(page, size)
+        return getService().getLawyerInviteList(reqBean)
+    }
+
+    /**
+     * 律师函详情信息
+     */
+    suspend fun getLawyerLetterDetail(
+        billId: String,
+        relationId: Int?
+    ): BaseResponse<LawyerLetterDetailBean> {
+        val reqBean = GetLawyerLetterDetailReqBean(billId, relationId)
+        return getService().getLawyerLetterDetail(reqBean)
     }
 
 }

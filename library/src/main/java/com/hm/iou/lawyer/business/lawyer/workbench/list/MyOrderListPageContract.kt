@@ -33,6 +33,8 @@ class MyOrderListPageContract {
 
         fun init(orderStatus: LawyerOrderStatus)
 
+        fun onResume()
+
         fun getFirstPage()
 
         fun getNextPage()

@@ -1,11 +1,13 @@
 package com.hm.iou.lawyer.business.lawyer.workbench.list
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.business.NavigationHelper
+import com.hm.iou.lawyer.business.lawyer.workbench.order.OrderDetailActivity
 import com.hm.iou.uikit.HMLoadMoreView
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_letter_order_list.*
 
@@ -37,10 +39,24 @@ class LetterOrderListActivity : HMBaseActivity<LetterOrderListPresenter>(),
         mOrderAdapter?.setOnItemClickListener { adapter, _, position ->
             val item = adapter.getItem(position) as IOrderItem?
             item?.let {
-                NavigationHelper.toUserOrderDetailPage(this, it.getOrderId() ?: "")
+                val intent = Intent(mContext, OrderDetailActivity::class.java)
+                val orderId = item.getOrderId()
+                orderId?.let {
+                    intent.putExtra(OrderDetailActivity.EXTRA_KEY_ORDER_ID, it)
+                }
+                val relationId = item.getRelationId()
+                relationId?.let {
+                    intent.putExtra(OrderDetailActivity.EXTRA_KEY_RELATION_ID, it)
+                }
+                startActivity(intent)
             }
         }
         mPresenter.getFirstPage()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mPresenter.onResume()
     }
 
     override fun showInitLoading(show: Boolean) {

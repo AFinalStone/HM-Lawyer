@@ -11,20 +11,18 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.bean.res.GetLawyerHomeDetailResBean
-import com.hm.iou.lawyer.bean.res.HonorBean
+import com.hm.iou.lawyer.bean.res.ImageUrlFileIdBean
 import com.hm.iou.lawyer.bean.res.LawyerServiceBean
 import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.lawyer.home.authen.AuthenProgressActivity
 import com.hm.iou.lawyer.business.lawyer.home.edit.*
 import com.hm.iou.lawyer.dict.UpdateLawFirmStatusType
 import com.hm.iou.lawyer.dict.UpdateYeaCheckStatusType
-import com.hm.iou.router.Router
 import com.hm.iou.tools.ImageLoader
 import com.hm.iou.tools.kt.*
 import com.hm.iou.uikit.HMTopBarView
 import com.hm.iou.uikit.dialog.HMActionSheetDialog
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_home.*
-import okhttp3.Route
 
 /**
  * 律师首页前置页面
@@ -57,13 +55,13 @@ class HomeActivity : HMBaseActivity<HomePresenter>(),
             }
         }
 
-        class LawyerHonorAdapter : BaseQuickAdapter<HonorBean, BaseViewHolder> {
+        class LawyerHonorAdapter : BaseQuickAdapter<ImageUrlFileIdBean, BaseViewHolder> {
 
             constructor(context: Context) : super(R.layout.lawyer_item_lawyer_home_lawyer_honor) {
                 this@LawyerHonorAdapter.mContext = context
             }
 
-            override fun convert(helper: BaseViewHolder?, item: HonorBean?) {
+            override fun convert(helper: BaseViewHolder?, item: ImageUrlFileIdBean?) {
                 val ivLogo = helper?.getView<ImageView>(R.id.iv_image)
                 ivLogo?.let {
                     ImageLoader.getInstance(mContext).displayImage(item?.url, ivLogo)
@@ -176,7 +174,7 @@ class HomeActivity : HMBaseActivity<HomePresenter>(),
 
         mLawyerHonorAdapter = LawyerHonorAdapter(mContext)
         mLawyerHonorAdapter?.setOnItemClickListener { adapter, _, position ->
-            val list: List<HonorBean> = adapter.data as List<HonorBean>
+            val list: List<ImageUrlFileIdBean> = adapter.data as List<ImageUrlFileIdBean>
             val listUrl = ArrayList<String>()
             for (honor in list) {
                 listUrl.add(honor?.url ?: "")
@@ -190,7 +188,9 @@ class HomeActivity : HMBaseActivity<HomePresenter>(),
 
     override fun showDetail(detail: GetLawyerHomeDetailResBean) {
         mDetail = detail
-        ImageLoader.getInstance(mContext).displayImage(detail.image, iv_lawyer_avatar)
+        val headerUrl = detail.image?.url
+        ImageLoader.getInstance(mContext)
+            .displayImage(headerUrl, iv_lawyer_avatar, R.mipmap.uikit_icon_header_unknow)
         tv_lawyer_name.text = detail.authName ?: ""
         tv_lawyer_age_limit.text = "执业%S年".format(detail.holdingYearCount)
         tv_lawyer_company.text = detail.lawFirm ?: ""

@@ -10,21 +10,16 @@
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
-    android:paddingLeft="15dp"
-    android:paddingTop="15dp"
-    android:paddingRight="15dp"
-    android:paddingBottom="15dp">
+    android:padding="15dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="45dp">
 
-        <ImageView
+        <com.hm.iou.uikit.CircleImageView
             android:id="@+id/iv_header"
             android:layout_width="40dp"
             android:layout_height="39dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
             android:src="@mipmap/uikit_icon_header_unknow" />
 
         <TextView
@@ -32,23 +27,22 @@
             style="@style/UikitEditText"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="11dp"
+            android:layout_marginStart="50dp"
             android:text="木子李" />
 
         <TextView
             android:id="@+id/tv_order_time"
             style="@style/UikitTextView.Auxiliary"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="20dp"
             tools:text="2019.11.11 12:00" />
 
         <TextView
             android:id="@+id/tv_order_type"
             style="@style/UikitTextView"
             android:layout_height="24dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="7dp"
             android:background="@drawable/uikit_bg_round_border_gray"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"

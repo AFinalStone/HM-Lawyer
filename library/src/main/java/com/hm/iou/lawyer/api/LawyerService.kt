@@ -27,6 +27,9 @@ interface LawyerService {
     @POST("/api/lawyer/v1/lawyer/auth/create")
     suspend fun lawyerAuthentication(@Body req: LawyerAuthenticationReqBean): BaseResponse<LawyerAuthenticationResBean>
 
+    @GET("/api/lawyer/v1/lawyer/auth/fail/detail")
+    suspend fun getLawyerAuthenticationFailedInfo(): BaseResponse<LawyerAuthenticationResBean>
+
     @POST("/api/lawyer/v1/lawyer/auth/update")
     suspend fun updateLawyerAuthenticationInfo(@Body req: UpdateLawyerAuthenticationInfReqBean): BaseResponse<LawyerAuthenticationResBean>
 
@@ -67,6 +70,19 @@ interface LawyerService {
     suspend fun ratingLawyer(@Body reqBean: RatingLawyerReqBean): BaseResponse<Any>
 
     @POST("/api/lawyer/v1/lawyerBill")
-    suspend fun getLawyerMyOrderList(@Body reqBean: LawyerMyOrderPageReqBean): BaseResponse<LawyerMyOrderListResBean>
+    suspend fun getLawyerMyOrderList(@Body reqBean: GetLawyerMyOrderListReqBean): BaseResponse<LawyerOrderListResBean>
+
+    @POST("/api/lawyer/v1/letter/lawyerLetterWaitList")
+    suspend fun getLawyerLetterList(@Body reqBean: GetLawyerLetterOrderListReqBean): BaseResponse<LawyerOrderListResBean>
+
+    @POST("/api/lawyer/v1/letter/lawyerInviteWaitList")
+    suspend fun getLawyerInviteList(@Body reqBean: GetLawyerInviteOrderListReqBean): BaseResponse<LawyerOrderListResBean>
+
+    @POST("/api/lawyer/v1/letter/canAcceptBill")
+    suspend fun checkLawyerCanAcceptOrder(@Body reqBean: LawyerCanAcceptOrderReqBean): BaseResponse<LawyerCanAcceptOrderResBean>
+
+    @POST("/api/lawyer/v1/letter/lawyerLetterDetail")
+    suspend fun getLawyerLetterDetail(@Body reqBean: GetLawyerLetterDetailReqBean): BaseResponse<LawyerLetterDetailBean>
+
 
 }

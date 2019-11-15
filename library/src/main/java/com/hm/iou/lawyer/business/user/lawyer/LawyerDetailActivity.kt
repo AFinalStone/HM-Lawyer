@@ -12,15 +12,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
-import com.hm.iou.lawyer.bean.res.HonorBean
+import com.hm.iou.lawyer.bean.res.ImageUrlFileIdBean
 import com.hm.iou.lawyer.bean.res.LawyerServiceBean
 import com.hm.iou.lawyer.business.NavigationHelper
-import com.hm.iou.lawyer.business.user.CommImageAdapter
 import com.hm.iou.tools.ImageLoader
 import com.hm.iou.tools.kt.*
-import com.hm.iou.uikit.HMGrayDividerItemDecoration
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_detail_info.*
-import kotlinx.android.synthetic.main.lawyer_layout_layout_service.*
 
 /**
  * Created by hjy on 2019/11/12
@@ -137,14 +134,14 @@ class LawyerDetailActivity : HMBaseActivity<LawyerDetailPresenter>(), LawyerDeta
         tv_lawyer_desc.text = desc
     }
 
-    override fun showLawyerHonorImage(list: List<HonorBean>?) {
+    override fun showLawyerHonorImage(list: List<ImageUrlFileIdBean>?) {
         rv_lawyer_honor.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         val adapter = LawyerHonorAdapter(this)
         adapter.setNewData(list)
         rv_lawyer_honor.adapter = adapter
         adapter.setOnItemClickListener { adapter, _, position ->
-            val list: List<HonorBean> = adapter.data as List<HonorBean>
+            val list: List<ImageUrlFileIdBean> = adapter.data as List<ImageUrlFileIdBean>
             val listUrl = ArrayList<String>()
             for (honor in list) {
                 listUrl.add(honor?.url ?: "")
@@ -153,13 +150,13 @@ class LawyerDetailActivity : HMBaseActivity<LawyerDetailPresenter>(), LawyerDeta
         }
     }
 
-    class LawyerHonorAdapter : BaseQuickAdapter<HonorBean, BaseViewHolder> {
+    class LawyerHonorAdapter : BaseQuickAdapter<ImageUrlFileIdBean, BaseViewHolder> {
 
         constructor(context: Context) : super(R.layout.lawyer_item_lawyer_home_lawyer_honor) {
             this@LawyerHonorAdapter.mContext = context
         }
 
-        override fun convert(helper: BaseViewHolder?, item: HonorBean?) {
+        override fun convert(helper: BaseViewHolder?, item: ImageUrlFileIdBean?) {
             val ivLogo = helper?.getView<ImageView>(R.id.iv_image)
             ivLogo?.let {
                 ImageLoader.getInstance(mContext).displayImage(item?.url, ivLogo)

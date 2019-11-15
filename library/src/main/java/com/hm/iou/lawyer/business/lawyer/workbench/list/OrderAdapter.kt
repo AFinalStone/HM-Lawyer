@@ -54,4 +54,6 @@ interface IOrderItem {
 
     fun getStatusStr(): String?
 
+    fun getRelationId(): Int?
+
 }

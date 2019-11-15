@@ -8,6 +8,7 @@ import com.hm.iou.lawyer.business.user.order.MyOrderListPresenter
 import com.hm.iou.lawyer.dict.LawyerOrderStatus
 import com.hm.iou.lawyer.dict.OrderStatus
 import com.hm.iou.lawyer.event.AddLawyerLetterEvent
+import com.hm.iou.lawyer.event.LawyerOrderStatusChangedEvent
 import com.hm.iou.lawyer.event.UserOrderStatusChangedEvent
 import com.hm.iou.network.exception.ApiException
 import kotlinx.coroutines.Job
@@ -26,11 +27,12 @@ import java.text.SimpleDateFormat
 class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.View) :
     HMBaseFragmentPresenter<MyOrderListPageContract.View>(context, view),
     MyOrderListPageContract.Presenter {
-
     companion object {
         const val PAGE_SIZE = 10
     }
 
+
+    private var mNeedRefresh = false
     private var mPageNo = 1
     private val mDataList: MutableList<IOrderItem> = mutableListOf()
     private var mOrderStatus: LawyerOrderStatus = LawyerOrderStatus.ALL
@@ -48,6 +50,13 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
 
     override fun init(orderStatus: LawyerOrderStatus) {
         mOrderStatus = orderStatus
+        getFirstPage()
+    }
+
+    override fun onResume() {
+        if (mNeedRefresh) {
+            getFirstPage()
+        }
     }
 
     override fun getFirstPage() {
@@ -63,7 +72,7 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
                         mOrderStatus.status
                     )
                 )
-
+                mNeedRefresh = false
                 val dataList = result?.list
                 mPageNo = 1
                 mDataList.clear()
@@ -130,10 +139,16 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
         val sdf2 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         list.forEach { item ->
             dataList.add(object : IOrderItem {
+
+
                 var formatTime: String? = null
 
                 override fun getOrderId(): String? {
                     return item.billId
+                }
+
+                override fun getRelationId(): Int? {
+                    return item.relationId
                 }
 
                 override fun getTime(): String? {
@@ -148,11 +163,11 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
                 }
 
                 override fun getUserHeader(): String? {
-                    return ""
+                    return item.avatarUrl
                 }
 
                 override fun getUserName(): String? {
-                    return ""
+                    return item.name
                 }
 
                 override fun getDesc(): String? {
@@ -160,11 +175,12 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
                 }
 
                 override fun getTypeStr(): String? {
-                    return "律师函"
+                    return if (1 == item.billType) "发律师函" else "律师咨询"
                 }
 
+
                 override fun getPrice(): String? {
-                    return "报价：¥${item.price}"
+                    return "¥${item.price}"
                 }
 
                 //2待接单，3进行中，4已完成，5已取消
@@ -182,15 +198,10 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
         return dataList
     }
 
-    //订单状态更改了之后，比如用户取消了该订单
+    //订单状态更改了之后
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventOrderStatusChanged(event: UserOrderStatusChangedEvent) {
-        getFirstPage()
+    fun onEventOrderStatusChanged(event: LawyerOrderStatusChangedEvent) {
+        mNeedRefresh = true
     }
 
-    //创建成功之后，刷新页面
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventCreateLawyerLetter(event: AddLawyerLetterEvent) {
-        getFirstPage()
-    }
 }

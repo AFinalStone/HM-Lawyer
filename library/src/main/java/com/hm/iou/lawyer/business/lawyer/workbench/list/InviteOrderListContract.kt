@@ -7,6 +7,7 @@ import com.hm.iou.base.mvp.BaseContract
  */
 class InviteOrderListContract {
 
+
     interface View : BaseContract.BaseView {
         fun showInitLoading(show: Boolean)
 
@@ -25,10 +26,12 @@ class InviteOrderListContract {
         fun showLoadMoreEnd()
 
         fun showLoadMoreComplete()
-
     }
 
     interface Presenter : BaseContract.BasePresenter {
+
+        fun onResume()
+
         fun getFirstPage()
 
         fun getNextPage()

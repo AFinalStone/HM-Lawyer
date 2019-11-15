@@ -10,7 +10,7 @@ import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.base.photo.CompressPictureUtil
 import com.hm.iou.database.table.IouData
 import com.hm.iou.lawyer.R
-import com.hm.iou.lawyer.bean.res.HonorBean
+import com.hm.iou.lawyer.bean.res.ImageUrlFileIdBean
 import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.comm.IouImageUploadAdapter
 import com.hm.iou.logger.Logger
@@ -31,7 +31,7 @@ class EditLawyerHonorActivity : HMBaseActivity<EditLawyerHonorPresenter>(),
         private const val REQ_CODE_CERTIFICATE_IMAGE_GALLERY = 101
     }
 
-    private val mListHonors: ArrayList<HonorBean>? by extraDelegate(
+    private val mListHonors: ArrayList<ImageUrlFileIdBean>? by extraDelegate(
         EXTRA_KEY_LAWYER_HONOR,
         null
     )

@@ -27,7 +27,8 @@ class LawyerDetailPresenter(context: Context, view: LawyerDetailContract.View) :
             try {
                 mDetailInfo = handleResponse(LawyerApi.getLawyerHomeDetail(lawyerId))
                 mDetailInfo?.let {
-                    mView.showAvatar(it.image)
+                    val header = it.image?.url
+                    mView.showAvatar(header)
                     mView.showLawyerName("${it.authName}律师")
                     mView.showLawyerAgeLimit("执业${it.holdingYearCount}年")
                     mView.showLawyerCompany(it.lawFirm)

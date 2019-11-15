@@ -28,6 +28,9 @@ class LetterOrderListContract {
     }
 
     interface Presenter : BaseContract.BasePresenter {
+
+        fun onResume()
+
         fun getFirstPage()
 
         fun getNextPage()
