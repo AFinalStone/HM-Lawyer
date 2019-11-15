@@ -11,7 +11,12 @@ import com.hm.iou.lawyer.business.lawyer.workbench.list.LetterOrderListActivity
 import com.hm.iou.lawyer.business.lawyer.workbench.list.MyOrderListActivity
 import com.hm.iou.lawyer.dict.LawyerOrderStatus
 import com.hm.iou.lawyer.dict.ModelType
+import com.hm.iou.lawyer.dict.UpdateWalletBalanceEvent
+import com.hm.iou.uikit.HMTopBarView
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_workbench.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * @author : 借条管家-shilei
@@ -22,6 +27,8 @@ import kotlinx.android.synthetic.main.lawyer_activity_lawyer_workbench.*
 class WorkBenchActivity : HMBaseActivity<WorkBenchPresenter>(),
     WorkBenchContract.View {
 
+    private var mNeedRefresh = false
+
     private val mAdapterWaiteTo = MenuAdapter()
     private val mAdapterLawyerOrder = MenuAdapter()
 
@@ -31,6 +38,21 @@ class WorkBenchActivity : HMBaseActivity<WorkBenchPresenter>(),
         WorkBenchPresenter(this, this)
 
     override fun initEventAndData(savedInstanceState: Bundle?) {
+        EventBus.getDefault().register(this)
+
+        topbar.setOnMenuClickListener(object : HMTopBarView.OnTopBarMenuClickListener {
+            override fun onClickTextMenu() {
+
+            }
+
+            override fun onClickImageMenu() {
+                NavigationHelper.toLawyerHomePage(this@WorkBenchActivity)
+            }
+        })
+
+        srl_workbench.setOnRefreshListener {
+            mPresenter.refreshWorkbenchInfo()
+        }
 
         ll_wallet.setOnClickListener {
             NavigationHelper.toMyWallet(mContext)
@@ -46,15 +68,13 @@ class WorkBenchActivity : HMBaseActivity<WorkBenchPresenter>(),
                             LawyerOrderStatus.LOADING.status.toString()
                         )
                     }
-                    ModelType.WAIT_TO_FINISH
-                    -> {
+                    ModelType.WAIT_TO_FINISH -> {
                         intent.putExtra(
                             MyOrderListActivity.EXTRA_KEY_TAB_TYPE,
                             LawyerOrderStatus.FINISH.status.toString()
                         )
                     }
-                    ModelType.WAIT_TO_ALL_ORDER
-                    -> {
+                    ModelType.WAIT_TO_ALL_ORDER -> {
                         intent.putExtra(
                             MyOrderListActivity.EXTRA_KEY_TAB_TYPE,
                             LawyerOrderStatus.ALL.status.toString()
@@ -93,14 +113,54 @@ class WorkBenchActivity : HMBaseActivity<WorkBenchPresenter>(),
 
         rv_list_lawyer_order.layoutManager = GridLayoutManager(mContext, 3)
         rv_list_lawyer_order.adapter = mAdapterLawyerOrder
+
         mPresenter.init()
+        mPresenter.refreshWorkbenchInfo()
     }
 
-    override fun showWaiteToDoList(list: List<IMenuItem>) {
+    override fun onResume() {
+        super.onResume()
+        if (mNeedRefresh) {
+            mNeedRefresh = false
+            mPresenter.refreshWorkbenchInfo()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
+    }
+
+    override fun showWaitToDoList(list: List<IMenuItem>) {
         mAdapterWaiteTo.setNewData(list)
     }
 
     override fun showLawyerOrderList(list: List<IMenuItem>) {
         mAdapterLawyerOrder.setNewData(list)
+    }
+
+    override fun showWalletBalance(amount: String) {
+        iv_workbench_total_money.text = amount
+    }
+
+    override fun showTodayIncome(income: String) {
+        tv_today_income.text = income
+    }
+
+    override fun showTodayCompleteCount(count: String) {
+        tv_today_finish.text = count
+    }
+
+    override fun showTodayOrderCount(count: String) {
+        tv_receive_order.text = count
+    }
+
+    override fun finishRefresh() {
+        srl_workbench.setRefreshing(false)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventUpdateWalletBalance(event: UpdateWalletBalanceEvent) {
+        mNeedRefresh = true
     }
 }

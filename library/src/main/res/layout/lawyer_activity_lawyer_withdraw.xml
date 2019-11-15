@@ -28,6 +28,7 @@
             android:text="提现银行卡" />
 
         <LinearLayout
+            android:id="@+id/ll_bank_card"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="7dp"
@@ -93,6 +94,7 @@
                 android:background="@null"
                 android:hint="提现金额最低为100元"
                 android:inputType="numberDecimal"
+                android:maxLength="10"
                 android:textSize="@dimen/textFontSize_22" />
 
         </LinearLayout>
@@ -110,7 +112,7 @@
                 android:id="@+id/tv_remainder_money"
                 style="@style/UikitTextView.Auxiliary.Small"
                 android:layout_height="match_parent"
-                android:text="钱包余额¥1000.00" />
+                android:text="钱包余额¥--" />
 
             <TextView
                 android:id="@+id/tv_withdraw_all_money"
@@ -165,6 +167,9 @@
             android:text="常见问题"
             android:textColor="#ff575b62" />
     </LinearLayout>
+
+
+    <View style="@style/UikitDivider.Horizontal" />
 
     <com.hm.iou.uikit.HMBottomBarView
         android:id="@+id/bottom_bar"

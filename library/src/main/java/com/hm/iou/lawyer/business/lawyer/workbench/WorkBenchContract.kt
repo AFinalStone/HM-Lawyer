@@ -11,21 +11,48 @@ import com.hm.iou.base.mvp.BaseContract
 class WorkBenchContract {
 
     interface View : BaseContract.BaseView {
+
+        fun finishRefresh()
+
         /**
          * 显示待办事项
          */
-        fun showWaiteToDoList(list: List<IMenuItem>)
+        fun showWaitToDoList(list: List<IMenuItem>)
 
         /**
          * 显示律师订单
          */
         fun showLawyerOrderList(list: List<IMenuItem>)
+
+        /**
+         * 显示钱包余额
+         */
+        fun showWalletBalance(amount: String)
+
+        /**
+         * 显示今日收益
+         */
+        fun showTodayIncome(income: String)
+
+        /**
+         * 今日完成
+         */
+        fun showTodayCompleteCount(count: String)
+
+        /**
+         * 显示今日接单
+         */
+        fun showTodayOrderCount(count: String)
+
     }
 
     interface Presenter : BaseContract.BasePresenter {
+
+        fun init()
+
         /**
          * 初始化
          */
-        fun init()
+        fun refreshWorkbenchInfo()
     }
 }

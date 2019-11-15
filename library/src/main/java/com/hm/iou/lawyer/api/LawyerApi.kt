@@ -113,7 +113,7 @@ object LawyerApi {
      *
      * @return
      */
-    suspend fun withDrawMoney(req: WithDrawMoneyReqBean): BaseResponse<Any> {
+    suspend fun withDrawMoney(req: WithDrawMoneyReqBean): BaseResponse<String> {
         return getService().withDrawMoney(req)
     }
 

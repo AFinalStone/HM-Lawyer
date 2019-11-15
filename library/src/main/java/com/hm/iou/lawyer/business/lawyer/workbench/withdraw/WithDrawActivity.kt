@@ -2,51 +2,55 @@ package com.hm.iou.lawyer.business.lawyer.workbench.withdraw
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import com.hm.iou.base.BaseBizAppLike
 import com.hm.iou.base.comm.HMTextChangeListener
 import com.hm.iou.base.mvp.HMBaseActivity
+import com.hm.iou.base.utils.RouterUtil
 import com.hm.iou.lawyer.R
+import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.router.Router
+import com.hm.iou.tools.kt.clickWithDuration
 import com.hm.iou.uikit.dialog.HMAlertDialog
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_withdraw.*
 
 /**
  * 提现
  */
-class WithDrawActivity : HMBaseActivity<WithDrawPresenter>(),
-    WithDrawContract.View {
+class WithDrawActivity : HMBaseActivity<WithDrawPresenter>(), WithDrawContract.View {
 
     companion object {
+        const val EXTRA_KEY_WALLET_BALANCE = "wallet_balance"
         private const val MIN_MONEY = 100
     }
 
     private var mWithDrawTotalMoney: Float = 0f
-    private var mRemainderMoney: String? = null
-
 
     override fun getLayoutId(): Int = R.layout.lawyer_activity_lawyer_withdraw
 
-    override fun initPresenter(): WithDrawPresenter =
-        WithDrawPresenter(this, this)
+    override fun initPresenter(): WithDrawPresenter = WithDrawPresenter(this, this)
 
     override fun initEventAndData(savedInstanceState: Bundle?) {
+        ll_bank_card.clickWithDuration {
+            NavigationHelper.toBindBankCardPage(this)
+        }
 
-        iv_to_bank_detail.setOnClickListener {
-            Router.getInstance()
-                .buildWithUrl("hmiou://m.54jietiao.com/pay/user_bind_bank?source=lawyer")
-                .navigation(mContext)
+        tv_withdraw_all_money.clickWithDuration {
+            mPresenter.clickWithdrawAll()
         }
-        tv_withdraw_all_money.setOnClickListener {
-            et_withdraw_money.setText(mRemainderMoney ?: "")
-            et_withdraw_money.setSelection(et_withdraw_money.length())
-        }
-        tv_withdraw_record.setOnClickListener {
 
+        //提现记录
+        tv_withdraw_record.clickWithDuration {
+            NavigationHelper.toWithdrawMoneyRecordPage(this)
         }
-        tv_common_question.setOnClickListener {
 
+        //常见问题
+        tv_common_question.clickWithDuration {
+            NavigationHelper.toCommQuestionPage(this)
         }
+
         bottom_bar.setOnTitleClickListener {
             if (tv_bank_card.length() == 0) {
                 toastErrorMessage("请绑定银行卡")
@@ -54,15 +58,6 @@ class WithDrawActivity : HMBaseActivity<WithDrawPresenter>(),
             }
             if (mWithDrawTotalMoney < MIN_MONEY) {
                 toastErrorMessage("提现金额最低为100元")
-                return@setOnTitleClickListener
-            }
-            val remainderMoney = try {
-                mRemainderMoney?.toFloat() ?: 0f
-            } catch (e: Exception) {
-                0f
-            }
-            if (mWithDrawTotalMoney > remainderMoney) {
-                toastErrorMessage("提现金额不能大于钱包余额")
                 return@setOnTitleClickListener
             }
             mPresenter.calcWithDrawMoney(mWithDrawTotalMoney)
@@ -75,13 +70,24 @@ class WithDrawActivity : HMBaseActivity<WithDrawPresenter>(),
                 before: Int,
                 count: Int
             ) {
-                mWithDrawTotalMoney = 0f
-                try {
-                    mWithDrawTotalMoney = charSequence.toString().toFloat()
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                charSequence?.let {
+                    val dotIndex = charSequence.indexOf(".")
+                    if (dotIndex != -1) {
+                        if( charSequence.length - dotIndex >= 4) {
+                            et_withdraw_money.setText(charSequence.substring(0, dotIndex + 3))
+                            et_withdraw_money.setSelection(et_withdraw_money.length())
+                            return
+                        }
+                    }
+
+                    mWithDrawTotalMoney = 0f
+                    try {
+                        mWithDrawTotalMoney = charSequence.toString().toFloat()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    checkValue()
                 }
-                checkValue()
             }
         })
 
@@ -94,14 +100,18 @@ class WithDrawActivity : HMBaseActivity<WithDrawPresenter>(),
     }
 
 
-    override fun showRemainderMoney(money: String?) {
-        tv_remainder_money.text = "钱包余额¥%S".format(money ?: "")
-        mRemainderMoney = money
+    override fun showWalletBalance(money: String?) {
+        tv_remainder_money.text = money ?: ""
     }
 
-    override fun showBankcard(bankCard: String?, bankName: String?) {
+    override fun showBankCard(bankCard: String?, bankName: String?) {
         tv_bank_card.text = bankCard ?: ""
         tv_bank_name.text = bankName ?: ""
+    }
+
+    override fun updateWithdrawMoney(money: String?) {
+        et_withdraw_money.setText(money ?: "")
+        et_withdraw_money.setSelection(et_withdraw_money.length())
     }
 
     override fun showWithDrawDialog(
@@ -119,6 +129,9 @@ class WithDrawActivity : HMBaseActivity<WithDrawPresenter>(),
         view.findViewById<TextView>(R.id.tv_withdraw_total_money).text = withDrawTotalMoney
         view.findViewById<TextView>(R.id.tv_service_money).text = serviceMoney
         view.findViewById<TextView>(R.id.tv_service_rate).text = serviceRate
+        view.findViewById<View>(R.id.iv_withdraw_close).clickWithDuration {
+            alert.dismiss()
+        }
         view.findViewById<Button>(R.id.btn_ok).setOnClickListener {
             mPresenter.withDrawMoney(mWithDrawTotalMoney)
             alert.dismiss()

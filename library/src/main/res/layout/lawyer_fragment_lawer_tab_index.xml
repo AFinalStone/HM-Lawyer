@@ -94,9 +94,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
-                android:paddingTop="20dp"
                 android:paddingRight="10dp"
-                android:paddingBottom="20dp">
+                >
 
                 <TextView
                     android:id="@+id/tv_lawyer_find_lawyer"
@@ -106,6 +105,8 @@
                     android:drawableTop="@mipmap/lawyer_ic_find_lawyer"
                     android:drawablePadding="8dp"
                     android:gravity="center_horizontal"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
                     android:text="找律师" />
 
                 <TextView
@@ -116,6 +117,8 @@
                     android:drawableTop="@mipmap/lawyer_ic_lawyer_letter"
                     android:drawablePadding="8dp"
                     android:gravity="center_horizontal"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
                     android:text="律师函" />
 
                 <TextView
@@ -126,6 +129,8 @@
                     android:drawableTop="@mipmap/lawyer_ic_my_order"
                     android:drawablePadding="8dp"
                     android:gravity="center_horizontal"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
                     android:text="我的订单" />
 
             </LinearLayout>

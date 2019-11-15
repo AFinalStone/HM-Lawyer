@@ -27,7 +27,7 @@
         android:id="@+id/iv_status"
         android:layout_width="105dp"
         android:layout_height="105dp"
-        tools:src="@mipmap/lawyer_ic_authen_loading" />
+        tools:src="@mipmap/uikit_data_search" />
 
     <TextView
         android:id="@+id/tv_status"
