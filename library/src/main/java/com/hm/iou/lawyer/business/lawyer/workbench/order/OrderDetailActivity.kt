@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Gravity
 import android.view.View
 import android.view.View.*
 import com.hm.iou.base.mvp.HMBaseActivity
@@ -120,6 +121,9 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
                 tv_operate_01.visibility = GONE
                 tv_operate_02.visibility = GONE
                 tv_order_status.text = "订单已取消"
+                tv_order_operate_label.text = "取消时间"
+                val time = detail.doDate?.replace("-", ".")
+                tv_order_operate_time.text = time
             }
             OrderStatus.REFUSE.status -> {
                 rl_order_status.visibility = VISIBLE
@@ -131,6 +135,10 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
                 iv_more.visibility = GONE
                 tv_operate_01.visibility = GONE
                 tv_operate_02.visibility = GONE
+                tv_order_status.text = "订单已拒绝"
+                tv_order_operate_label.text = "拒绝时间"
+                val time = detail.doDate?.replace("-", ".")
+                tv_order_operate_time.text = time
             }
         }
         //头像，昵称，时间
@@ -176,6 +184,13 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
                     NavigationHelper.toImageGalleryPage(this, list, position)
                 }
             }
+        }
+        val receiveInfo = detail.receiveInfo
+        receiveInfo?.let {
+            //收件人信息
+            tv_order_receiver_name.text = receiveInfo.receiverName
+            tv_order_receiver_mobile.text = receiveInfo.receiverMobile
+            tv_order_receiver_addr.text = receiveInfo.receiverDetailAddress
         }
 
     }
@@ -237,6 +252,7 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
             phone?.let {
                 HMAlertDialog.Builder(mContext)
                     .setMessage(phone)
+                    .setMessageGravity(Gravity.CENTER)
                     .setNegativeButton("取消")
                     .setPositiveButton("呼叫")
                     .setOnClickListener(object : HMAlertDialog.OnClickListener {
@@ -250,7 +266,7 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
                         override fun onNegClick() {
                         }
                     })
-                    .create()
+                    .create().show()
             }
         }
         tv_operate_02.clickWithDuration {
@@ -306,6 +322,7 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
         list.add("取消订单")
         HMActionSheetDialog.Builder(mContext)
             .setActionSheetList(list)
+            .setCanSelected(false)
             .setOnItemClickListener { position, _ ->
                 if (0 == position) {
                     HMAlertDialog.Builder(mContext)

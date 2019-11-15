@@ -171,6 +171,7 @@ class LawyerFinishOrderActivity : HMBaseActivity<LawyerFinishOrderPresenter>(),
     override fun showMailList(list: ArrayList<String>) {
         mBottomDialog = HMActionSheetDialog.Builder(mContext)
             .setActionSheetList(list)
+            .setCanSelected(false)
             .setOnItemClickListener { _, s ->
                 tv_mail_company_name.text = s
             }
