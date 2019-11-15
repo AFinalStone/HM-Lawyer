@@ -1,7 +1,7 @@
 package com.hm.iou.lawyer.business.lawyer.workbench.list
 
 import com.hm.iou.base.mvp.BaseContract
-import com.hm.iou.lawyer.dict.LawyerOrderStatus
+import com.hm.iou.lawyer.dict.LawyerOrderTabStatus
 
 /**
  * 我的钱包
@@ -31,7 +31,7 @@ class MyOrderListPageContract {
 
     interface Presenter : BaseContract.BasePresenter {
 
-        fun init(orderStatus: LawyerOrderStatus)
+        fun init(orderStatus: LawyerOrderTabStatus)
 
         fun onResume()
 

@@ -7,7 +7,7 @@ import android.view.View
 import com.hm.iou.base.mvp.HMBaseFragment
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.business.lawyer.workbench.order.OrderDetailActivity
-import com.hm.iou.lawyer.dict.LawyerOrderStatus
+import com.hm.iou.lawyer.dict.LawyerOrderTabStatus
 import com.hm.iou.tools.kt.getValue
 import com.hm.iou.tools.kt.putValue
 import com.hm.iou.uikit.HMLoadMoreView
@@ -25,7 +25,7 @@ class MyOrderListPageFragment : HMBaseFragment<MyOrderListPagePresenter>(),
     companion object {
         private const val KEY_ORDER_STATUS = "order_status"
 
-        fun newInstance(orderStatus: LawyerOrderStatus): MyOrderListPageFragment {
+        fun newInstance(orderStatus: LawyerOrderTabStatus): MyOrderListPageFragment {
             val fragment = MyOrderListPageFragment()
             val args = Bundle()
             args.putValue(KEY_ORDER_STATUS, orderStatus)
@@ -35,7 +35,7 @@ class MyOrderListPageFragment : HMBaseFragment<MyOrderListPagePresenter>(),
 
     }
 
-    private var mOrderStatus: LawyerOrderStatus = LawyerOrderStatus.ALL
+    private var mOrderStatus: LawyerOrderTabStatus = LawyerOrderTabStatus.ALL
 
     private var mOrderAdapter: OrderAdapter? = null
 
@@ -46,12 +46,12 @@ class MyOrderListPageFragment : HMBaseFragment<MyOrderListPagePresenter>(),
         MyOrderListPagePresenter(mActivity!!, this)
 
     override fun initEventAndData(savedInstanceState: Bundle?) {
-        mOrderStatus = arguments?.get(KEY_ORDER_STATUS) as LawyerOrderStatus
+        mOrderStatus = arguments?.get(KEY_ORDER_STATUS) as LawyerOrderTabStatus
         if (mOrderStatus == null) {
-            mOrderStatus = LawyerOrderStatus.ALL
+            mOrderStatus = LawyerOrderTabStatus.ALL
         }
         if (savedInstanceState != null) {
-            mOrderStatus = savedInstanceState.getValue(KEY_ORDER_STATUS) ?: LawyerOrderStatus.ALL
+            mOrderStatus = savedInstanceState.getValue(KEY_ORDER_STATUS) ?: LawyerOrderTabStatus.ALL
         }
         mOrderAdapter = mActivity?.let { OrderAdapter(it) }
         rv_order_list.layoutManager = LinearLayoutManager(mActivity)

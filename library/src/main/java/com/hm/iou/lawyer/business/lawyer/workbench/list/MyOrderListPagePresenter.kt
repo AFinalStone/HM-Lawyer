@@ -4,12 +4,9 @@ import android.content.Context
 import com.hm.iou.base.mvp.HMBaseFragmentPresenter
 import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.bean.res.LawyerOrderItem
-import com.hm.iou.lawyer.business.user.order.MyOrderListPresenter
-import com.hm.iou.lawyer.dict.LawyerOrderStatus
+import com.hm.iou.lawyer.dict.LawyerOrderTabStatus
 import com.hm.iou.lawyer.dict.OrderStatus
-import com.hm.iou.lawyer.event.AddLawyerLetterEvent
 import com.hm.iou.lawyer.event.LawyerOrderStatusChangedEvent
-import com.hm.iou.lawyer.event.UserOrderStatusChangedEvent
 import com.hm.iou.network.exception.ApiException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -35,7 +32,7 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
     private var mNeedRefresh = false
     private var mPageNo = 1
     private val mDataList: MutableList<IOrderItem> = mutableListOf()
-    private var mOrderStatus: LawyerOrderStatus = LawyerOrderStatus.ALL
+    private var mOrderStatus: LawyerOrderTabStatus = LawyerOrderTabStatus.ALL
 
     private var mNextPageJob: Job? = null
 
@@ -48,7 +45,7 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
         EventBus.getDefault().unregister(this)
     }
 
-    override fun init(orderStatus: LawyerOrderStatus) {
+    override fun init(orderStatus: LawyerOrderTabStatus) {
         mOrderStatus = orderStatus
         getFirstPage()
     }

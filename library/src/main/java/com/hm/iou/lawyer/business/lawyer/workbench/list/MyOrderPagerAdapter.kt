@@ -3,7 +3,7 @@ package com.hm.iou.lawyer.business.lawyer.workbench.list
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import com.hm.iou.lawyer.dict.LawyerOrderStatus
+import com.hm.iou.lawyer.dict.LawyerOrderTabStatus
 import java.util.*
 
 /**
@@ -15,10 +15,10 @@ import java.util.*
 class MyOrderPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     private val mOrderStatus = arrayOf(
-        LawyerOrderStatus.ALL,
-        LawyerOrderStatus.LOADING,
-        LawyerOrderStatus.FINISH,
-        LawyerOrderStatus.CANCEL
+        LawyerOrderTabStatus.ALL,
+        LawyerOrderTabStatus.LOADING,
+        LawyerOrderTabStatus.FINISH,
+        LawyerOrderTabStatus.CANCEL
     )
 
     internal var list: MutableList<Fragment> = ArrayList()

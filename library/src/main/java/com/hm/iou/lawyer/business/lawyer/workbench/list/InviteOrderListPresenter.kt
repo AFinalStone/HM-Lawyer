@@ -56,7 +56,7 @@ class InviteOrderListPresenter(context: Context, view: InviteOrderListContract.V
                 if (mDataList.isEmpty())
                     mView.showInitLoading(true)
                 val result = handleResponse(
-                    LawyerApi.getLawyerLetterList(
+                    LawyerApi.getLawyerInviteList(
                         1,
                         PAGE_SIZE
                     )
@@ -98,7 +98,7 @@ class InviteOrderListPresenter(context: Context, view: InviteOrderListContract.V
             try {
                 val list = convertData(
                     handleResponse(
-                        LawyerApi.getLawyerLetterList(
+                        LawyerApi.getLawyerInviteList(
                             mPageNo + 1,
                             PAGE_SIZE
                         )

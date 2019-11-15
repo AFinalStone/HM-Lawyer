@@ -224,4 +224,60 @@ object LawyerApi {
         return getService().getLawyerLetterDetail(reqBean)
     }
 
+    /**
+     * 校验律师能否接单
+     */
+    suspend fun checkLawyerCanAcceptOrder(
+        billId: String
+    ): BaseResponse<CheckLawyerCanAcceptOrderResBean> {
+        return getService().checkLawyerCanAcceptOrder(billId)
+    }
+
+    /**
+     * 律师接单
+     */
+    suspend fun lawyerAcceptOrder(
+        billId: String
+    ): BaseResponse<Any> {
+        return getService().lawyerAcceptOrder(billId)
+    }
+
+    /**
+     * 律师取消订单
+     */
+    suspend fun lawyerCancelOrder(
+        billId: String
+    ): BaseResponse<Any> {
+        return getService().lawyerCancelOrder(billId)
+    }
+
+    /**
+     * 律师拒绝订单
+     */
+    suspend fun lawyerRefuseOrder(
+        billId: String
+    ): BaseResponse<Any> {
+        return getService().lawyerRefuseOrder(billId)
+    }
+
+    /**
+     * 获取快递公司名称列表
+     */
+    suspend fun getMailList(): BaseResponse<ArrayList<String>> {
+        return getService().getMailList()
+    }
+
+    /**
+     * 律师完成订单
+     */
+    suspend fun lawyerFinishOrder(
+        billId: String,
+        expressName: String,
+        expressNumber: String,
+        finishImgs: List<String>
+    ): BaseResponse<Any> {
+        val reqBean = LawyerFinishOrderReqBean(billId, expressName, expressNumber, finishImgs)
+        return getService().lawyerFinishOrder(reqBean)
+    }
+
 }

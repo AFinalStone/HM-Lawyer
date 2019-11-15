@@ -1,0 +1,120 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.hm.iou.uikit.HMTopBarView
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/uikit_topbar_height"
+        app:backIconIsShow="false"
+        app:bottomDividerIsShow="false"
+        app:titleBackground="@color/transparent"
+        app:titleText="律师函需求详情" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/UikitTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="快递名称" />
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="0dp" />
+
+            <TextView
+                android:id="@+id/tv_mail_company_name"
+                style="@style/UikitTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end|center_vertical"
+                android:hint="请选择快递名称"
+                android:minWidth="130dp" />
+
+            <ImageView
+                android:id="@+id/iv_mail_company_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:src="@mipmap/uikit_ic_arrow_right" />
+        </LinearLayout>
+
+        <View style="@style/UikitDivider.Horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/UikitTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="快递单号" />
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="0dp" />
+
+            <EditText
+                android:id="@+id/et_mail_id"
+                style="@style/UikitEditText.Normal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end|center_vertical"
+                android:hint="请输入快递单号"
+                android:maxLength="30"
+                android:maxLines="1"
+                android:minWidth="130dp"
+                android:paddingEnd="10dp" />
+        </LinearLayout>
+
+        <View style="@style/UikitDivider.Horizontal" />
+
+        <TextView
+            style="@style/UikitTextView"
+            android:layout_marginTop="10dp"
+            android:text="*完成信息(请上传律师函及快递信息图片，最多三张）" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_mail_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:overScrollMode="never" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_bottom_divider"
+        style="@style/UikitDivider.Horizontal"
+        android:layout_above="@+id/ll_bottom" />
+
+    <com.hm.iou.uikit.HMBottomBarView
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        app:bottomTitleBackground="@drawable/uikit_selector_btn_minor_small"
+        app:bottomTitleColor="@color/uikit_text_auxiliary"
+        app:bottomTitleText="确认完成" />
+
+</LinearLayout>
