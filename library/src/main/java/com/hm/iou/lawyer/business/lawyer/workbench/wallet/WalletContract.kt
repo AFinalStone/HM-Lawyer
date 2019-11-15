@@ -9,21 +9,25 @@ class WalletContract {
 
     interface View : BaseContract.BaseView {
 
+        fun finishRefresh()
+
         /**
          * 钱包余额
          */
-        fun showRemainderMoney(money: String?)
+        fun showWalletBalance(money: String?)
 
         /**
          * 累计收入
          */
-        fun showTotalMoney(money: String?)
+        fun showTotalProfit(money: String?)
     }
 
     interface Presenter : BaseContract.BasePresenter {
         /**
          * 初始化
          */
-        fun init()
+        fun refreshWalletInfo()
+
+        fun toWithdrawMoney()
     }
 }

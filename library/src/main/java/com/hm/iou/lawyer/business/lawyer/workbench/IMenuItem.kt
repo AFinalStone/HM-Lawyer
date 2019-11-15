@@ -10,6 +10,8 @@ import com.hm.iou.lawyer.dict.ModelType
  */
 interface IMenuItem {
 
+    var redCount: Int
+
     /**
      * 菜单icon
      */
@@ -23,10 +25,16 @@ interface IMenuItem {
     /**
      * 红点数量
      */
-    fun getIRedDotNum(): String
+    fun getIRedDotNum(): String {
+        return if (redCount > 9) "N" else redCount.toString()
+    }
 
     /**
      * 是否显示红点
      */
     fun ifShowRedDot(): Boolean
+
+    fun updateRedCount(count: Int) {
+        redCount = count
+    }
 }

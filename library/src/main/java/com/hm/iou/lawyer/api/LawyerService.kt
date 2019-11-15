@@ -46,7 +46,7 @@ interface LawyerService {
     suspend fun calcLawyerWithDrawRate(@Query("fen") fen: Int): BaseResponse<CalcaLawyerWithDrawRateResBean>
 
     @POST("/api/lawyer/v1/withdraw")
-    suspend fun withDrawMoney(@Body req: WithDrawMoneyReqBean): BaseResponse<Any>
+    suspend fun withDrawMoney(@Body req: WithDrawMoneyReqBean): BaseResponse<String>
 
     @GET("/api/lawyer/v1/lawyer/list")
     suspend fun getLawyerList(

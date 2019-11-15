@@ -12,12 +12,17 @@ class WithDrawContract {
         /**
          * 显示银行卡
          */
-        fun showBankcard(bankCard: String?, bankName: String?)
+        fun showBankCard(bankCard: String?, bankName: String?)
 
         /**
          * 钱包余额
          */
-        fun showRemainderMoney(money: String?)
+        fun showWalletBalance(money: String?)
+
+        /**
+         * 更新提现金额输入框
+         */
+        fun updateWithdrawMoney(money: String?)
 
         /**
          * 显示提现确认对话框
@@ -37,6 +42,11 @@ class WithDrawContract {
         fun init()
 
         fun onResume()
+
+        /**
+         * 点击全部体现
+         */
+        fun clickWithdrawAll()
 
         /**
          * 计算实际提现金额

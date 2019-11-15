@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.hm.iou.base.BaseBizAppLike
 import com.hm.iou.base.adver.AdBean
 import com.hm.iou.base.mvp.HMBaseFragment
 import com.hm.iou.base.utils.RouterUtil
@@ -47,7 +48,7 @@ class LawerTabIndexFragment : HMBaseFragment<LawerTabIndexPresenter>(),
         }
         //律师工作台
         mContentView?.findViewById<View>(R.id.tv_lawyer_workbench)?.clickWithDuration {
-
+            activity?.let { NavigationHelper.toWorkbenchActivity(it) }
         }
         //找律师
         mContentView?.findViewById<View>(R.id.tv_lawyer_find_lawyer)?.clickWithDuration {
@@ -71,14 +72,11 @@ class LawerTabIndexFragment : HMBaseFragment<LawerTabIndexPresenter>(),
         }
         //法律百科
         mContentView?.findViewById<View>(R.id.rl_lawyer_baike)?.clickWithDuration {
-            RouterUtil.clickMenuLink(
-                activity,
-                "https://h5.54jietiao.com/moneyMarket_V1-1-2/html/otherLaw.html"
-            )
+            activity?.let { NavigationHelper.toLawBaikePage(it) }
         }
         //计算
         mContentView?.findViewById<View>(R.id.rl_lawyer_calc)?.clickWithDuration {
-
+            activity?.let { NavigationHelper.toFeeCalcPage(it) }
         }
     }
 

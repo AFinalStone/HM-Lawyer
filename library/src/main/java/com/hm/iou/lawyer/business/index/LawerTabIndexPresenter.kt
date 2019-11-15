@@ -101,7 +101,6 @@ class LawerTabIndexPresenter(context: Context, view: LawerTabIndexContract.View)
         continuation.invokeOnCancellation {
             disposable.dispose()
         }
-
     }
 
     /**

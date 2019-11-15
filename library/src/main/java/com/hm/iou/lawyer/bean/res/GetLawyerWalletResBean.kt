@@ -7,6 +7,6 @@ package com.hm.iou.lawyer.bean.res
  * @E-Mail : afinalstone@foxmail.com
  */
 data class GetLawyerWalletResBean(
-    val totalProfit: String,
-    val walletBalance: String
+    val totalProfit: Int = 0,
+    val walletBalance: Int = 0
 )

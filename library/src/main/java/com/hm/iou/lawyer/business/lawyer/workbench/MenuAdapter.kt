@@ -14,19 +14,19 @@ import com.hm.iou.uikit.HMDotTextView
 class MenuAdapter :
     BaseQuickAdapter<IMenuItem, BaseViewHolder>(R.layout.lawyer_item_lawyer_workbench_list) {
     override fun convert(helper: BaseViewHolder?, item: IMenuItem?) {
-        val itemIcon = item?.getIIcon()
-        if (itemIcon != null) {
-//            helper?.setImageResource(R.id.iv_icon, itemIcon)
-        }
-        helper?.setText(R.id.tv_name, item?.getIModel()?.modelName)
+        helper ?: return
+        item ?: return
+        val itemIcon = item.getIIcon()
+        helper.setImageResource(R.id.iv_icon, itemIcon)
+        helper.setText(R.id.tv_name, item.getIModel().modelName)
 
-        val ifShow = item?.ifShowRedDot()
-        if (ifShow == true) {
-            helper?.setGone(R.id.dot_num, true)
-            val dotRedMsg = helper?.getView<HMDotTextView>(R.id.dot_num)
-            dotRedMsg?.setText("3")
+        val ifShow = item.ifShowRedDot()
+        if (ifShow) {
+            helper.setGone(R.id.dot_num, true)
+            val dotRedMsg = helper.getView<HMDotTextView>(R.id.dot_num)
+            dotRedMsg.setText(item.getIRedDotNum())
         } else {
-            helper?.setGone(R.id.dot_num, false)
+            helper.setGone(R.id.dot_num, false)
         }
     }
 }

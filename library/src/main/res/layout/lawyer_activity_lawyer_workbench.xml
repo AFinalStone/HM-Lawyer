@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/uikit_background"
+    >
 
     <com.hm.iou.uikit.HMTopBarView
+        android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/uikit_topbar_height"
         app:backIconIsShow="false"
@@ -15,176 +17,201 @@
         app:titleBackground="@color/transparent"
         app:titleText="律师工作台" />
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl_workbench"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topbar"
+        android:layout_above="@+id/bottom_bar"
+        >
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/ll_wallet"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginStart="13dp"
-                android:layout_marginEnd="13dp"
-                android:background="@drawable/lawyer_shape_bg_lawyer_workbench"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    style="@style/UikitTextView.Large"
-                    android:layout_marginStart="37dp"
-                    android:layout_marginTop="27dp"
-                    android:text="钱包余额"
-                    android:textColor="@color/white" />
-
-                <TextView
-                    style="@style/UikitTextView"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="37dp"
-                    android:gravity="center_vertical"
-                    android:text="3100.00"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/textFontSize_36"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="14dp"
-                    android:background="#636685" />
-
                 <LinearLayout
+                    android:id="@+id/ll_wallet"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_height="200dp"
+                    android:layout_marginStart="13dp"
+                    android:layout_marginEnd="13dp"
+                    android:background="@drawable/lawyer_shape_bg_lawyer_workbench"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/UikitTextView.Large"
+                        android:layout_marginStart="37dp"
+                        android:layout_marginTop="27dp"
+                        android:text="钱包余额"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/iv_workbench_total_money"
+                        style="@style/UikitTextView"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="37dp"
+                        android:gravity="center_vertical"
+                        android:text="--"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textFontSize_36"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginEnd="14dp"
+                        android:background="#636685" />
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
-                        <TextView
-                            style="@style/UikitTextView.Small"
-                            android:text="今日收益"
-                            android:textColor="@color/white" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/tv_today_income"
-                            style="@style/UikitTextView.Large"
-                            android:textColor="@color/white"
-                            tools:text="3100.00" />
-                    </LinearLayout>
+                            <TextView
+                                style="@style/UikitTextView.Small"
+                                android:text="今日收益"
+                                android:textColor="@color/white" />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/tv_today_income"
+                                style="@style/UikitTextView.Large"
+                                android:textColor="@color/white"
+                                android:text="--"
+                                tools:text="3100.00" />
+                        </LinearLayout>
 
-                        <TextView
-                            style="@style/UikitTextView.Small"
-                            android:text="今日完成"
-                            android:textColor="@color/white" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/tv_today_finish"
-                            style="@style/UikitTextView.Large"
-                            android:textColor="@color/white"
-                            tools:text="11" />
-                    </LinearLayout>
+                            <TextView
+                                style="@style/UikitTextView.Small"
+                                android:text="今日完成"
+                                android:textColor="@color/white" />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/tv_today_finish"
+                                style="@style/UikitTextView.Large"
+                                android:textColor="@color/white"
+                                android:text="--"
+                                tools:text="11" />
+                        </LinearLayout>
 
-                        <TextView
-                            style="@style/UikitTextView.Small"
-                            android:text="今日接单"
-                            android:textColor="@color/white" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/tv_receive_order"
-                            style="@style/UikitTextView.Large"
-                            android:textColor="@color/white"
-                            tools:text="1" />
+                            <TextView
+                                style="@style/UikitTextView.Small"
+                                android:text="今日接单"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/tv_receive_order"
+                                style="@style/UikitTextView.Large"
+                                android:textColor="@color/white"
+                                android:text="--"
+                                tools:text="1" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="13dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="13dp"
-                android:background="@drawable/uikit_bg_card_form"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/UikitTextView"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="9dp"
-                    android:text="待办事项"
-                    android:textColor="#ff575b62" />
-
-                <View
-                    style="@style/UikitDivider.Horizontal"
-                    android:layout_marginStart="9dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="9dp" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_list_wait_to_do"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbars="none" />
+                    android:layout_marginStart="13dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="13dp"
+                    android:background="@drawable/uikit_bg_card_form"
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <TextView
+                        style="@style/UikitTextView"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="9dp"
+                        android:text="待办事项"
+                        android:textColor="#ff575b62" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="13dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="13dp"
-                android:background="@drawable/uikit_bg_card_form"
-                android:orientation="vertical">
+                    <View
+                        style="@style/UikitDivider.Horizontal"
+                        android:layout_marginStart="9dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginEnd="9dp" />
 
-                <TextView
-                    style="@style/UikitTextView"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="9dp"
-                    android:text="律师订单"
-                    android:textColor="#ff575b62" />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_list_wait_to_do"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none" />
 
-                <View
-                    style="@style/UikitDivider.Horizontal"
-                    android:layout_marginStart="9dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="9dp" />
+                </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_list_lawyer_order"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbars="none" />
+                    android:layout_marginStart="13dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="13dp"
+                    android:background="@drawable/uikit_bg_card_form"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/UikitTextView"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="9dp"
+                        android:text="律师订单"
+                        android:textColor="#ff575b62" />
+
+                    <View
+                        style="@style/UikitDivider.Horizontal"
+                        android:layout_marginStart="9dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginEnd="9dp" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_list_lawyer_order"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none" />
+
+                </LinearLayout>
 
             </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-</LinearLayout>
+
+    <com.hm.iou.uikit.HMBottomBarView
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        />
+
+    <View
+        style="@style/UikitDivider.Horizontal"
+        android:layout_above="@+id/bottom_bar" />
+
+</RelativeLayout>

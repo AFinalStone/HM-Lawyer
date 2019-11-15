@@ -53,12 +53,12 @@ class AuthenProgressActivity : HMBaseActivity<HMBasePresenter<BaseContract.BaseV
         if (false == mIfAuthenticationFailed) {
             tv_status.text = "认证审核中"
             tv_desc.text = "您的认证申请正在审核中，我们将尽快为您审核"
-            iv_status.setImageResource(R.mipmap.lawyer_ic_authen_loading)
+            iv_status.setImageResource(R.mipmap.uikit_data_search)
             bottom_bar.setTitleVisible(false)
         } else {
             tv_status.text = "认证审核失败"
             tv_desc.text = mIfAuthenticationFailedDesc ?: "很抱歉，您的认证审核未通过"
-            iv_status.setImageResource(R.mipmap.lawyer_ic_authen_failed)
+            iv_status.setImageResource(R.mipmap.uikit_data_fail_cry)
             bottom_bar.setTitleVisible(true)
         }
     }

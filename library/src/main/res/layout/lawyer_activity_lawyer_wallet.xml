@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/uikit_background"
     android:orientation="vertical">
 
     <com.hm.iou.uikit.HMTopBarView
+        android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/uikit_topbar_height"
         app:backIconIsShow="false"
@@ -15,82 +17,101 @@
         app:titleText="我的钱包" />
 
 
-    <RelativeLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl_wallet"
         android:layout_width="match_parent"
-        android:layout_height="124dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/lawyer_shape_bg_lawyer_wallet_remainder_money"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topbar"
+        android:layout_above="@+id/bottom_bar"
+        >
 
-        <TextView
-            style="@style/UikitTextView.Large"
-            android:layout_marginStart="37dp"
-            android:layout_marginTop="27dp"
-            android:text="钱包余额"
-            android:textColor="@color/white" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_remainder_money"
-            style="@style/UikitTextView"
-            android:layout_height="60dp"
-            android:layout_marginStart="37dp"
-            android:layout_marginTop="54dp"
-            android:gravity="center_vertical"
-            android:text="3100.00"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textFontSize_36"
-            android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btn_withdraw_money"
-            style="@style/UikitHMButton"
-            android:layout_width="60dp"
-            android:layout_height="26dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/lawyer_shape_bg_lawyer_wallet_withdraw"
-            android:text="提现"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textFontSize_16" />
-    </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="124dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/lawyer_shape_bg_lawyer_wallet_remainder_money"
+                android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/uikit_bg_card_form"
-        android:orientation="vertical"
-        android:paddingStart="28dp">
+                <TextView
+                    style="@style/UikitTextView.Large"
+                    android:layout_marginStart="37dp"
+                    android:layout_marginTop="27dp"
+                    android:text="钱包余额"
+                    android:textColor="@color/white" />
 
-        <TextView
-            style="@style/UikitTextView"
-            android:layout_marginTop="9dp"
-            android:text="累计收入（元）"
-            android:textColor="#ff575b62" />
+                <TextView
+                    android:id="@+id/tv_remainder_money"
+                    style="@style/UikitTextView"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="37dp"
+                    android:layout_marginTop="54dp"
+                    android:gravity="center_vertical"
+                    android:text="--"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textFontSize_36"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_total_receive_money"
-            style="@style/UikitTextView"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:text="6100.00"
-            android:textColor="#ff3a3a3a"
-            android:textSize="@dimen/textFontSize_22" />
-    </LinearLayout>
+                <Button
+                    android:id="@+id/btn_withdraw_money"
+                    style="@style/UikitHMButton"
+                    android:layout_width="60dp"
+                    android:layout_height="26dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/lawyer_shape_bg_lawyer_wallet_withdraw"
+                    android:text="提现"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textFontSize_16" />
+            </RelativeLayout>
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/uikit_bg_card_form"
+                android:orientation="vertical"
+                android:paddingStart="28dp">
+
+                <TextView
+                    style="@style/UikitTextView"
+                    android:layout_marginTop="9dp"
+                    android:text="累计收入（元）"
+                    android:textColor="#ff575b62" />
+
+                <TextView
+                    android:id="@+id/tv_total_receive_money"
+                    style="@style/UikitTextView"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:text="--"
+                    android:textColor="#ff3a3a3a"
+                    android:textSize="@dimen/textFontSize_22" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <com.hm.iou.uikit.HMBottomBarView
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:bottomTitleBackground="@drawable/lawyer_shape_bg_lawyer_wallet_bottom_record"
-        app:bottomTitleText="交易记录" />
-</LinearLayout>
+        app:bottomTitleBackground="@drawable/uikit_bg_item_ripple"
+        app:bottomTitleColor="@color/uikit_text_sub_content"
+        app:bottomTitleText="交易记录"
+        android:layout_alignParentBottom="true"
+        />
+
+    <View
+        style="@style/UikitDivider.Horizontal"
+        android:layout_above="@id/bottom_bar" />
+</RelativeLayout>
