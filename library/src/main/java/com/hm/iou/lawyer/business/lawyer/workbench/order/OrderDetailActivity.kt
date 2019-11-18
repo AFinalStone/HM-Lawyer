@@ -72,6 +72,11 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
         mPresenter.init(order, mRelationId)
     }
 
+    override fun onResume() {
+        super.onResume()
+        mPresenter.onResume()
+    }
+
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.putValue(EXTRA_KEY_ORDER_ID, mOrderId)

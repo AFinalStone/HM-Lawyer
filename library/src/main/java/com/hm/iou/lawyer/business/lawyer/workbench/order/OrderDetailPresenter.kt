@@ -77,10 +77,31 @@ class OrderDetailPresenter(context: Context, view: OrderDetailContract.View) :
         launch {
             try {
                 mView.showLoadingView()
-                handleResponse(LawyerApi.lawyerAcceptOrder(mOrderId))
-                mView.dismissLoadingView()
-                mView.toastMessage("操作成功")
-                getOrderDetail()
+                val result = handleResponse(LawyerApi.checkLawyerCanAcceptOrder(mOrderId))
+                when (result?.result) {
+                    0 -> {
+                        handleResponse(LawyerApi.lawyerAcceptOrder(mOrderId))
+                        mView.dismissLoadingView()
+                        mView.toastMessage("操作成功")
+                        getOrderDetail()
+                    }
+                    1 -> {
+                        result.note?.let {
+                            mView.toastMessage(it)
+                        }
+                        handleResponse(LawyerApi.lawyerAcceptOrder(mOrderId))
+                        mView.dismissLoadingView()
+                        mView.toastMessage("操作成功")
+                        getOrderDetail()
+                    }
+                    2 -> {
+                        result.note?.let {
+                            mView.dismissLoadingView()
+                            mView.toastMessage(it)
+                        }
+                    }
+                }
+
             } catch (e: Exception) {
                 mView.dismissLoadingView()
                 handleException(e)

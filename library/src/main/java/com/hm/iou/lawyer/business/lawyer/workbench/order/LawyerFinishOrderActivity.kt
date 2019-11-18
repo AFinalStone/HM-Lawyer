@@ -225,6 +225,7 @@ class LawyerFinishOrderActivity : HMBaseActivity<LawyerFinishOrderPresenter>(),
         if (mListImageBean.isNullOrEmpty()) {
             bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
             bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
+            return
         }
         bottom_bar.setTitleBackgournd(R.drawable.uikit_shape_common_btn_normal)
         bottom_bar.setTitleTextColor(R.color.uikit_text_main_content)
