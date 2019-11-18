@@ -28,7 +28,6 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
         const val PAGE_SIZE = 10
     }
 
-
     private var mNeedRefresh = false
     private var mPageNo = 1
     private val mDataList: MutableList<IOrderItem> = mutableListOf()
@@ -38,26 +37,19 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
 
     private var mNextPageJob: Job? = null
 
-    init {
-        EventBus.getDefault().register(this)
-    }
-
     override fun onCreateView() {
         super.onCreateView()
         mScope = MainScope()
+        EventBus.getDefault().register(this)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        EventBus.getDefault().unregister(this)
         mScope?.cancel()
         mScope = null
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        EventBus.getDefault().unregister(this)
-        mNextPageJob?.cancel()
-    }
 
     override fun init(orderStatus: LawyerOrderTabStatus) {
         mOrderStatus = orderStatus

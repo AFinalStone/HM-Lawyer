@@ -13,8 +13,7 @@ import com.hm.iou.sharedata.UserManager
 import com.hm.iou.sharedata.event.CommBizEvent
 import com.hm.iou.sharedata.model.BaseResponse
 import com.hm.iou.sharedata.model.PersonalCenterInfo
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -30,18 +29,24 @@ class LawerTabIndexPresenter(context: Context, view: LawerTabIndexContract.View)
     HMBaseFragmentPresenter<LawerTabIndexContract.View>(context, view),
     LawerTabIndexContract.Presenter {
 
+    private var mScope: CoroutineScope? = null
+
     companion object {
         const val BANNER_AD_POSITION = "banner014"
     }
 
-    override fun onViewCreated() {
-        super.onViewCreated()
+
+    override fun onCreateView() {
+        super.onCreateView()
+        mScope = MainScope()
         EventBus.getDefault().register(this)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         EventBus.getDefault().unregister(this)
+        mScope?.cancel()
+        mScope = null
     }
 
     override fun init() {
@@ -57,7 +62,7 @@ class LawerTabIndexPresenter(context: Context, view: LawerTabIndexContract.View)
     }
 
     override fun getTopBanner() {
-        launch {
+        mScope?.launch {
             try {
                 val response = HttpReqManager.getInstance().getService(AdService::class.java)
                     .getAdvertiseByCoroutine(BANNER_AD_POSITION)
@@ -74,7 +79,7 @@ class LawerTabIndexPresenter(context: Context, view: LawerTabIndexContract.View)
         if (isAuth) {
             mView.showTopLawyerWorkbench(View.VISIBLE)
         } else {
-            launch {
+            mScope?.launch {
                 try {
                     val isLawyer = isAuthLawyer()
                     mView.showTopLawyerWorkbench(if (isLawyer) View.VISIBLE else View.GONE)
