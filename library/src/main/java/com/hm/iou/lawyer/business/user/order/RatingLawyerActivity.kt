@@ -76,7 +76,7 @@ class RatingLawyerActivity : HMBaseActivity<HMBasePresenter<BaseContract.BaseVie
                 mPresenter.handleResponse(LawyerApi.ratingLawyer(mOrderId ?: "", desc, r1, r2))
                 dismissLoadingView()
                 toastMessage("评价成功")
-                EventBus.getDefault().register(RatingLawyerSuccEvent(mOrderId))
+                EventBus.getDefault().post(RatingLawyerSuccEvent(mOrderId))
                 finish()
             } catch (e: Exception) {
                 dismissLoadingView()
