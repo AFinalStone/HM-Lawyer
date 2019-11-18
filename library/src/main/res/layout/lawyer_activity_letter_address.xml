@@ -141,7 +141,9 @@
         android:layout_height="50dip"
         android:layout_alignParentBottom="true"
         app:bottomTitleText="确认"
-        app:enable="false" />
+        app:bottomTitleColor="@color/uikit_text_auxiliary"
+        app:bottomTitleBackground="@drawable/uikit_selector_btn_minor_small"
+        />
 
     <View
         style="@style/UikitDivider.Horizontal"

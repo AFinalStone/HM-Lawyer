@@ -42,7 +42,13 @@ class RatingLawyerActivity : HMBaseActivity<HMBasePresenter<BaseContract.BaseVie
 
         et_rating_desc.addTextChangedListener(object : HMTextChangeListener() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                bottomBar.isEnabled = et_rating_desc.text.trim().length >= 5
+                if (et_rating_desc.text.trim().length >= 5) {
+                    bottomBar.setTitleBtnBackground(R.drawable.uikit_selector_btn_main_small)
+                    bottomBar.setTitleBtnTextColor(resources.getColor(R.color.uikit_text_auxiliary))
+                } else {
+                    bottomBar.setTitleBtnBackground(R.drawable.uikit_selector_btn_minor_small)
+                    bottomBar.setTitleBtnTextColor(resources.getColor(R.color.uikit_text_main_content))
+                }
             }
         })
 
@@ -58,6 +64,11 @@ class RatingLawyerActivity : HMBaseActivity<HMBasePresenter<BaseContract.BaseVie
 
         bottomBar.setOnTitleClickListener {
             val desc = et_rating_desc.text.trim().toString()
+            if (desc.length < 5) {
+                toastMessage("服务评价至少输入5个字")
+                return@setOnTitleClickListener
+            }
+
             val r1 = rating_order_attitude.rating
             val r2 = rating_order_professional.rating
             submitRating(desc, r1, r2)

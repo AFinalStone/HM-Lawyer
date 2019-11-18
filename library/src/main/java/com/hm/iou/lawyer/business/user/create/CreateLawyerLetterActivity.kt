@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import com.hm.iou.base.ImageGalleryActivity
 import com.hm.iou.base.comm.HMTextChangeListener
+import com.hm.iou.base.constants.HMConstants
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.base.photo.CompressPictureUtil
 import com.hm.iou.base.utils.RouterUtil
@@ -18,6 +19,7 @@ import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.comm.IouImageUploadAdapter
 import com.hm.iou.router.Router
 import com.hm.iou.sharedata.UserManager
+import com.hm.iou.tools.StringUtil
 import com.hm.iou.tools.kt.clickWithDuration
 import com.hm.iou.tools.kt.extraDelegate
 import com.hm.iou.tools.kt.putValue
@@ -264,20 +266,38 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
             tv_letter_receiver_info.text.trim().isEmpty() ||
             et_letter_desc.text.trim().isEmpty()
         ) {
-            bottom_bar.isEnabled = false
+            bottom_bar.setTitleBtnBackground(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleBtnTextColor(resources.getColor(R.color.uikit_text_auxiliary))
             return
         }
-        bottom_bar.isEnabled = true
+        bottom_bar.setTitleBtnBackground(R.drawable.uikit_selector_btn_main_small)
+        bottom_bar.setTitleBtnTextColor(resources.getColor(R.color.uikit_text_main_content))
     }
 
     private fun toCreateLawyerLetter(innerUser: Boolean) {
         val name = et_letter_name.text.trim().toString()
+        if (name.isNullOrEmpty()) {
+            toastMessage("请输入您的姓名")
+            return
+        }
         val mobile = et_letter_mobile.text.trim().toString()
+        if (!StringUtil.matchRegex(mobile, HMConstants.REG_MOBILE)) {
+            toastMessage("请输入正确的联系方式")
+            return
+        }
         val price = if ((!mLawyerId.isNullOrEmpty()) && mPrice != null && (mPrice ?: 0) > 0) mPrice!! else (et_letter_price.text.trim().toString().toIntOrNull() ?: 0)
-        val desc = et_letter_desc.text.trim().toString()
-
         if (price < 300 || price > 10000) {
-            toastMessage("报价输入范围不正确")
+            toastMessage("报价范围为300-10000")
+            return
+        }
+
+        if (mReceiverInfo == null) {
+            toastMessage("请输入收函人信息")
+            return
+        }
+        val desc = et_letter_desc.text.trim().toString()
+        if (desc.isNullOrEmpty()) {
+            toastMessage("请输入案件描述")
             return
         }
 
