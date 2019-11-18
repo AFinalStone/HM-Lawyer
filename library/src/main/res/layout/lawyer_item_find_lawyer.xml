@@ -13,6 +13,8 @@
         android:src="@mipmap/uikit_icon_header_unknow"
         android:layout_marginLeft="30dp"
         android:layout_centerVertical="true"
+        app:civ_border_color="@color/uikti_header_border_color"
+        app:civ_border_width="@dimen/uikti_header_border_width"
         />
 
     <RelativeLayout

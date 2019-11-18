@@ -56,6 +56,8 @@
                     android:layout_height="85dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="35dp"
+                    app:civ_border_color="@color/uikti_header_border_color"
+                    app:civ_border_width="@dimen/uikti_header_border_width"
                     android:src="@mipmap/uikit_icon_header_unknow" />
 
 
