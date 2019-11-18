@@ -127,7 +127,7 @@ class HomeActivity : HMBaseActivity<HomePresenter>(),
         })
         iv_lawyer_avatar.clickWithDuration {
             val intent = Intent(mContext, EditLawyerHeaderActivity::class.java)
-            mDetail?.image?.let {
+            mDetail?.image?.url?.let {
                 intent.putExtra(EditLawyerHeaderActivity.EXTRA_KEY_LAWYER_HEADE, it)
             }
             startActivity(intent)

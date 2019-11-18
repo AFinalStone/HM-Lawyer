@@ -17,7 +17,9 @@
 
     <TextView
         style="@style/UikitTextView"
+        android:layout_marginStart="21dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="21dp"
         android:text="请上传荣誉资质照片，最多三张"
         android:textSize="@dimen/textFontSize_14" />
 
@@ -25,7 +27,9 @@
         android:id="@+id/rv_lawyer_honor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
         android:layout_marginTop="10dip"
+        android:layout_marginEnd="21dp"
         android:overScrollMode="never"
         android:scrollbars="none" />
 
