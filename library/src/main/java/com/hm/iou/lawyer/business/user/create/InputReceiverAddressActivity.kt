@@ -97,6 +97,24 @@ class InputReceiverAddressActivity : HMBaseActivity<HMBasePresenter<BaseContract
             data.receiverMobile = et_letter_mobile.text.trim().toString()
             data.receiverCityDetail = tv_letter_city.text.trim().toString()
             data.receiverDetailAddress = et_letter_addr.text.trim().toString()
+
+            if (data.receiverName.isNullOrEmpty()) {
+                toastMessage("请输入收函人姓名")
+                return@setOnTitleClickListener
+            }
+            if (data.receiverMobile.isNullOrEmpty()) {
+                toastMessage("请输入收函人联系方式")
+                return@setOnTitleClickListener
+            }
+            if (data.receiverCityDetail.isNullOrEmpty()) {
+                toastMessage("请输入收函人所在地区")
+                return@setOnTitleClickListener
+            }
+            if (data.receiverDetailAddress.isNullOrEmpty()) {
+                toastMessage("请输入收函人详细地址")
+                return@setOnTitleClickListener
+            }
+
             val intent = Intent()
             intent.putExtra("receiver", data as Parcelable)
             setResult(Activity.RESULT_OK, intent)
@@ -111,10 +129,12 @@ class InputReceiverAddressActivity : HMBaseActivity<HMBasePresenter<BaseContract
             tv_letter_city.text.trim().isEmpty() ||
             et_letter_addr.text.trim().isEmpty()
         ) {
-            bottom_bar.isEnabled = false
+            bottom_bar.setTitleBtnBackground(R.drawable.uikit_selector_btn_minor_small)
+            bottom_bar.setTitleBtnTextColor(resources.getColor(R.color.uikit_text_auxiliary))
             return
         }
-        bottom_bar.isEnabled = true
+        bottom_bar.setTitleBtnBackground(R.drawable.uikit_selector_btn_main_small)
+        bottom_bar.setTitleBtnTextColor(resources.getColor(R.color.uikit_text_main_content))
     }
 
 }
