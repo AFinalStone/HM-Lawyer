@@ -68,7 +68,9 @@ class LawerTabIndexFragment : HMBaseFragment<LawerTabIndexPresenter>(),
         }
         //北京互联网法院
         mContentView?.findViewById<View>(R.id.iv_lawyer_court_banner)?.clickWithDuration {
-
+            activity?.let {
+                NavigationHelper.toBeijingInternetCourtPage(it)
+            }
         }
         //法律百科
         mContentView?.findViewById<View>(R.id.rl_lawyer_baike)?.clickWithDuration {
@@ -77,6 +79,10 @@ class LawerTabIndexFragment : HMBaseFragment<LawerTabIndexPresenter>(),
         //计算
         mContentView?.findViewById<View>(R.id.rl_lawyer_calc)?.clickWithDuration {
             activity?.let { NavigationHelper.toFeeCalcPage(it) }
+        }
+
+        mContentView?.findViewById<View>(R.id.rl_lawyer_delegate)?.clickWithDuration {
+            activity?.let { NavigationHelper.toCaseDelegatePage(it) }
         }
     }
 

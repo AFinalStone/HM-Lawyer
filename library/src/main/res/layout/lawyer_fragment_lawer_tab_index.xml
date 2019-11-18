@@ -181,7 +181,7 @@
                         android:background="#FFF1F6FD"
                         android:paddingLeft="3dp"
                         android:paddingRight="3dp"
-                        android:text="安全便捷"
+                        android:text="安全知识"
                         android:textColor="#FF909FB7"
                         android:textSize="12dp" />
 
@@ -240,7 +240,7 @@
                         android:background="#FFF1F6FD"
                         android:paddingLeft="3dp"
                         android:paddingRight="3dp"
-                        android:text="安全便捷"
+                        android:text="方便快捷"
                         android:textColor="#FF909FB7"
                         android:textSize="12dp" />
 
@@ -249,7 +249,66 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_lawyer_calc_title"
                         android:layout_marginTop="3dp"
-                        android:text="解您心中的疑惑"
+                        android:text="做到心中有数"
+                        android:textColor="@color/uikit_text_auxiliary"
+                        android:textSize="12dp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/uikit_ic_arrow_right" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_lawyer_delegate"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="?attr/selectableItemBackground"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp">
+
+                <ImageView
+                    android:id="@+id/iv_lawyer_case_delegate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/iv_lawyer_case_delegate" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/iv_lawyer_case_delegate">
+
+                    <TextView
+                        android:id="@+id/tv_lawyer_delegate_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="案件委托" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/tv_lawyer_delegate_title"
+                        android:background="#FFF1F6FD"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="省时省力"
+                        android:textColor="#FF909FB7"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_lawyer_delegate_title"
+                        android:layout_marginTop="3dp"
+                        android:text="快速响应99%的案件"
                         android:textColor="@color/uikit_text_auxiliary"
                         android:textSize="12dp" />
                 </RelativeLayout>

@@ -48,7 +48,7 @@ class RatingLawyerActivity : HMBaseActivity<HMBasePresenter<BaseContract.BaseVie
 
         topBar.setOnMenuClickListener(object : HMTopBarView.OnTopBarMenuClickListener {
             override fun onClickTextMenu() {
-                RouterUtil.toSubmitFeedback(this@RatingLawyerActivity, "Square", "Report")
+                RouterUtil.toSubmitFeedback(this@RatingLawyerActivity, "Lawyer", "Report")
             }
 
             override fun onClickImageMenu() {
