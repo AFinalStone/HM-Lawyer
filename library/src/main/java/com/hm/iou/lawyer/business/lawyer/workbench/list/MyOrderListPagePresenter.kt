@@ -9,9 +9,7 @@ import com.hm.iou.lawyer.dict.OrderStatus
 import com.hm.iou.lawyer.event.LawyerOrderStatusChangedEvent
 import com.hm.iou.logger.Logger
 import com.hm.iou.network.exception.ApiException
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -30,6 +28,7 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
         const val PAGE_SIZE = 10
     }
 
+    private var mScope: CoroutineScope? = null
 
     private var mNeedRefresh = false
     private var mPageNo = 1
@@ -38,16 +37,19 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
 
     private var mNextPageJob: Job? = null
 
-    init {
+    override fun onCreateView() {
+        super.onCreateView()
+        mScope = MainScope()
         EventBus.getDefault().register(this)
     }
 
-
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mScope?.cancel()
+        mScope = null
         EventBus.getDefault().unregister(this)
-        mNextPageJob?.cancel()
     }
+
 
     override fun init(orderStatus: LawyerOrderTabStatus) {
         mOrderStatus = orderStatus
@@ -65,7 +67,7 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
         Logger.d("开始请求首页数据")
         mView.showInitLoading(false)
         mView.showDataEmpty(true)
-        launch {
+        mScope?.launch {
             try {
                 if (mDataList.isEmpty())
                     mView.showInitLoading(true)
@@ -114,8 +116,7 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
 
     override fun getNextPage() {
         mNextPageJob?.cancel()
-        Logger.d("开始请求下一页数据")
-        mNextPageJob = launch {
+        mNextPageJob = mScope?.launch {
             try {
                 Logger.d("下一页接口请求")
                 val list = convertData(
