@@ -251,4 +251,18 @@ object NavigationHelper {
             "${BaseBizAppLike.getInstance().h5Server}/apph5/HM-lawyer/#/cashDetail?sequenceId=$sequenceId")
     }
 
+    /**
+     * 点击背景互联网法院页面
+     */
+    fun toBeijingInternetCourtPage(context: Context) {
+        RouterUtil.clickMenuLink(context, "https://h5.54jietiao.com/Content/index.html?autoId=1580")
+    }
+
+    /**
+     * 进入案件委托页面
+     */
+    fun toCaseDelegatePage(context: Context) {
+        RouterUtil.clickMenuLink(context, "https://h5.54jietiao.com/moneyMarket_V1-1-2/html/typeSelect.html")
+    }
+
 }

@@ -31,7 +31,7 @@ class LawerTabIndexPresenter(context: Context, view: LawerTabIndexContract.View)
     LawerTabIndexContract.Presenter {
 
     companion object {
-        const val BANNER_AD_POSITION = "banner004"
+        const val BANNER_AD_POSITION = "banner014"
     }
 
     override fun onViewCreated() {
