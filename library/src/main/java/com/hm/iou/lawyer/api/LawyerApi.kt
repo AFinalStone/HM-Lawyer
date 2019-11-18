@@ -170,7 +170,7 @@ object LawyerApi {
         content: String,
         attitudeScore: Int,
         professionalScore: Int
-    ): BaseResponse<Any> {
+    ): BaseResponse<Boolean> {
         val reqBean = RatingLawyerReqBean()
         reqBean.billId = billId
         reqBean.content = content
