@@ -7,8 +7,10 @@ import com.hm.iou.lawyer.bean.res.LawyerOrderItem
 import com.hm.iou.lawyer.dict.LawyerOrderTabStatus
 import com.hm.iou.lawyer.dict.OrderStatus
 import com.hm.iou.lawyer.event.LawyerOrderStatusChangedEvent
+import com.hm.iou.logger.Logger
 import com.hm.iou.network.exception.ApiException
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -40,6 +42,7 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
         EventBus.getDefault().register(this)
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
         EventBus.getDefault().unregister(this)
@@ -59,11 +62,14 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
 
     override fun getFirstPage() {
         mNextPageJob?.cancel()
+        Logger.d("开始请求首页数据")
         mView.showInitLoading(false)
+        mView.showDataEmpty(true)
         launch {
             try {
                 if (mDataList.isEmpty())
                     mView.showInitLoading(true)
+                Logger.d("第一页接口请求")
                 val result = handleResponse(
                     LawyerApi.getLawyerMyOrderList(
                         1,
@@ -91,6 +97,7 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
                     mView.showLoadMoreComplete()
                 }
             } catch (e: Exception) {
+                Logger.d("发生了异常")
                 handleException(e, showCommError = false, showBusinessError = false)
                 mView.showInitLoading(false)
                 mView.finishRefresh()
@@ -100,15 +107,20 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
                     mView.toastMessage(if (e is ApiException) e.message else "数据加载失败，请重试")
                 }
             }
+            Logger.d("第一页接口执行结束")
         }
+        Logger.d("第一页执行结束")
     }
 
     override fun getNextPage() {
         mNextPageJob?.cancel()
+        Logger.d("开始请求下一页数据")
         mNextPageJob = launch {
             try {
+                Logger.d("下一页接口请求")
                 val list = convertData(
                     handleResponse(
+
                         LawyerApi.getLawyerMyOrderList(
                             mPageNo + 1,
                             PAGE_SIZE,
@@ -130,7 +142,9 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
                 mView.showInitLoading(false)
                 mView.showLoadMoreFail()
             }
+            Logger.d("下一页接口执行结束")
         }
+        Logger.d("下一页执行结束")
     }
 
     private fun convertData(list: List<LawyerOrderItem>?): List<IOrderItem> {

@@ -37,8 +37,9 @@ class MyOrderListActivity : HMBaseActivity<HMBasePresenter<BaseContract.BaseView
         if (savedInstanceState != null) {
             mOrderStatus = savedInstanceState.getValue(EXTRA_KEY_TAB_TYPE)
         }
-        mPagerAdapter = MyOrderPagerAdapter(getSupportFragmentManager())
+        mPagerAdapter = MyOrderPagerAdapter(supportFragmentManager)
         vp_my_order.adapter = mPagerAdapter
+        vp_my_order.offscreenPageLimit = 4
         tab_my_order.setViewPager(vp_my_order)
         if (mOrderStatus != null) {
             try {

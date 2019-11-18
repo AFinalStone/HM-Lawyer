@@ -136,7 +136,6 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
             doSubmit()
         }
         et_certificate_code.requestFocus()
-        showSoftKeyboard()
     }
 
 

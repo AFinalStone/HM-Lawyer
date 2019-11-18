@@ -50,7 +50,4 @@ class MyOrderPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         return list[position]
     }
 
-    override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        return super.isViewFromObject(view, `object`)
-    }
 }
