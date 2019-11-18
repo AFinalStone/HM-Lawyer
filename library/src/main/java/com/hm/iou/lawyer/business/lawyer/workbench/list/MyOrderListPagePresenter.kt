@@ -59,6 +59,7 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
 
     override fun getFirstPage() {
         mNextPageJob?.cancel()
+        mView.showInitLoading(false)
         launch {
             try {
                 if (mDataList.isEmpty())

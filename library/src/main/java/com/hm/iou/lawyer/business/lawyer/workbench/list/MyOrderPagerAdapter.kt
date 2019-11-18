@@ -3,6 +3,7 @@ package com.hm.iou.lawyer.business.lawyer.workbench.list
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.view.View
 import com.hm.iou.lawyer.dict.LawyerOrderTabStatus
 import java.util.*
 
@@ -47,5 +48,9 @@ class MyOrderPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
         return list[position]
+    }
+
+    override fun isViewFromObject(view: View, `object`: Any): Boolean {
+        return super.isViewFromObject(view, `object`)
     }
 }

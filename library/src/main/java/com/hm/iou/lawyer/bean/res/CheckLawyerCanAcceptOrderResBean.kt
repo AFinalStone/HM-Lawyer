@@ -7,7 +7,6 @@ package com.hm.iou.lawyer.bean.res
  * @E-Mail : afinalstone@foxmail.com
  */
 data class CheckLawyerCanAcceptOrderResBean(
-    val feePercent: String?,//费率，如 10%
-    val serviceFee: String?,//服务费，如  ¥100.00
-    val withdrawNum: String?//体现金额，如 ¥1000.00
+    val note: String?,//提示
+    val result: Int?//结果：0=可以接单，1，可以接单，且展示note，2=不可以接单
 )

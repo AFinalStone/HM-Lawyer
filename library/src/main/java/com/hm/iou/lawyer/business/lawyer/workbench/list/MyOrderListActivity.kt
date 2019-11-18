@@ -26,7 +26,7 @@ class MyOrderListActivity : HMBaseActivity<HMBasePresenter<BaseContract.BaseView
         LawyerOrderTabStatus.ALL.status.toString()
     )
 
-    private val mPagerAdapter: MyOrderPagerAdapter = MyOrderPagerAdapter(supportFragmentManager)
+    private var mPagerAdapter: MyOrderPagerAdapter? = null
 
     override fun getLayoutId(): Int = R.layout.lawyer_activity_lawyer_my_order_list
 
@@ -37,14 +37,14 @@ class MyOrderListActivity : HMBaseActivity<HMBasePresenter<BaseContract.BaseView
         if (savedInstanceState != null) {
             mOrderStatus = savedInstanceState.getValue(EXTRA_KEY_TAB_TYPE)
         }
-
+        mPagerAdapter = MyOrderPagerAdapter(getSupportFragmentManager())
         vp_my_order.adapter = mPagerAdapter
         tab_my_order.setViewPager(vp_my_order)
         if (mOrderStatus != null) {
             try {
                 val orderStatus = Integer.valueOf(mOrderStatus)
-                val pos = mPagerAdapter.getPositionByType(orderStatus)
-                vp_my_order.currentItem = pos
+                val pos = mPagerAdapter?.getPositionByType(orderStatus)
+                vp_my_order.currentItem = pos ?: 0
             } catch (e: Exception) {
                 e.printStackTrace()
             }

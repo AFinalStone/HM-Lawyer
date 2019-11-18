@@ -3,14 +3,17 @@ package com.hm.iou.lawyer.business.lawyer.workbench.list
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.hm.iou.base.mvp.HMBaseFragment
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.business.lawyer.workbench.order.OrderDetailActivity
 import com.hm.iou.lawyer.dict.LawyerOrderTabStatus
+import com.hm.iou.logger.Logger
 import com.hm.iou.tools.kt.getValue
 import com.hm.iou.tools.kt.putValue
 import com.hm.iou.uikit.HMLoadMoreView
+import com.hm.iou.uikit.HMLoadingView
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_my_order_page_list.*
 
@@ -48,23 +51,23 @@ class MyOrderListPageFragment : HMBaseFragment<MyOrderListPagePresenter>(),
 
     override fun initEventAndData(savedInstanceState: Bundle?) {
         mOrderStatus = arguments?.get(KEY_ORDER_STATUS) as LawyerOrderTabStatus
-        if (mOrderStatus == null) {
-            mOrderStatus = LawyerOrderTabStatus.ALL
-        }
         if (savedInstanceState != null) {
             mOrderStatus = savedInstanceState.getValue(KEY_ORDER_STATUS) ?: LawyerOrderTabStatus.ALL
         }
+        Logger.d("tag==${mOrderStatus.statusName}")
         mOrderAdapter = mActivity?.let { OrderAdapter(it) }
-        rv_order_list.layoutManager = LinearLayoutManager(mActivity)
+        val rvOrderList = mContentView?.findViewById<RecyclerView>(R.id.rv_order_list)
+        rvOrderList?.layoutManager = LinearLayoutManager(mActivity)
         mOrderAdapter?.setLoadMoreView(HMLoadMoreView())
-        mOrderAdapter?.bindToRecyclerView(rv_order_list)
-        rv_order_list.adapter = mOrderAdapter
-        smartrl_order_list.setOnRefreshListener {
-            mPresenter.getFirstPage()
-        }
+        mOrderAdapter?.bindToRecyclerView(rvOrderList)
+        rvOrderList?.adapter = mOrderAdapter
+        mContentView?.findViewById<SmartRefreshLayout>(R.id.smartrl_order_list)
+            ?.setOnRefreshListener {
+                mPresenter.getFirstPage()
+            }
         mOrderAdapter?.setOnLoadMoreListener({
             mPresenter.getNextPage()
-        }, rv_order_list)
+        }, rvOrderList)
         mOrderAdapter?.setOnItemClickListener { adapter, _, position ->
             val item = adapter.getItem(position) as IOrderItem?
             item?.let {
@@ -96,24 +99,23 @@ class MyOrderListPageFragment : HMBaseFragment<MyOrderListPagePresenter>(),
 
     override fun showInitLoading(show: Boolean) {
         if (show) {
-            loading_view.showDataLoading()
+            mContentView?.findViewById<HMLoadingView>(R.id.loading_view)?.showDataLoading()
         } else {
-            loading_view.stopLoadingAnim()
-            loading_view.visibility = View.GONE
+            mContentView?.findViewById<HMLoadingView>(R.id.loading_view)?.visibility = View.GONE
         }
     }
 
     override fun showDataEmpty(show: Boolean) {
         if (show) {
-            loading_view.showDataEmpty("订单数据为空")
+            mContentView?.findViewById<HMLoadingView>(R.id.loading_view)?.showDataEmpty("订单数据为空")
         } else {
-            loading_view.stopLoadingAnim()
-            loading_view.visibility = View.GONE
+            mContentView?.findViewById<HMLoadingView>(R.id.loading_view)?.stopLoadingAnim()
+            mContentView?.findViewById<HMLoadingView>(R.id.loading_view)?.visibility = View.GONE
         }
     }
 
     override fun showInitError(err: String?) {
-        loading_view.showDataFail(err) {
+        mContentView?.findViewById<HMLoadingView>(R.id.loading_view)?.showDataFail(err) {
             mPresenter.getFirstPage()
         }
     }
