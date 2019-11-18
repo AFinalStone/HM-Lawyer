@@ -41,19 +41,7 @@ class YearCheckAuthenActivity : HMBaseActivity<YearCheckAuthenPresenter>(),
         iv_add_authen_photo_back.setOnClickListener(this)
         //提交认证
         bottom_bar.setOnTitleClickListener {
-            if (mAuthenImageFrontPath == null) {
-                toastErrorMessage("请上传律师执业证姓名照片页")
-                return@setOnTitleClickListener
-            }
-            if (mAuthenImageBackPath == null) {
-                toastErrorMessage("请上传律师执业证年检页")
-                return@setOnTitleClickListener
-            }
-            //认证照片
-            val listAuthenImage = ArrayList<String>()
-            listAuthenImage.add(mAuthenImageFrontPath ?: "")
-            listAuthenImage.add(mAuthenImageBackPath ?: "")
-            mPresenter.updateLawyerAuthenticationInfo(listAuthenImage)
+            doSubmit()
         }
     }
 
@@ -116,6 +104,22 @@ class YearCheckAuthenActivity : HMBaseActivity<YearCheckAuthenPresenter>(),
             }
             return
         }
+    }
+
+    private fun doSubmit() {
+        if (mAuthenImageFrontPath == null) {
+            toastErrorMessage("请上传律师执业证姓名照片页")
+            return
+        }
+        if (mAuthenImageBackPath == null) {
+            toastErrorMessage("请上传律师执业证年检页")
+            return
+        }
+        //认证照片
+        val listAuthenImage = ArrayList<String>()
+        listAuthenImage.add(mAuthenImageFrontPath ?: "")
+        listAuthenImage.add(mAuthenImageBackPath ?: "")
+        mPresenter.updateLawyerAuthenticationInfo(listAuthenImage)
     }
 
     /**

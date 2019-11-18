@@ -47,35 +47,7 @@ class UpdateLawyerFirmActivity : HMBaseActivity<UpdateLawyerFirmPresenter>(),
         iv_add_authen_photo_back.setOnClickListener(this)
         //提交认证
         bottom_bar.setOnTitleClickListener {
-            //执业证号
-            val certificateCode: String = et_certificate_code.text.toString()
-            //执业律所
-            val lawyerFirmName: String = et_lawyer_firm.text.toString()
-            if (certificateCode.length < 17) {
-                toastErrorMessage("请输入正确的执业证号")
-                return@setOnTitleClickListener
-            }
-            if (lawyerFirmName.length < 5) {
-                toastErrorMessage("执业律所必须在5-15个字以内")
-                return@setOnTitleClickListener
-            }
-            if (mAuthenImageFrontPath == null) {
-                toastErrorMessage("请上传律师执业证姓名照片页")
-                return@setOnTitleClickListener
-            }
-            if (mAuthenImageBackPath == null) {
-                toastErrorMessage("请上传律师执业证年检页")
-                return@setOnTitleClickListener
-            }
-            //认证照片
-            val listAuthenImage = ArrayList<String>()
-            listAuthenImage.add(mAuthenImageFrontPath ?: "")
-            listAuthenImage.add(mAuthenImageBackPath ?: "")
-            mPresenter.updateLawyerAuthenticationInfo(
-                certificateCode,
-                lawyerFirmName,
-                listAuthenImage
-            )
+            doSubmit()
         }
         et_certificate_code.requestFocus()
         showSoftKeyboard()
@@ -140,6 +112,38 @@ class UpdateLawyerFirmActivity : HMBaseActivity<UpdateLawyerFirmPresenter>(),
                     .navigation(mContext, REQ_CODE_SELECT_AUTHEN_IMAGE_BACK)
             }
         }
+    }
+
+    private fun doSubmit() {
+        //执业证号
+        val certificateCode: String = et_certificate_code.text.toString()
+        //执业律所
+        val lawyerFirmName: String = et_lawyer_firm.text.toString()
+        if (certificateCode.length < 17) {
+            toastErrorMessage("请输入正确的执业证号")
+            return
+        }
+        if (lawyerFirmName.length < 5) {
+            toastErrorMessage("执业律所必须在5-15个字以内")
+            return
+        }
+        if (mAuthenImageFrontPath == null) {
+            toastErrorMessage("请上传律师执业证姓名照片页")
+            return
+        }
+        if (mAuthenImageBackPath == null) {
+            toastErrorMessage("请上传律师执业证年检页")
+            return
+        }
+        //认证照片
+        val listAuthenImage = ArrayList<String>()
+        listAuthenImage.add(mAuthenImageFrontPath ?: "")
+        listAuthenImage.add(mAuthenImageBackPath ?: "")
+        mPresenter.updateLawyerAuthenticationInfo(
+            certificateCode,
+            lawyerFirmName,
+            listAuthenImage
+        )
     }
 
     /**

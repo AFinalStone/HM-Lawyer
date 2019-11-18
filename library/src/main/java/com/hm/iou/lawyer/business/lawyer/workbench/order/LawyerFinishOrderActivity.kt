@@ -141,6 +141,7 @@ class LawyerFinishOrderActivity : HMBaseActivity<LawyerFinishOrderPresenter>(),
                             mListImageBean?.add(entity)
                             mImageAdapter.addData(entity.value)
                         }
+                        checkValue()
                     }
                 }
             }
