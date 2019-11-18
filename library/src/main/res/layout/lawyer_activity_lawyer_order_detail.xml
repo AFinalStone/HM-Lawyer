@@ -321,8 +321,10 @@
 
                 </LinearLayout>
 
-                <View android:id="@+id/view_divider_letter"
-                    style="@style/UikitDivider.Horizontal" />
+                <View
+                    android:id="@+id/view_divider_letter"
+                    style="@style/UikitDivider.Horizontal"
+                    android:layout_marginTop="10dp" />
 
                 <TextView
                     android:id="@+id/tv_letter_label"

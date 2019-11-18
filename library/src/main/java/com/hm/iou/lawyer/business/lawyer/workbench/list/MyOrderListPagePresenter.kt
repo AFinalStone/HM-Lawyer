@@ -43,6 +43,7 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
     override fun onDestroy() {
         super.onDestroy()
         EventBus.getDefault().unregister(this)
+        mNextPageJob?.cancel()
     }
 
     override fun init(orderStatus: LawyerOrderTabStatus) {
@@ -90,6 +91,7 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
                 }
             } catch (e: Exception) {
                 handleException(e, showCommError = false, showBusinessError = false)
+                mView.showInitLoading(false)
                 mView.finishRefresh()
                 if (mDataList.isEmpty()) {
                     mView.showInitError(e.message)
@@ -124,6 +126,7 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
                 mPageNo++
             } catch (e: Exception) {
                 handleException(e, showCommError = false, showBusinessError = false)
+                mView.showInitLoading(false)
                 mView.showLoadMoreFail()
             }
         }

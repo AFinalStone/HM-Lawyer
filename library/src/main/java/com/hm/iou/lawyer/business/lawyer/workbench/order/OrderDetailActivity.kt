@@ -166,13 +166,13 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
         //图片资料
         val list = detail.fileUrls
         if (list.isNullOrEmpty()) {
-            view_divider_order_img.visibility = View.GONE
-            tv_order_img_label.visibility = View.GONE
-            rv_order_img.visibility = View.GONE
+            view_divider_order_img.visibility = GONE
+            tv_order_img_label.visibility = GONE
+            rv_order_img.visibility = GONE
         } else {
-            view_divider_order_img.visibility = View.VISIBLE
-            tv_order_img_label.visibility = View.VISIBLE
-            rv_order_img.visibility = View.VISIBLE
+            view_divider_order_img.visibility = VISIBLE
+            tv_order_img_label.visibility = VISIBLE
+            rv_order_img.visibility = VISIBLE
             rv_order_img.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             val adapter = CommImageAdapter(this)
@@ -287,6 +287,7 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
         tv_operate_01.visibility = GONE
         tv_operate_02.visibility = GONE
         tv_order_status.text = "订单已完成"
+        tv_order_operate_label.text = "完成时间"
         val time = detail.doDate?.replace("-", ".")
         tv_order_operate_time.text = time ?: ""
         val finishInfo = detail.letterFinishInfo
