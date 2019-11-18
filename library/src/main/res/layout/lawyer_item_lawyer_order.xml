@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_content"
     android:layout_width="match_parent"
@@ -20,7 +21,9 @@
             android:id="@+id/iv_header"
             android:layout_width="40dp"
             android:layout_height="39dp"
-            android:src="@mipmap/uikit_icon_header_unknow" />
+            android:src="@mipmap/uikit_icon_header_unknow"
+            app:civ_border_color="@color/uikti_header_border_color"
+            app:civ_border_width="@dimen/uikti_header_border_width" />
 
         <TextView
             android:id="@+id/tv_name"
@@ -59,9 +62,11 @@
         android:id="@+id/tv_order_desc"
         style="@style/UikitTextView"
         android:layout_marginTop="10dp"
+        android:ellipsize="end"
         android:lineSpacingExtra="2dp"
+        android:maxLines="2"
         android:textColor="@color/uikit_text_sub_content"
-        tools:text="朋友准备向我借钱，但是我不知道该怎么写借条，所以请各位律师帮忙代写一份借条。" />
+        tools:text="朋友准备向我借钱，但是我不知道该怎么写借条，所以请各位律师帮忙代写一份借条。朋友准备向我借钱，但是我不知道该怎么写借条，所以请各位律师帮忙代写一份借条。朋友准备向我借钱，但是我不知道该怎么写借条，所以请各位律师帮忙代写一份借条。" />
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -31,9 +31,10 @@
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nsv_layer_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@id/view_divider"
-        android:layout_below="@id/topbar">
+        android:layout_below="@id/topbar"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,15 +62,17 @@
                     android:layout_width="85dp"
                     android:layout_height="85dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="35dp"
-                    android:src="@mipmap/uikit_icon_header_unknow" />
+                    android:layout_marginStart="35dp"
+                    android:src="@mipmap/uikit_icon_header_unknow"
+                    app:civ_border_color="@color/uikti_header_border_color"
+                    app:civ_border_width="@dimen/uikti_header_border_width"/>
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginStart="30dp"
                     android:orientation="vertical">
 
                     <TextView

@@ -225,6 +225,7 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
                         }
                     })
                     .create()
+                    .show()
             }
         } else {
             tv_operate_01.visibility = GONE
