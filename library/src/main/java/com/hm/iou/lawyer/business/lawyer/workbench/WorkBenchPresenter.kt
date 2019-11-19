@@ -5,7 +5,9 @@ import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.dict.ModelType
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 
 /**
  * @author : 借条管家-shilei
@@ -22,8 +24,9 @@ class WorkBenchPresenter(context: Context, view: WorkBenchContract.View) :
     //律师订单
     private val mListDataLawyerOrder = ArrayList<IMenuItem>()
 
-    override fun init() {
+    private var mRefreshJob: Job? = null
 
+    override fun init() {
         mListDataWaitToDo.add(object : IMenuItem {
             override var redCount: Int = 0
             
@@ -74,7 +77,8 @@ class WorkBenchPresenter(context: Context, view: WorkBenchContract.View) :
     }
 
     override fun refreshWorkbenchInfo() {
-        launch {
+        mRefreshJob?.cancel()
+        mRefreshJob = launch {
             try {
                 val result = handleResponse(LawyerApi.getLawyerWorkBench())
                 mView.finishRefresh()

@@ -12,6 +12,7 @@ import com.hm.iou.lawyer.business.lawyer.workbench.list.MyOrderListActivity
 import com.hm.iou.lawyer.dict.LawyerOrderTabStatus
 import com.hm.iou.lawyer.dict.ModelType
 import com.hm.iou.lawyer.dict.UpdateWalletBalanceEvent
+import com.hm.iou.lawyer.event.LawyerOrderStatusChangedEvent
 import com.hm.iou.uikit.HMTopBarView
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_workbench.*
 import org.greenrobot.eventbus.EventBus
@@ -161,6 +162,11 @@ class WorkBenchActivity : HMBaseActivity<WorkBenchPresenter>(),
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventUpdateWalletBalance(event: UpdateWalletBalanceEvent) {
+        mNeedRefresh = true
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventUpdateWalletBalance(event: LawyerOrderStatusChangedEvent) {
         mNeedRefresh = true
     }
 }
