@@ -78,7 +78,7 @@ class MyOrderListPageFragment : HMBaseFragment<MyOrderListPagePresenter>(),
                 }
                 val relationId = item.getRelationId()
                 relationId?.let {
-                    intent.putExtra(OrderDetailActivity.EXTRA_KEY_RELATION_ID, it)
+                    intent.putExtra(OrderDetailActivity.EXTRA_KEY_RELATION_ID, it.toString())
                 }
                 startActivity(intent)
             }

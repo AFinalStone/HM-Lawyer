@@ -28,6 +28,8 @@ class WalletContract {
          */
         fun refreshWalletInfo()
 
+        fun onResume()
+
         fun toWithdrawMoney()
     }
 }

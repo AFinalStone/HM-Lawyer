@@ -18,16 +18,12 @@ import org.greenrobot.eventbus.ThreadMode
 class WalletActivity : HMBaseActivity<WalletPresenter>(),
     WalletContract.View {
 
-    private var mNeedRefresh = false
-
     override fun getLayoutId(): Int = R.layout.lawyer_activity_lawyer_wallet
 
     override fun initPresenter(): WalletPresenter =
         WalletPresenter(this, this)
 
     override fun initEventAndData(savedInstanceState: Bundle?) {
-        EventBus.getDefault().register(this)
-
         btn_withdraw_money.setOnClickListener {
             mPresenter.toWithdrawMoney()
         }
@@ -46,19 +42,11 @@ class WalletActivity : HMBaseActivity<WalletPresenter>(),
 
     override fun onResume() {
         super.onResume()
-        if (mNeedRefresh) {
-            mNeedRefresh = false
-            mPresenter.refreshWalletInfo()
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        EventBus.getDefault().unregister(this)
+        mPresenter.onResume()
     }
 
     override fun finishRefresh() {
-        srl_wallet.setRefreshing(false)
+        srl_wallet.isRefreshing = false
     }
 
     override fun showWalletBalance(money: String?) {
@@ -67,11 +55,6 @@ class WalletActivity : HMBaseActivity<WalletPresenter>(),
 
     override fun showTotalProfit(money: String?) {
         tv_total_receive_money.text = money ?: ""
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventUpdateWalletBalance(event: UpdateWalletBalanceEvent) {
-        mNeedRefresh = true
     }
 
 }

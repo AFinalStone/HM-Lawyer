@@ -42,7 +42,7 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
     /**
      * 记录id
      */
-    private var mRelationId: Int? by extraDelegate(
+    private var mRelationId: String? by extraDelegate(
         EXTRA_KEY_RELATION_ID,
         null
     )
@@ -52,10 +52,10 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
     override fun initPresenter(): OrderDetailPresenter =
         OrderDetailPresenter(this, this)
 
-    override fun initEventAndData(savedInstanceState: Bundle?) {
-        if (savedInstanceState != null) {
-            mOrderId = savedInstanceState.getValue(EXTRA_KEY_ORDER_ID)
-            mRelationId = savedInstanceState.getValue(EXTRA_KEY_RELATION_ID)
+    override fun initEventAndData(bundle: Bundle?) {
+        if (bundle != null) {
+            mOrderId = bundle.getValue(EXTRA_KEY_ORDER_ID)
+            mRelationId = bundle.getValue(EXTRA_KEY_RELATION_ID)
         }
         val order = mOrderId
         if (order.isNullOrEmpty()) {
@@ -66,7 +66,13 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
         iv_back.clickWithDuration {
             onBackPressed()
         }
-        mPresenter.init(order, mRelationId)
+        var relationId: Int? = null
+        try {
+            relationId = mRelationId?.toInt()
+        } catch (e: Exception) {
+
+        }
+        mPresenter.init(order, relationId)
     }
 
     override fun onResume() {
@@ -94,7 +100,13 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
         loading_view.visibility = VISIBLE
         loading_view.showDataFail(msg) {
             mOrderId?.let {
-                mPresenter.init(it, mRelationId)
+                var relationId: Int? = null
+                try {
+                    relationId = mRelationId?.toInt()
+                } catch (e: Exception) {
+
+                }
+                mPresenter.init(it, relationId)
             }
         }
     }
