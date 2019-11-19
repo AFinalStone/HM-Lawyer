@@ -11,7 +11,7 @@ class LawyerOrderItem {
     val avatarUrl: String? = null//用户头像
     val name: String? = null//用户姓名
     val billId: String? = null//订单id
-    val billType: Int? = null//订单类型：1=发律师函，2=律师咨询
+    val billType: Int? = null//订单类型：1=律师函，2=律师咨询
     val caseDescription: String? = null//案件描述-用于订单创建订单
     val createTime: String? = null//时间
     val price: Int? = null//报价（单位元）
@@ -19,5 +19,5 @@ class LawyerOrderItem {
 
     //律师我的订单字段
     val relationId: Int? = null//一个律师对一个订单可能有多个记录- 记录id
-    val type: Int? = null//类型：1=发律师函，2=律师咨询
+    val type: Int? = null//类型：1=律师函，2=律师咨询
 }

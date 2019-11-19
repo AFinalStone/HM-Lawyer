@@ -160,7 +160,7 @@ class LetterOrderListPresenter(context: Context, view: LetterOrderListContract.V
                 }
 
                 override fun getTypeStr(): String? {
-                    return if (1 == item.billType) "发律师函" else "律师咨询"
+                    return if (1 == item.billType) "律师函" else "律师咨询"
                 }
 
                 override fun getPrice(): String? {

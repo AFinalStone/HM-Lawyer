@@ -54,7 +54,7 @@ class WorkBenchActivity : HMBaseActivity<WorkBenchPresenter>(),
             mPresenter.refreshWorkbenchInfo()
         }
 
-        ll_wallet.setOnClickListener {
+        ll_wallet_remaind_money.setOnClickListener {
             NavigationHelper.toMyWallet(mContext)
         }
         mAdapterWaiteTo.setOnItemClickListener { _, _, position ->

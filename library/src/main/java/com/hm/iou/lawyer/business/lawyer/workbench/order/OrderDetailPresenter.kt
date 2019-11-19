@@ -20,7 +20,6 @@ class OrderDetailPresenter(context: Context, view: OrderDetailContract.View) :
     HMBasePresenter<OrderDetailContract.View>(context, view),
     OrderDetailContract.Presenter {
 
-
     private var mOrderId: String = ""
     private var mRelationId: Int? = null
     private var mNeedRefresh = false
@@ -73,35 +72,44 @@ class OrderDetailPresenter(context: Context, view: OrderDetailContract.View) :
         }
     }
 
-    override fun acceptOrder() {
+    override fun checkCanAcceptOrder() {
         launch {
             try {
                 mView.showLoadingView()
                 val result = handleResponse(LawyerApi.checkLawyerCanAcceptOrder(mOrderId))
                 when (result?.result) {
-                    0 -> {
-                        handleResponse(LawyerApi.lawyerAcceptOrder(mOrderId))
-                        mView.dismissLoadingView()
-                        mView.toastMessage("操作成功")
-                        getOrderDetail()
+                    0 -> {//0=可以正常接单
+                        acceptOrder()
                     }
-                    1 -> {
-                        result.note?.let {
-                            mView.toastMessage(it)
-                        }
-                        handleResponse(LawyerApi.lawyerAcceptOrder(mOrderId))
+                    1 -> {//1=可以接单，提示用户及时更新年检信息
                         mView.dismissLoadingView()
-                        mView.toastMessage("操作成功")
-                        getOrderDetail()
+                        mView.showNeedUpdateYearCheckByCanAcceptOrder(result.note)
                     }
-                    2 -> {
-                        result.note?.let {
-                            mView.dismissLoadingView()
-                            mView.toastMessage(it)
-                        }
+                    2 -> {//2=不可以接单，提示原因
+                        mView.dismissLoadingView()
+                        mView.showNotCanAcceptOrder(result.note)
+                    }
+                    3 -> {//3不可接单，提示用户需要更新年检
+                        mView.dismissLoadingView()
+                        mView.showNotCanAcceptOrder(result.note)
                     }
                 }
+            } catch (e: Exception) {
+                mView.dismissLoadingView()
+                handleException(e)
+            }
+        }
+    }
 
+
+    override fun acceptOrder() {
+        launch {
+            try {
+                mView.showLoadingView()
+                handleResponse(LawyerApi.lawyerAcceptOrder(mOrderId))
+                mView.dismissLoadingView()
+                mView.toastMessage("操作成功")
+                getOrderDetail()
             } catch (e: Exception) {
                 mView.dismissLoadingView()
                 handleException(e)

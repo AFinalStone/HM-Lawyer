@@ -12,24 +12,21 @@ import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.bean.res.LawyerLetterDetailBean
 import com.hm.iou.lawyer.business.NavigationHelper
+import com.hm.iou.lawyer.business.lawyer.home.edit.YearCheckAuthenActivity
 import com.hm.iou.lawyer.business.user.CommImageAdapter
 import com.hm.iou.lawyer.dict.OrderStatus
 import com.hm.iou.tools.ImageLoader
-import com.hm.iou.tools.kt.clickWithDuration
-import com.hm.iou.tools.kt.extraDelegate
-import com.hm.iou.tools.kt.getValue
-import com.hm.iou.tools.kt.putValue
+import com.hm.iou.tools.kt.*
 import com.hm.iou.uikit.dialog.HMActionSheetDialog
 import com.hm.iou.uikit.dialog.HMAlertDialog
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_order_detail.*
 import java.text.SimpleDateFormat
 
 /**
- * 我的钱包
+ * 订单详情
  */
 class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
     OrderDetailContract.View {
-
     companion object {
         const val EXTRA_KEY_ORDER_ID = "order_id"
         const val EXTRA_KEY_RELATION_ID = "relation_id"
@@ -353,4 +350,54 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
             .show()
     }
 
+    override fun showNeedUpdateYearCheckByCanAcceptOrder(msg: String?) {
+        HMAlertDialog.Builder(mContext)
+            .setMessage(msg)
+            .setNegativeButton("更新年检")
+            .setPositiveButton("继续接单")
+            .setOnClickListener(object : HMAlertDialog.OnClickListener {
+                override fun onNegClick() {
+                    startActivity<YearCheckAuthenActivity>()
+                }
+
+                override fun onPosClick() {
+                    mPresenter.acceptOrder()
+                }
+            })
+            .create()
+            .show()
+    }
+
+    override fun showNeedUpdateYearCheckByNotCanAcceptOrder(msg: String?) {
+        HMAlertDialog.Builder(mContext)
+            .setMessage(msg)
+            .setNegativeButton("稍后更新")
+            .setPositiveButton("立即更新")
+            .setOnClickListener(object : HMAlertDialog.OnClickListener {
+                override fun onNegClick() {
+                }
+
+                override fun onPosClick() {
+                    startActivity<YearCheckAuthenActivity>()
+                }
+            })
+            .create()
+            .show()
+    }
+
+    override fun showNotCanAcceptOrder(msg: String?) {
+        HMAlertDialog.Builder(mContext)
+            .setMessage(msg)
+            .setPositiveButton("知道了")
+            .setOnClickListener(object : HMAlertDialog.OnClickListener {
+                override fun onNegClick() {
+
+                }
+
+                override fun onPosClick() {
+                }
+            })
+            .create()
+            .show()
+    }
 }

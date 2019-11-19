@@ -8,5 +8,5 @@ package com.hm.iou.lawyer.bean.res
  */
 data class CheckLawyerCanAcceptOrderResBean(
     val note: String?,//提示
-    val result: Int?//结果：0=可以接单，1，可以接单，且展示note，2=不可以接单
+    val result: Int?//结果：0=可以接单，1=可以接单，且展示note，2=不可以接单 ，3=不可接单-需要更新年检
 )

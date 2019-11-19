@@ -21,6 +21,21 @@ class OrderDetailContract {
          */
         fun showDetail(detail: LawyerLetterDetailBean)
 
+        /**
+         * 提示用户及时更新年检信息，可以接单
+         */
+        fun showNeedUpdateYearCheckByCanAcceptOrder(msg: String?)
+
+        /**
+         * 提示用户需要更新年检信息，不可以接单
+         */
+        fun showNeedUpdateYearCheckByNotCanAcceptOrder(msg: String?)
+
+        /**
+         * 提示无法接单
+         */
+        fun showNotCanAcceptOrder(msg: String?)
+
     }
 
     interface Presenter : BaseContract.BasePresenter {
@@ -33,6 +48,11 @@ class OrderDetailContract {
          * 获取订单详情
          */
         fun getOrderDetail()
+
+        /**
+         * 校验能否接单
+         */
+        fun checkCanAcceptOrder()
 
         /**
          * 律师接受订单
