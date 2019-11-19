@@ -231,7 +231,7 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
         tv_operate_02.text = "立即接单"
 
         tv_operate_02.clickWithDuration {
-            mPresenter.acceptOrder()
+            mPresenter.checkCanAcceptOrder()
         }
     }
 

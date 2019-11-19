@@ -91,7 +91,10 @@ class OrderDetailPresenter(context: Context, view: OrderDetailContract.View) :
                     }
                     3 -> {//3不可接单，提示用户需要更新年检
                         mView.dismissLoadingView()
-                        mView.showNotCanAcceptOrder(result.note)
+                        mView.showNeedUpdateYearCheckByNotCanAcceptOrder(result.note)
+                    }
+                    else -> {
+                        mView.dismissLoadingView()
                     }
                 }
             } catch (e: Exception) {
