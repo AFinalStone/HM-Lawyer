@@ -106,10 +106,10 @@ class FindLawyerPresenter(context: Context, view: FindLawyerContract.View) :
 
                 mView.hideInitLoading(false)
                 mView.showRecyclerView(View.VISIBLE, false)
-                mDataList.addAll(list)
+                mDataListByName.addAll(list)
                 mView.showLawyers(list, false)
 
-                if (mDataList.isNullOrEmpty()) {
+                if (mDataListByName.isNullOrEmpty()) {
                     mView.showDataEmpty(false)
                 } else {
                     if (list.size < 10) {

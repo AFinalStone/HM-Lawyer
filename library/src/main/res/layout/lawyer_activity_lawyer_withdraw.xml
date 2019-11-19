@@ -131,7 +131,7 @@
             <TextView
                 style="@style/UikitTextView.Auxiliary.Small"
                 android:layout_height="match_parent"
-                android:text="10%提现费用" />
+                android:text="10%提现服务费用" />
 
         </LinearLayout>
 
