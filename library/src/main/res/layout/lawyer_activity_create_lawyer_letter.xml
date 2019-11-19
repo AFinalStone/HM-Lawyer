@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:layout_alignParentBottom="true"
-        app:bottomTitleText="发布"
+        app:bottomTitleText="&#160;&#160;&#160;&#160;发布&#160;&#160;&#160;&#160;"
         app:bottomTitleColor="@color/uikit_text_auxiliary"
         app:bottomTitleBackground="@drawable/uikit_selector_btn_minor_small"
         />

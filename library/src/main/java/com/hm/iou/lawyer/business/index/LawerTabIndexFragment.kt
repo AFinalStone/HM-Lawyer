@@ -37,6 +37,7 @@ class LawerTabIndexFragment : HMBaseFragment<LawerTabIndexPresenter>(),
     override fun initPresenter() = LawerTabIndexPresenter(activity!!, this)
 
     override fun initEventAndData(savedInstanceState: Bundle?) {
+        StatusBarUtil.setStatusBarDarkFont(mActivity, true)
         initClickEvents()
         mPresenter.init()
     }
@@ -135,7 +136,7 @@ class LawerTabIndexFragment : HMBaseFragment<LawerTabIndexPresenter>(),
             params.height = ((ScreenUtil.getScreenWidth(activity) - DensityUtil.dip2px(
                 activity,
                 24f
-            )) / 1.98f).toInt()
+            )) / 3f).toInt()
             banner.layoutParams = params
             banner.setImageLoader(object : ImageLoaderInterface<View> {
                 override fun createImageView(context: Context?): View? = null

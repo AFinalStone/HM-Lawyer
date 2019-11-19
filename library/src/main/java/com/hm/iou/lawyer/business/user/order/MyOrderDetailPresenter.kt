@@ -134,7 +134,7 @@ class MyOrderDetailPresenter(context: Context, view: MyOrderDetailContract.View)
                         mView.showTopBarMenu("") {}
                         if (serviceRating == null) {
                             mView.showOrHideBottomBtn(true)
-                            mView.showBottomBtn("评论律师") {
+                            mView.showBottomBtn("评价律师") {
                                 NavigationHelper.toRatingLawyerPage(mContext, orderId)
                             }
                         } else {

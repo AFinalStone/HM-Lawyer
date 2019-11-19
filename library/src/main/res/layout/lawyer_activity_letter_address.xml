@@ -51,7 +51,7 @@
 
             <TextView
                 style="@style/UikitTextView"
-                android:text="身份照号码" />
+                android:text="身份证号码" />
 
             <EditText
                 android:id="@+id/et_letter_idno"
@@ -127,7 +127,8 @@
                 android:layout_marginLeft="10dp"
                 android:gravity="right|center_vertical"
                 android:hint="请输入收函人详细地址"
-                android:maxLength="40" />
+                android:maxLength="40"
+                />
 
         </LinearLayout>
 
@@ -140,7 +141,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:layout_alignParentBottom="true"
-        app:bottomTitleText="确认"
+        app:bottomTitleText="&#160;&#160;&#160;&#160;确认&#160;&#160;&#160;&#160;"
         app:bottomTitleColor="@color/uikit_text_auxiliary"
         app:bottomTitleBackground="@drawable/uikit_selector_btn_minor_small"
         />

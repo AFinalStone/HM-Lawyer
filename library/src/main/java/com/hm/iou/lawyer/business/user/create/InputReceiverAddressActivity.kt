@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
 import com.hm.iou.base.comm.HMTextChangeListener
 import com.hm.iou.base.constants.HMConstants
 import com.hm.iou.base.mvp.BaseContract
@@ -16,6 +18,7 @@ import com.hm.iou.tools.kt.clickWithDuration
 import com.hm.iou.uikit.datepicker.CityPickerDialog
 import kotlinx.android.synthetic.main.lawyer_activity_letter_address.*
 import kotlinx.android.synthetic.main.lawyer_activity_letter_address.et_letter_name
+import kotlinx.android.synthetic.main.lawyer_layout_search_by_name.*
 
 /**
  * Created by hjy on 2019/11/12
@@ -74,6 +77,14 @@ class InputReceiverAddressActivity : HMBaseActivity<HMBasePresenter<BaseContract
                 checkInputValues()
             }
         })
+
+        et_letter_addr.setOnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
+                hideSoftKeyboard()
+                return@setOnKeyListener true
+            }
+            return@setOnKeyListener false
+        }
 
         val data = intent.getParcelableExtra<LetterReceiverBean>("receiver")
         data?.let {
