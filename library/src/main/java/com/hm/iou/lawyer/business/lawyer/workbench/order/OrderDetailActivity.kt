@@ -223,6 +223,7 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
             tv_operate_01.clickWithDuration {
                 HMAlertDialog.Builder(mContext)
                     .setMessage("是否确认拒绝此订单")
+                    .setMessageGravity(Gravity.CENTER)
                     .setNegativeButton("确认拒绝")
                     .setPositiveButton("考虑一下")
                     .setOnClickListener(object : HMAlertDialog.OnClickListener {
