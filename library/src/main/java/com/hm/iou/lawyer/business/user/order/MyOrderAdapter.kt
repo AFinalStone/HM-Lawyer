@@ -30,6 +30,8 @@ interface IOrderItem {
 
     fun getDesc(): String?
 
+    fun getType(): Int = 0
+
     fun getTypeStr(): String?
 
     fun getPrice(): String?

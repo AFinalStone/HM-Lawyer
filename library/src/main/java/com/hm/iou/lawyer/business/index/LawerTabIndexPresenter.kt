@@ -36,6 +36,9 @@ class LawerTabIndexPresenter(context: Context, view: LawerTabIndexContract.View)
         const val BANNER_AD_POSITION = "banner014"
     }
 
+    //banner 是否获取成功
+    private var mBannerSucc: Boolean = false
+    private var mBannerJob: Job? = null
 
     override fun onCreateView() {
         super.onCreateView()
@@ -63,14 +66,18 @@ class LawerTabIndexPresenter(context: Context, view: LawerTabIndexContract.View)
     }
 
     override fun getTopBanner() {
-        mScope?.launch {
+        if (mBannerSucc || mBannerJob?.isActive == true)
+            return
+        mBannerJob = mScope?.launch {
             try {
                 val response = HttpReqManager.getInstance().getService(AdService::class.java)
                     .getAdvertiseByCoroutine(BANNER_AD_POSITION)
                 val result = handleResponse(response)
+                mBannerSucc = true
                 mView.showBanner(result)
             } catch (e: Exception) {
                 handleException(e, showBusinessError = false, showCommError = false)
+                mBannerSucc = false
             }
         }
     }
@@ -93,7 +100,7 @@ class LawerTabIndexPresenter(context: Context, view: LawerTabIndexContract.View)
 
     private suspend fun isAuthLawyer(): Boolean = suspendCancellableCoroutine { continuation ->
         val disposable = CommApi.getPersonalCenter()
-            .subscribe({resp ->
+            .subscribe({ resp ->
                 val data = try {
                     handleResponse(resp)
                 } catch (e: Exception) {
