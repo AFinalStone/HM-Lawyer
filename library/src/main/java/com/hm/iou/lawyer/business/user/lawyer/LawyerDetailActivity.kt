@@ -124,8 +124,9 @@ class LawyerDetailActivity : HMBaseActivity<LawyerDetailPresenter>(), LawyerDeta
                 view.findViewById<TextView>(R.id.tv_lawyer_service_name).text = item.serviceName
                 view.findViewById<TextView>(R.id.tv_lawyer_service_desc).text = item.serviceDesc
                 view.findViewById<TextView>(R.id.tv_lawyer_service_price).text = item.servicePrice
-                //TODO
-//                view.findViewById<TextView>(R.id.iv_lawyer_service_logo).text = ""
+                val ivLogo = view.findViewById<ImageView>(R.id.iv_lawyer_service_logo)
+                ImageLoader.getInstance(this@LawyerDetailActivity)
+                    .displayImage(item.logo, ivLogo, R.mipmap.lawyer_ic_lawyer_letter2, R.mipmap.lawyer_ic_lawyer_letter2)
             }
         }
     }

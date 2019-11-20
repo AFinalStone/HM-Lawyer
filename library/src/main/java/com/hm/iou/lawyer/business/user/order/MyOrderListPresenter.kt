@@ -5,6 +5,7 @@ import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.bean.res.CustOrderItemBean
 import com.hm.iou.lawyer.dict.OrderStatus
+import com.hm.iou.lawyer.dict.OrderType
 import com.hm.iou.lawyer.event.AddLawyerLetterEvent
 import com.hm.iou.lawyer.event.UserOrderStatusChangedEvent
 import com.hm.iou.network.exception.ApiException
@@ -139,7 +140,15 @@ class MyOrderListPresenter(context: Context, view: MyOrderListContract.View) :
                 }
 
                 override fun getTypeStr(): String? {
-                    return "律师函"
+                    return when(item.type) {
+                        OrderType.Letter.type -> "律师函"
+                        OrderType.Consult.type -> "律师咨询"
+                        else -> ""
+                    }
+                }
+
+                override fun getType(): Int {
+                    return item.type
                 }
 
                 override fun getPrice(): String? {

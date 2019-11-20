@@ -96,6 +96,7 @@ class LawerTabIndexFragment : HMBaseFragment<LawerTabIndexPresenter>(),
         if (!hidden) {
             StatusBarUtil.setStatusBarDarkFont(mActivity, true)
             mPresenter.updateRedFlagCount()
+            mPresenter.getTopBanner()
         }
     }
 
