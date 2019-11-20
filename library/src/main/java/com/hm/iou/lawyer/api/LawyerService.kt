@@ -88,10 +88,10 @@ interface LawyerService {
     suspend fun lawyerAcceptOrder(@Query("billId") billId: String): BaseResponse<Any>
 
     @GET("/api/lawyer/v1/letter/lawyerCancelBill")
-    suspend fun lawyerCancelOrder(@Query("billId") billId: String): BaseResponse<Any>
+    suspend fun lawyerCancelOrder(@Query("billId") billId: String): BaseResponse<Int>
 
     @GET("/api/lawyer/v1/letter/lawyerRefuseBill")
-    suspend fun lawyerRefuseOrder(@Query("billId") billId: String): BaseResponse<Any>
+    suspend fun lawyerRefuseOrder(@Query("billId") billId: String): BaseResponse<Int>
 
     @GET("/api/lawyer/v1/express/list")
     suspend fun getMailList(): BaseResponse<ArrayList<String>>
