@@ -223,8 +223,9 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
             tv_operate_01.visibility = VISIBLE
             tv_operate_01.text = "拒绝接单"
             tv_operate_01.clickWithDuration {
-                val sp = SpannableString("是否确认拒绝此订单")
-                sp.setSpan(AbsoluteSizeSpan(mContext.dp2px(18)), 0, "是否确认拒绝此订单".length, 0)
+                val msg = "是否确认拒绝此订单"
+                val sp = SpannableString(msg)
+                sp.setSpan(AbsoluteSizeSpan(mContext.dp2px(18)), 0, msg.length, 0)
                 HMAlertDialog.Builder(mContext)
                     .setMessage(sp)
                     .setMessageGravity(Gravity.CENTER)
@@ -348,8 +349,9 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
             .setCanSelected(false)
             .setOnItemClickListener { position, _ ->
                 if (0 == position) {
-                    val sp = SpannableString("取消订单后今日将不能接单，是否继续取消？")
-                    sp.setSpan(AbsoluteSizeSpan(mContext.dp2px(18)), 0, "是否确认拒绝此订单".length, 0)
+                    val msg = "取消订单后今日将不能接单，是否继续取消？"
+                    val sp = SpannableString(msg)
+                    sp.setSpan(AbsoluteSizeSpan(mContext.dp2px(18)), 0, msg.length, 0)
                     HMAlertDialog.Builder(mContext)
                         .setMessage(sp)
                         .setPositiveButton("放弃取消")
@@ -374,7 +376,7 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
     override fun showNeedUpdateYearCheckByCanAcceptOrder(msg: String?) {
         msg?.let {
             val sp = SpannableString(msg)
-            sp.setSpan(AbsoluteSizeSpan(mContext.dp2px(18)), 0, msg.length ?: 0, 0)
+            sp.setSpan(AbsoluteSizeSpan(mContext.dp2px(18)), 0, msg.length, 0)
             HMAlertDialog.Builder(mContext)
                 .setMessage(sp)
                 .setNegativeButton("更新年检")

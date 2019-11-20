@@ -2,6 +2,8 @@ package com.hm.iou.lawyer.business.user.order
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.text.SpannableString
+import android.text.style.AbsoluteSizeSpan
 import android.view.Gravity
 import android.view.View
 import com.hm.iou.base.mvp.HMBaseActivity
@@ -10,6 +12,7 @@ import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.user.CommImageAdapter
 import com.hm.iou.tools.ImageLoader
 import com.hm.iou.tools.kt.clickWithDuration
+import com.hm.iou.tools.kt.dp2px
 import com.hm.iou.tools.kt.extraDelegate
 import com.hm.iou.uikit.HMTopBarView
 import com.hm.iou.uikit.dialog.HMAlertDialog
@@ -230,21 +233,26 @@ class MyOrderDetailActivity : HMBaseActivity<MyOrderDetailPresenter>(), MyOrderD
         negBtn: String?,
         callback: (pos: Boolean) -> Unit
     ) {
-        HMAlertDialog.Builder(this)
-            .setTitle(title)
-            .setMessage(msg)
-            .setMessageGravity(Gravity.CENTER)
-            .setPositiveButton(posBtn)
-            .setNegativeButton(negBtn)
-            .setOnClickListener(object : HMAlertDialog.OnClickListener {
-                override fun onNegClick() {
-                    callback(false)
-                }
+        msg?.let {
+            val sp = SpannableString(msg)
+            sp.setSpan(AbsoluteSizeSpan(mContext.dp2px(18)), 0, msg.length, 0)
+            HMAlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(sp)
+                .setMessageGravity(Gravity.CENTER)
+                .setPositiveButton(posBtn)
+                .setNegativeButton(negBtn)
+                .setOnClickListener(object : HMAlertDialog.OnClickListener {
+                    override fun onNegClick() {
+                        callback(false)
+                    }
 
-                override fun onPosClick() {
-                    callback(true)
-                }
-            })
-            .create().show()
+                    override fun onPosClick() {
+                        callback(true)
+                    }
+                })
+                .create().show()
+        }
+
     }
 }
