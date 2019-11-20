@@ -63,7 +63,7 @@ class EditLawyerHeaderActivity : HMBaseActivity<EditLawyerHeaderPresenter>(),
     }
 
     override fun showUserAvatar(url: String) {
-        ImageLoader.getInstance(mContext).displayImage(url, iv_header)
+        ImageLoader.getInstance(mContext).displayImage(url, iv_header,R.mipmap.uikit_icon_header_unknow)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

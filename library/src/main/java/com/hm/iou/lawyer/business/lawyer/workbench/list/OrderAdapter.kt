@@ -21,7 +21,7 @@ class OrderAdapter :
         helper ?: return
         item ?: return
         val ivHeader = helper.getView<ImageView>(R.id.iv_header)
-        ImageLoader.getInstance(mContext).displayImage(item.getUserHeader(), ivHeader)
+        ImageLoader.getInstance(mContext).displayImage(item.getUserHeader(), ivHeader,R.mipmap.uikit_icon_header_unknow)
         helper.setText(R.id.tv_name, item.getUserName())
         helper.setText(R.id.tv_order_time, item.getTime())
         helper.setText(R.id.tv_order_type, item.getTypeStr())
