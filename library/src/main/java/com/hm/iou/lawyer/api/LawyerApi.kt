@@ -247,7 +247,7 @@ object LawyerApi {
      */
     suspend fun lawyerCancelOrder(
         billId: String
-    ): BaseResponse<Any> {
+    ): BaseResponse<Int> {
         return getService().lawyerCancelOrder(billId)
     }
 
@@ -256,7 +256,7 @@ object LawyerApi {
      */
     suspend fun lawyerRefuseOrder(
         billId: String
-    ): BaseResponse<Any> {
+    ): BaseResponse<Int> {
         return getService().lawyerRefuseOrder(billId)
     }
 

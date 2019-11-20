@@ -110,6 +110,7 @@ class OrderDetailPresenter(context: Context, view: OrderDetailContract.View) :
             try {
                 mView.showLoadingView()
                 handleResponse(LawyerApi.lawyerAcceptOrder(mOrderId))
+                EventBus.getDefault().post(LawyerOrderStatusChangedEvent())
                 mView.dismissLoadingView()
                 mView.toastMessage("操作成功")
                 getOrderDetail()
@@ -124,7 +125,11 @@ class OrderDetailPresenter(context: Context, view: OrderDetailContract.View) :
         launch {
             try {
                 mView.showLoadingView()
-                handleResponse(LawyerApi.lawyerRefuseOrder(mOrderId))
+                val relationId = handleResponse(LawyerApi.lawyerRefuseOrder(mOrderId))
+                if (relationId != null) {
+                    mRelationId = relationId
+                }
+                EventBus.getDefault().post(LawyerOrderStatusChangedEvent())
                 mView.dismissLoadingView()
                 mView.toastMessage("操作成功")
                 getOrderDetail()
@@ -139,7 +144,11 @@ class OrderDetailPresenter(context: Context, view: OrderDetailContract.View) :
         launch {
             try {
                 mView.showLoadingView()
-                handleResponse(LawyerApi.lawyerCancelOrder(mOrderId))
+                val relationId = handleResponse(LawyerApi.lawyerCancelOrder(mOrderId))
+                if (relationId != null) {
+                    mRelationId = relationId
+                }
+                EventBus.getDefault().post(LawyerOrderStatusChangedEvent())
                 mView.dismissLoadingView()
                 mView.toastMessage("操作成功")
                 getOrderDetail()
