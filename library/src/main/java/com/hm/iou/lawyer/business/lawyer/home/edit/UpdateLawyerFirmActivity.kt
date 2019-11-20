@@ -39,6 +39,20 @@ class UpdateLawyerFirmActivity : HMBaseActivity<UpdateLawyerFirmPresenter>(),
         UpdateLawyerFirmPresenter(this, this)
 
     override fun initEventAndData(savedInstanceState: Bundle?) {
+        et_certificate_code.addTextChangedListener(object : HMTextChangeListener() {
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                checkValue()
+            }
+
+        })
+        et_lawyer_firm.addTextChangedListener(object : HMTextChangeListener() {
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                checkValue()
+            }
+
+        })
         //律师正面
         iv_authen_photo_front.setOnClickListener(this)
         iv_add_authen_photo_front.setOnClickListener(this)

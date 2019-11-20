@@ -144,7 +144,6 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
         //个人证件照片
         if (REQ_CODE_SELECT_HEADER_IMAGE == requestCode && Activity.RESULT_OK == resultCode) {
             data?.let {
-                iv_add_header_image.visibility = INVISIBLE
                 val path = data.getStringExtra("extra_result_selection_path_first")
                 Logger.d("头像camera path: $mHeaderImageBean")
                 CompressPictureUtil.compressPic(
@@ -155,6 +154,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
                     mHeaderImageBean?.url = picPath
                     ImageLoader.getInstance(mContext)
                         .displayImage(picPath, iv_header_image)
+                    iv_add_header_image.visibility = INVISIBLE
                     checkValue()
                 }
 
@@ -164,7 +164,6 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
         //证件正面照片
         if (REQ_CODE_SELECT_AUTHEN_IMAGE_FRONT == requestCode && Activity.RESULT_OK == resultCode) {
             data?.let {
-                iv_add_authen_photo_front.visibility = INVISIBLE
                 val path = data.getStringExtra("extra_result_selection_path_first")
                 Logger.d("证件正面camera path: $path")
                 CompressPictureUtil.compressPic(
@@ -175,6 +174,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
                     mAuthenImageFrontBean?.url = picPath
                     ImageLoader.getInstance(mContext)
                         .displayImage(picPath, iv_authen_photo_front)
+                    iv_add_authen_photo_front.visibility = INVISIBLE
                     checkValue()
                 }
             }
@@ -184,7 +184,6 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
         //证件反面照片
         if (REQ_CODE_SELECT_AUTHEN_IMAGE_BACK == requestCode && Activity.RESULT_OK == resultCode) {
             data?.let {
-                iv_add_authen_photo_back.visibility = INVISIBLE
                 val path = data.getStringExtra("extra_result_selection_path_first")
                 Logger.d("证件反面camera path: $path")
                 CompressPictureUtil.compressPic(
@@ -195,7 +194,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
                     mAuthenImageBackBean?.url = picPath
                     ImageLoader.getInstance(mContext)
                         .displayImage(picPath, iv_authen_photo_back)
-
+                    iv_add_authen_photo_back.visibility = INVISIBLE
                     checkValue()
                 }
             }
@@ -270,8 +269,12 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
     }
 
     override fun showDetail(detail: LawyerAuthenticationResBean) {
+        //执业证号
         et_certificate_code.setText(detail.licenseNumber ?: "")
+        et_certificate_code.setSelection(et_certificate_code.length())
+        //执业律所
         et_lawyer_firm.setText(detail.lawFirm ?: "")
+        //持证日期
         var certificateStartTime = ""
         try {
             val sdf01 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -283,11 +286,13 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
             e.printStackTrace()
         }
         tv_certificate_start_time.text = certificateStartTime
+        //个人介绍
         et_self_introduction.setText(detail.info ?: "")
         //个人证件照
         mHeaderImageBean = detail.image
         ImageLoader.getInstance(mContext)
             .displayImage(mHeaderImageBean?.url, iv_header_image, R.mipmap.uikit_icon_header_unknow)
+        iv_add_header_image.visibility = INVISIBLE
         //认证照片
         val listAuthen = detail.authCerts
         try {
@@ -297,6 +302,8 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
                 iv_authen_photo_front,
                 R.mipmap.uikit_icon_header_unknow
             )
+            iv_add_authen_photo_front.visibility = INVISIBLE
+
             mAuthenImageBackBean = listAuthen?.get(1)
             ImageLoader.getInstance(mContext)
                 .displayImage(
@@ -304,6 +311,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
                     iv_authen_photo_back,
                     R.mipmap.uikit_icon_header_unknow
                 )
+            iv_add_authen_photo_back.visibility = INVISIBLE
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -441,7 +449,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
             tvToday.gravity = Gravity.CENTER
 
             val builder = TimePickerDialog.Builder(this)
-                .setTitle("借款到期")
+                .setTitle("持证日期")
                 .setHeaderView(tvToday)
                 .setScrollType(TimePickerDialog.SCROLL_TYPE.DAY)
                 .setTimeRange(startTime, endTime)

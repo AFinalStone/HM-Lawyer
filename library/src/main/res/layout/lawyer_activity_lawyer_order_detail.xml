@@ -71,7 +71,7 @@
             android:background="@drawable/uikit_shape_common_btn_selector"
             android:gravity="center"
             android:text="立即接单"
-            android:textColor="#ff575b62"
+            android:textColor="#ff111111"
             android:visibility="gone" />
 
     </LinearLayout>
@@ -162,9 +162,9 @@
                         android:layout_height="50dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
+                        android:src="@mipmap/uikit_icon_header_unknow"
                         app:civ_border_color="@color/uikti_header_border_color"
-                        app:civ_border_width="@dimen/uikti_header_border_width"
-                        android:src="@mipmap/uikit_icon_header_unknow" />
+                        app:civ_border_width="@dimen/uikti_header_border_width" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"

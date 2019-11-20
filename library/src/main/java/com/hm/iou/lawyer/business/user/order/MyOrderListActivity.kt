@@ -53,7 +53,7 @@ class MyOrderListActivity : HMBaseActivity<MyOrderListPresenter>(), MyOrderListC
 
     override fun showDataEmpty(show: Boolean) {
         if (show) {
-            loading_view.showDataEmpty("订单数据为空")
+            loading_view.showDataEmpty("没有相关订单哦~")
         } else {
             loading_view.stopLoadingAnim()
             loading_view.visibility = View.GONE

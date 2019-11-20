@@ -15,3 +15,4 @@ data class LawyerAuthenticationResBean(
     val lawFirm: String?,
     val licenseNumber: String?
 )
+

@@ -107,7 +107,7 @@ class MyOrderListPageFragment : HMBaseFragment<MyOrderListPagePresenter>(),
 
     override fun showDataEmpty(show: Boolean) {
         if (show) {
-            mContentView?.findViewById<HMLoadingView>(R.id.loading_view)?.showDataEmpty("订单数据为空")
+            mContentView?.findViewById<HMLoadingView>(R.id.loading_view)?.showDataEmpty("没有相关订单哦~")
         } else {
             mContentView?.findViewById<HMLoadingView>(R.id.loading_view)?.stopLoadingAnim()
             mContentView?.findViewById<HMLoadingView>(R.id.loading_view)?.visibility = View.GONE

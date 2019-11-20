@@ -5,6 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.text.SpannableString
+import android.text.style.AbsoluteSizeSpan
 import android.view.Gravity
 import android.view.View
 import android.view.View.*
@@ -221,8 +223,10 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
             tv_operate_01.visibility = VISIBLE
             tv_operate_01.text = "拒绝接单"
             tv_operate_01.clickWithDuration {
+                val sp = SpannableString("是否确认拒绝此订单")
+                sp.setSpan(AbsoluteSizeSpan(mContext.dp2px(18)), 0, "是否确认拒绝此订单".length, 0)
                 HMAlertDialog.Builder(mContext)
-                    .setMessage("是否确认拒绝此订单")
+                    .setMessage(sp)
                     .setNegativeButton("确认拒绝")
                     .setPositiveButton("考虑一下")
                     .setOnClickListener(object : HMAlertDialog.OnClickListener {
@@ -252,7 +256,7 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
         rl_order_operate_time.visibility = GONE
         view_order_status.visibility = GONE
         view_order_operate_time.visibility = GONE
-        ll_order_receiver_info.visibility = GONE
+        ll_order_receiver_info.visibility = VISIBLE
         ll_mail_info.visibility = GONE
         iv_more.visibility = VISIBLE
         tv_operate_01.visibility = VISIBLE
@@ -265,8 +269,10 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
         tv_operate_01.clickWithDuration {
             val phone = detail.custInfo?.mobile
             phone?.let {
+                val sp = SpannableString(phone)
+                sp.setSpan(AbsoluteSizeSpan(mContext.dp2px(18)), 0, phone.length, 0)
                 HMAlertDialog.Builder(mContext)
-                    .setMessage(phone)
+                    .setMessage(sp)
                     .setMessageGravity(Gravity.CENTER)
                     .setNegativeButton("取消")
                     .setPositiveButton("呼叫")
@@ -341,8 +347,10 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
             .setCanSelected(false)
             .setOnItemClickListener { position, _ ->
                 if (0 == position) {
+                    val sp = SpannableString("取消订单后今日将不能接单，是否继续取消？")
+                    sp.setSpan(AbsoluteSizeSpan(mContext.dp2px(18)), 0, "是否确认拒绝此订单".length, 0)
                     HMAlertDialog.Builder(mContext)
-                        .setMessage("取消订单后今日将不能接单，是否继续取消？")
+                        .setMessage(sp)
                         .setPositiveButton("放弃取消")
                         .setNegativeButton("继续取消")
                         .setOnClickListener(object : HMAlertDialog.OnClickListener {
@@ -363,53 +371,58 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
     }
 
     override fun showNeedUpdateYearCheckByCanAcceptOrder(msg: String?) {
-        HMAlertDialog.Builder(mContext)
-            .setMessage(msg)
-            .setNegativeButton("更新年检")
-            .setPositiveButton("继续接单")
-            .setOnClickListener(object : HMAlertDialog.OnClickListener {
-                override fun onNegClick() {
-                    startActivity<YearCheckAuthenActivity>()
-                }
+        msg?.let {
+            val sp = SpannableString(msg)
+            sp.setSpan(AbsoluteSizeSpan(mContext.dp2px(18)), 0, msg.length ?: 0, 0)
+            HMAlertDialog.Builder(mContext)
+                .setMessage(sp)
+                .setNegativeButton("更新年检")
+                .setPositiveButton("继续接单")
+                .setOnClickListener(object : HMAlertDialog.OnClickListener {
+                    override fun onNegClick() {
+                        startActivity<YearCheckAuthenActivity>()
+                    }
 
-                override fun onPosClick() {
-                    mPresenter.acceptOrder()
-                }
-            })
-            .create()
-            .show()
+                    override fun onPosClick() {
+                        mPresenter.acceptOrder()
+                    }
+                })
+                .create()
+                .show()
+        }
+
     }
 
     override fun showNeedUpdateYearCheckByNotCanAcceptOrder(msg: String?) {
-        HMAlertDialog.Builder(mContext)
-            .setMessage(msg)
-            .setNegativeButton("稍后更新")
-            .setPositiveButton("立即更新")
-            .setOnClickListener(object : HMAlertDialog.OnClickListener {
-                override fun onNegClick() {
-                }
+        msg?.let {
+            val sp = SpannableString(msg)
+            sp.setSpan(AbsoluteSizeSpan(mContext.dp2px(18)), 0, msg.length, 0)
+            HMAlertDialog.Builder(mContext)
+                .setMessage(sp)
+                .setNegativeButton("稍后更新")
+                .setPositiveButton("立即更新")
+                .setOnClickListener(object : HMAlertDialog.OnClickListener {
+                    override fun onNegClick() {
+                    }
 
-                override fun onPosClick() {
-                    startActivity<YearCheckAuthenActivity>()
-                }
-            })
-            .create()
-            .show()
+                    override fun onPosClick() {
+                        startActivity<YearCheckAuthenActivity>()
+                    }
+                })
+                .create()
+                .show()
+        }
     }
 
     override fun showNotCanAcceptOrder(msg: String?) {
-        HMAlertDialog.Builder(mContext)
-            .setMessage(msg)
-            .setPositiveButton("知道了")
-            .setOnClickListener(object : HMAlertDialog.OnClickListener {
-                override fun onNegClick() {
-
-                }
-
-                override fun onPosClick() {
-                }
-            })
-            .create()
-            .show()
+        msg?.let {
+            val sp = SpannableString(msg)
+            sp.setSpan(AbsoluteSizeSpan(mContext.dp2px(18)), 0, msg.length, 0)
+            HMAlertDialog.Builder(mContext)
+                .setMessage(sp)
+                .setPositiveButton("知道了")
+                .create()
+                .show()
+        }
     }
 }

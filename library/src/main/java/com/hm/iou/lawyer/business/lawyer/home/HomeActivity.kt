@@ -18,6 +18,7 @@ import com.hm.iou.lawyer.business.lawyer.home.authen.AuthenProgressActivity
 import com.hm.iou.lawyer.business.lawyer.home.edit.*
 import com.hm.iou.lawyer.dict.UpdateLawFirmStatusType
 import com.hm.iou.lawyer.dict.UpdateYeaCheckStatusType
+import com.hm.iou.logger.Logger
 import com.hm.iou.tools.ImageLoader
 import com.hm.iou.tools.kt.*
 import com.hm.iou.uikit.HMTopBarView
@@ -75,7 +76,7 @@ class HomeActivity : HMBaseActivity<HomePresenter>(),
      */
     private var mUpdateLawFirmState: Int? by extraDelegate(
         EXTRA_KEY_UPDATE_LAW_FIRM_STATE,
-        null
+        -1
     )
 
     /**
@@ -83,7 +84,7 @@ class HomeActivity : HMBaseActivity<HomePresenter>(),
      */
     private var updateYearCheckState: Int? by extraDelegate(
         EXTRA_KEY_UPDATE_YEAR_CHECK_STATE,
-        null
+        -1
     )
 
     private var mLawyerServiceAdapter: LawyerServiceAdapter? = null
@@ -102,6 +103,15 @@ class HomeActivity : HMBaseActivity<HomePresenter>(),
             updateYearCheckState = savedInstanceState.getValue(EXTRA_KEY_UPDATE_YEAR_CHECK_STATE)
         }
         initView()
+        mPresenter.init()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        mUpdateLawFirmState = intent?.getIntExtra(EXTRA_KEY_UPDATE_LAW_FIRM_STATE, -1)
+        updateYearCheckState = intent?.getIntExtra(EXTRA_KEY_UPDATE_YEAR_CHECK_STATE, -1)
+        Logger.d("mUpdateLawFirmState=$mUpdateLawFirmState")
+        Logger.d("updateYearCheckState=$updateYearCheckState")
         mPresenter.init()
     }
 

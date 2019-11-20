@@ -78,10 +78,10 @@ class MainActivity : AppCompatActivity() {
         val pwd = MD5.hexdigest("123456".toByteArray())
         val reqBean = MobileLoginReqBean()
         //        reqBean.setMobile("13186975702");
-        reqBean.mobile = "15967132742";
+//        reqBean.mobile = "15967132742";
 //        reqBean.mobile = "15267163669"
         //        reqBean.setMobile("18337150117");
-//        reqBean.mobile = "17681832816"
+        reqBean.mobile = "17681832816"
 
         reqBean.queryPswd = pwd
         HttpReqManager.getInstance().getService<LoginService>(LoginService::class.java!!)
