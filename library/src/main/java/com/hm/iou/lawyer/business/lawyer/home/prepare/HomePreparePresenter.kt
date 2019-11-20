@@ -8,8 +8,10 @@ import com.hm.iou.lawyer.business.lawyer.home.HomeActivity
 import com.hm.iou.lawyer.business.lawyer.home.authen.AuthenProgressActivity
 import com.hm.iou.lawyer.dict.UpdateLawFirmStatusType
 import com.hm.iou.lawyer.dict.UpdateYeaCheckStatusType
+import com.hm.iou.lawyer.event.LawyerAuthSuccEvent
 import com.hm.iou.tools.kt.startActivity
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 
 /**
  * @author : 借条管家-shilei
@@ -48,6 +50,8 @@ class HomePreparePresenter(context: Context, view: HomePrepareContract.View) :
                                 HomeActivity.EXTRA_KEY_UPDATE_LAW_FIRM_STATE to lawFirmState,
                                 HomeActivity.EXTRA_KEY_UPDATE_YEAR_CHECK_STATE to yearCheckState
                             )
+                            //如果入口没有开启，则通知开启入口
+                            EventBus.getDefault().post(LawyerAuthSuccEvent())
                         }
                         4 -> {
                             val authFailMsg = result.authFailMsg ?: "很抱歉，您的认证审核未通过"

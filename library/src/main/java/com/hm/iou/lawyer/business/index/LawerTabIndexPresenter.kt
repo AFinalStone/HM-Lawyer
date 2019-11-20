@@ -8,6 +8,7 @@ import com.hm.iou.base.comm.CommApi
 import com.hm.iou.base.mvp.HMBaseFragmentPresenter
 import com.hm.iou.base.utils.RxUtil
 import com.hm.iou.lawyer.LawyerAppLike
+import com.hm.iou.lawyer.event.LawyerAuthSuccEvent
 import com.hm.iou.network.HttpReqManager
 import com.hm.iou.sharedata.UserManager
 import com.hm.iou.sharedata.event.CommBizEvent
@@ -93,7 +94,12 @@ class LawerTabIndexPresenter(context: Context, view: LawerTabIndexContract.View)
     private suspend fun isAuthLawyer(): Boolean = suspendCancellableCoroutine { continuation ->
         val disposable = CommApi.getPersonalCenter()
             .subscribe({resp ->
-                val data = handleResponse(resp)
+                val data = try {
+                    handleResponse(resp)
+                } catch (e: Exception) {
+                    continuation.resumeWithException(e)
+                    return@subscribe
+                }
                 data?.let {
                     UserManager.getInstance(mContext).setAuthLawyer(data.isLawyer)
                     continuation.resume(data.isLawyer)
@@ -119,6 +125,11 @@ class LawerTabIndexPresenter(context: Context, view: LawerTabIndexContract.View)
             val redFlagCount = commBizEvent.content
             mView.updateRedFlagCount(redFlagCount ?: "")
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventLawyerAuthEvent(event: LawyerAuthSuccEvent) {
+        judgeIsAuthLawyer()
     }
 
 }

@@ -135,6 +135,8 @@ class LawyerDetailActivity : HMBaseActivity<LawyerDetailPresenter>(), LawyerDeta
     }
 
     override fun showLawyerHonorImage(list: List<ImageUrlFileIdBean>?) {
+        tv_lawyer_honor_label.visibility = if (list.isNullOrEmpty()) View.INVISIBLE else View.VISIBLE
+        
         rv_lawyer_honor.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         val adapter = LawyerHonorAdapter(this)

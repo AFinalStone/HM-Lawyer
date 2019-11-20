@@ -227,6 +227,7 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
                 sp.setSpan(AbsoluteSizeSpan(mContext.dp2px(18)), 0, "是否确认拒绝此订单".length, 0)
                 HMAlertDialog.Builder(mContext)
                     .setMessage(sp)
+                    .setMessageGravity(Gravity.CENTER)
                     .setNegativeButton("确认拒绝")
                     .setPositiveButton("考虑一下")
                     .setOnClickListener(object : HMAlertDialog.OnClickListener {
