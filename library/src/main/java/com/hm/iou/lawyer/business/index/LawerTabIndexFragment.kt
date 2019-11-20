@@ -1,8 +1,11 @@
 package com.hm.iou.lawyer.business.index
 
 import android.content.Context
+import android.graphics.Outline
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.ViewOutlineProvider
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -19,6 +22,7 @@ import com.hm.iou.tools.ImageLoader
 import com.hm.iou.tools.ScreenUtil
 import com.hm.iou.tools.StringUtil
 import com.hm.iou.tools.kt.clickWithDuration
+import com.hm.iou.tools.kt.density
 import com.youth.banner.Banner
 import com.youth.banner.loader.ImageLoaderInterface
 import org.greenrobot.eventbus.EventBus
@@ -131,6 +135,17 @@ class LawerTabIndexFragment : HMBaseFragment<LawerTabIndexPresenter>(),
             banner.visibility = View.GONE
             banner.stopAutoPlay()
         } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                banner.outlineProvider = object : ViewOutlineProvider() {
+                    override fun getOutline(view: View?, outline: Outline?) {
+                        view ?: return
+                        outline ?: return
+                        outline.setRoundRect(0, 0, view.width, view.height, view.context.density * 4)
+                    }
+                }
+                banner.clipToOutline = true
+            }
+
             //设置 banner 宽度、高度
             val params = banner.layoutParams as LinearLayout.LayoutParams
             params.height = ((ScreenUtil.getScreenWidth(activity) - DensityUtil.dip2px(
