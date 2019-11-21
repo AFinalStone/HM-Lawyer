@@ -256,7 +256,7 @@
                 <TextView
                     style="@style/UikitTextView"
                     android:layout_height="40dp"
-                    android:text="收件人信息" />
+                    android:text="收函人信息" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -109,11 +109,11 @@ class WithDrawPresenter(context: Context, view: WithDrawContract.View) :
         launch {
             mView.showLoadingView()
             try {
-                val result = handleResponse(LawyerApi.withDrawMoney(WithDrawMoneyReqBean((withDrawMoney * 100).toInt())))
+                val result =
+                    handleResponse(LawyerApi.withDrawMoney(WithDrawMoneyReqBean((withDrawMoney * 100).toInt())))
                 EventBus.getDefault().post(UpdateWalletBalanceEvent())
                 mView.dismissLoadingView()
                 mView.updateWithdrawMoney("")
-                mView.toastMessage("提现成功")
                 //刷新钱包余额信息
                 getCurrentWalletBalance()
 

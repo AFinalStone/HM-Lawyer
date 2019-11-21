@@ -151,7 +151,7 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
                 iv_more.visibility = GONE
                 tv_operate_01.visibility = GONE
                 tv_operate_02.visibility = GONE
-                tv_order_status.text = "订单已拒绝"
+                tv_order_status.text = "已拒绝接单"
                 tv_order_operate_label.text = "拒绝时间"
                 val time = detail.doDate?.replace("-", ".")
                 tv_order_operate_time.text = time
