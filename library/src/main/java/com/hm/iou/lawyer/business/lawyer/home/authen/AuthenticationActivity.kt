@@ -316,7 +316,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
             e.printStackTrace()
         }
         //荣誉资质
-        val listHonor = detail.authCerts
+        val listHonor = detail.honors
         if (!listHonor.isNullOrEmpty()) {
             for (file in listHonor) {
                 val entity = IouData.FileEntity()

@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <com.hm.iou.uikit.HMTopBarView
@@ -40,8 +40,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:weightSum="1">
 
 
                 <LinearLayout
@@ -261,14 +262,12 @@
 
         <View
             android:id="@+id/view_divider"
-            style="@style/UikitDivider.Horizontal"
-            android:layout_above="@+id/bottom_bar" />
+            style="@style/UikitDivider.Horizontal" />
 
         <com.hm.iou.uikit.HMBottomBarView
             android:id="@+id/bottom_bar"
             android:layout_width="match_parent"
-            android:layout_height="50dip"
-            android:layout_alignParentBottom="true" />
+            android:layout_height="50dip" />
     </LinearLayout>
 
     <com.hm.iou.uikit.HMLoadingView
