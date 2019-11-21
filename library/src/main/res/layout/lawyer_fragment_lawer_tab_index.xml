@@ -6,11 +6,11 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <View
+    <com.hm.iou.uikit.StatusBarView
         android:id="@+id/view_statusbar_placeholder"
         android:layout_width="match_parent"
-        android:layout_height="24dip"
-        android:background="@color/white" />
+        android:layout_height="wrap_content"
+        />
 
     <FrameLayout
         android:layout_width="match_parent"
