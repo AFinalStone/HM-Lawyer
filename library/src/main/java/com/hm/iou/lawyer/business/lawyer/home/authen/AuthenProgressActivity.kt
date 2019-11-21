@@ -52,7 +52,6 @@ class AuthenProgressActivity : HMBaseActivity<HMBasePresenter<BaseContract.BaseV
                 savedInstanceState.getValue(EXTRA_KEY_IF_AUTHENTICATION_FAILED)
         }
         bottom_bar.setOnTitleClickListener {
-            NavigationHelper.toAuthentication(mContext)
             startActivityForResult<AuthenticationActivity>(REQ_CODE_RESTART_AUTHEN)
         }
         if (false == mIfAuthenticationFailed) {
