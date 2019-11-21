@@ -107,7 +107,7 @@
                     android:id="@+id/iv_add_authen_photo_front"
                     android:layout_width="226dp"
                     android:layout_height="160dp"
-                    android:src="@mipmap/lawyer_ic_lawyer_authen_front_image" />
+                    android:src="@mipmap/lawyer_ic_lawyer_authen_front_image_large" />
 
             </RelativeLayout>
 
@@ -132,7 +132,7 @@
                     android:id="@+id/iv_add_authen_photo_back"
                     android:layout_width="226dp"
                     android:layout_height="160dp"
-                    android:src="@mipmap/lawyer_ic_lawyer_authen_back_image" />
+                    android:src="@mipmap/lawyer_ic_lawyer_authen_back_image_large" />
 
             </RelativeLayout>
 

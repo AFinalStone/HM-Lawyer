@@ -311,30 +311,38 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
         et_self_introduction.setText(detail.info ?: "")
         //个人证件照
         mHeaderImageBean = detail.image
-        ImageLoader.getInstance(mContext)
-            .displayImage(mHeaderImageBean?.url, iv_header_image, R.mipmap.uikit_icon_header_unknow)
-        iv_add_header_image.visibility = INVISIBLE
-        //认证照片
-        val listAuthen = detail.authCerts
-        try {
-            mAuthenImageFrontBean = listAuthen?.get(0)
-            ImageLoader.getInstance(mContext).displayImage(
-                mAuthenImageFrontBean?.url,
-                iv_authen_photo_front,
-                R.mipmap.uikit_icon_header_unknow
-            )
-            iv_add_authen_photo_front.visibility = INVISIBLE
-
-            mAuthenImageBackBean = listAuthen?.get(1)
+        mHeaderImageBean?.let {
             ImageLoader.getInstance(mContext)
                 .displayImage(
-                    mAuthenImageBackBean?.url,
-                    iv_authen_photo_back,
+                    mHeaderImageBean?.url,
+                    iv_header_image,
                     R.mipmap.uikit_icon_header_unknow
                 )
-            iv_add_authen_photo_back.visibility = INVISIBLE
-        } catch (e: Exception) {
-            e.printStackTrace()
+            iv_add_header_image.visibility = INVISIBLE
+        }
+        //认证照片
+        val listAuthen = detail.authCerts
+        if (!listAuthen.isNullOrEmpty()) {
+            try {
+                mAuthenImageFrontBean = listAuthen.get(0)
+                ImageLoader.getInstance(mContext).displayImage(
+                    mAuthenImageFrontBean?.url,
+                    iv_authen_photo_front,
+                    R.mipmap.uikit_icon_header_unknow
+                )
+                iv_add_authen_photo_front.visibility = INVISIBLE
+
+                mAuthenImageBackBean = listAuthen.get(1)
+                ImageLoader.getInstance(mContext)
+                    .displayImage(
+                        mAuthenImageBackBean?.url,
+                        iv_authen_photo_back,
+                        R.mipmap.uikit_icon_header_unknow
+                    )
+                iv_add_authen_photo_back.visibility = INVISIBLE
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
         //荣誉资质
         val listHonor = detail.honors
