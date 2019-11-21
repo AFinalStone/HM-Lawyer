@@ -5,10 +5,7 @@ import com.hm.iou.base.file.FileApi
 import com.hm.iou.base.file.FileBizType
 import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.api.LawyerApi
-import com.hm.iou.lawyer.bean.req.UpdateLawyerAuthenticationInfReqBean
-import com.hm.iou.lawyer.dict.UpdateLawyerAuthenInfoType
 import com.hm.iou.lawyer.event.LawyerOrderStatusChangedEvent
-import com.hm.iou.lawyer.event.UpdateAuthenInfoEvent
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import java.io.File
@@ -54,7 +51,7 @@ class LawyerFinishOrderPresenter(
                         fileIdList
                     )
                 )
-                mView.toastMessage("操作成功")
+                mView.toastMessage("订单已完成")
                 EventBus.getDefault().post(LawyerOrderStatusChangedEvent())
                 mView.closeCurrPage()
             } catch (e: Exception) {

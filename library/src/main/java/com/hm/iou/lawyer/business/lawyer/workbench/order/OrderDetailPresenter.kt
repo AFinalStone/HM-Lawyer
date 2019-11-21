@@ -112,7 +112,7 @@ class OrderDetailPresenter(context: Context, view: OrderDetailContract.View) :
                 handleResponse(LawyerApi.lawyerAcceptOrder(mOrderId))
                 EventBus.getDefault().post(LawyerOrderStatusChangedEvent())
                 mView.dismissLoadingView()
-                mView.toastMessage("操作成功")
+                mView.toastMessage("接单成功")
                 getOrderDetail()
             } catch (e: Exception) {
                 mView.dismissLoadingView()
@@ -131,7 +131,7 @@ class OrderDetailPresenter(context: Context, view: OrderDetailContract.View) :
                 }
                 EventBus.getDefault().post(LawyerOrderStatusChangedEvent())
                 mView.dismissLoadingView()
-                mView.toastMessage("操作成功")
+                mView.toastMessage("订单已拒绝")
                 getOrderDetail()
             } catch (e: Exception) {
                 mView.dismissLoadingView()
@@ -150,7 +150,7 @@ class OrderDetailPresenter(context: Context, view: OrderDetailContract.View) :
                 }
                 EventBus.getDefault().post(LawyerOrderStatusChangedEvent())
                 mView.dismissLoadingView()
-                mView.toastMessage("操作成功")
+                mView.toastMessage("取消成功")
                 getOrderDetail()
             } catch (e: Exception) {
                 mView.dismissLoadingView()
