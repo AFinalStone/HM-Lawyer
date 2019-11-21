@@ -439,7 +439,12 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
             val todayTime = SimpleDateFormat("yyyy年 MM月dd日").format(calendar.time)
 
             calendar.add(Calendar.YEAR, -40)
-            val startTime = sdf.format(calendar.time)
+            //开始时间
+            var startTime: String = sdf.format(calendar.time)
+            val startDate: Date = sdf.parse("1980-08-01 00:00:00")
+            if (startDate.after(calendar.time)) {
+                startTime = sdf.format(startDate)
+            }
             val endTime = sdf.format(now)
 
             val tvToday = TextView(mContext)

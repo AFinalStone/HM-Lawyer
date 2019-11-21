@@ -52,7 +52,7 @@ dependencies {
     //首页、借条创建、编辑、展示等相关功能
 //    api 'com.heima.iou:hmjietiaolocal:1.0.0'
     //个人中心
-//    api 'com.heima.iou:hmuserinfolocal:1.0.0'
+    api 'com.heima.iou:hmuserinfolocal:1.0.0'
 
     compile(name: 'st-facecheck-release', ext: 'aar')
 
