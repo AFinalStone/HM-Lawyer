@@ -47,7 +47,9 @@
                     android:layout_height="160dp"
                     android:gravity="left|top"
                     android:hint="请输入5个字以上的评价"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:maxLength="50"
+                    />
 
                 <TextView
                     android:id="@+id/tv_rating_desc"
