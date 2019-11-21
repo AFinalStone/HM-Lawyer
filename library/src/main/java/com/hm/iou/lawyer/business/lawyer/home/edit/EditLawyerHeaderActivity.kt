@@ -15,7 +15,7 @@ import com.hm.iou.tools.kt.extraDelegate
 import com.hm.iou.tools.kt.getValue
 import com.hm.iou.tools.kt.putValue
 import com.hm.iou.uikit.HMTopBarView
-import kotlinx.android.synthetic.main.lawyer_activity_lawyer_header_detail.*
+import kotlinx.android.synthetic.main.lawyer_activity_edit_lawyer_header_detail.*
 import java.io.File
 
 /**
@@ -34,7 +34,7 @@ class EditLawyerHeaderActivity : HMBaseActivity<EditLawyerHeaderPresenter>(),
         null
     )
 
-    override fun getLayoutId(): Int = R.layout.lawyer_activity_lawyer_header_detail
+    override fun getLayoutId(): Int = R.layout.lawyer_activity_edit_lawyer_header_detail
 
     override fun initEventAndData(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {

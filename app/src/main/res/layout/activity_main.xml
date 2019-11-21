@@ -48,4 +48,10 @@
         android:layout_height="wrap_content"
         android:text="律师进度" />
 
+    <Button
+        android:id="@+id/btn_cut_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="裁切头像" />
+
 </LinearLayout>

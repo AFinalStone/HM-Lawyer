@@ -17,6 +17,11 @@ class AuthenticationContract {
          * 显示详情
          */
         fun showDetail(detail: LawyerAuthenticationResBean)
+
+        /**
+         * 设置返回并关闭页面
+         */
+        fun setResultOkAndClosePage()
     }
 
     interface Presenter : BaseContract.BasePresenter {

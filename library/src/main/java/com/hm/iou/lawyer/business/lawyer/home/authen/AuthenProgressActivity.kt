@@ -1,16 +1,19 @@
 package com.hm.iou.lawyer.business.lawyer.home.authen
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import com.hm.iou.base.mvp.BaseContract
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.business.NavigationHelper
-import com.hm.iou.tools.kt.extraDelegate
-import com.hm.iou.tools.kt.getValue
-import com.hm.iou.tools.kt.putValue
-import com.hm.iou.tools.kt.startActivity
+import com.hm.iou.lawyer.event.UpdateAuthenInfoEvent
+import com.hm.iou.tools.kt.*
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_authentication_progress.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * @author : 借条管家-shilei
@@ -24,6 +27,7 @@ class AuthenProgressActivity : HMBaseActivity<HMBasePresenter<BaseContract.BaseV
     companion object {
         const val EXTRA_KEY_IF_AUTHENTICATION_FAILED = "if_authentication_failed"
         const val EXTRA_KEY_IF_AUTHENTICATION_FAILED_DESC = "if_authentication_failed_desc"
+        private const val REQ_CODE_RESTART_AUTHEN = 100
     }
 
     /**
@@ -49,6 +53,7 @@ class AuthenProgressActivity : HMBaseActivity<HMBasePresenter<BaseContract.BaseV
         }
         bottom_bar.setOnTitleClickListener {
             NavigationHelper.toAuthentication(mContext)
+            startActivityForResult<AuthenticationActivity>(REQ_CODE_RESTART_AUTHEN)
         }
         if (false == mIfAuthenticationFailed) {
             tv_status.text = "认证审核中"
@@ -70,5 +75,12 @@ class AuthenProgressActivity : HMBaseActivity<HMBasePresenter<BaseContract.BaseV
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.putValue(EXTRA_KEY_IF_AUTHENTICATION_FAILED, mIfAuthenticationFailed)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (REQ_CODE_RESTART_AUTHEN == requestCode && resultCode == Activity.RESULT_OK) {
+            finish()
+        }
     }
 }

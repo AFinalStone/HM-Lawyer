@@ -3,6 +3,7 @@ package com.hm.iou.lawyer.business.lawyer.home.authen
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
@@ -13,8 +14,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.hm.iou.base.ImageGalleryActivity
 import com.hm.iou.base.comm.HMTextChangeListener
+import com.hm.iou.base.file.FileUtil
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.base.photo.CompressPictureUtil
+import com.hm.iou.base.photo.ImageCropper
 import com.hm.iou.database.table.IouData
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.bean.res.ImageUrlFileIdBean
@@ -27,6 +30,7 @@ import com.hm.iou.tools.ImageLoader
 import com.hm.iou.tools.kt.dp2px
 import com.hm.iou.uikit.datepicker.TimePickerDialog
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_authentication.*
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -36,6 +40,7 @@ import kotlin.collections.ArrayList
  */
 class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
     AuthenticationContract.View, View.OnClickListener {
+
     companion object {
         private const val REQ_CODE_SELECT_HEADER_IMAGE = 100
         private const val REQ_CODE_SELECT_AUTHEN_IMAGE_FRONT = 101
@@ -146,17 +151,31 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
             data?.let {
                 val path = data.getStringExtra("extra_result_selection_path_first")
                 Logger.d("头像camera path: $mHeaderImageBean")
-                CompressPictureUtil.compressPic(
-                    mContext, path
-                ) { file ->
-                    mHeaderImageBean = ImageUrlFileIdBean()
-                    val picPath = "file://" + file.absolutePath
-                    mHeaderImageBean?.url = picPath
-                    ImageLoader.getInstance(mContext)
-                        .displayImage(picPath, iv_header_image)
-                    iv_add_header_image.visibility = INVISIBLE
-                    checkValue()
-                }
+
+                ImageCropper.Helper.with(this)
+                    .setCallback { bitmap, _ ->
+                        val fileCrop =
+                            File(FileUtil.getExternalCacheDirPath(mContext) + File.separator + System.currentTimeMillis() + ".jpg")
+                        CompressPictureUtil.saveBitmapToTargetFile(
+                            fileCrop,
+                            bitmap,
+                            Bitmap.CompressFormat.JPEG
+                        )
+                        CompressPictureUtil.compressPic(
+                            mContext, fileCrop.absolutePath
+                        ) { file ->
+                            mHeaderImageBean = ImageUrlFileIdBean()
+                            val picPath = "file://" + file.absolutePath
+                            mHeaderImageBean?.url = picPath
+                            ImageLoader.getInstance(mContext)
+                                .displayImage(picPath, iv_header_image)
+                            iv_add_header_image.visibility = INVISIBLE
+                            checkValue()
+                        }
+                    }
+                    .create()
+                    .crop(path, 150, 150, false, "crop")
+
 
             }
             return
@@ -215,6 +234,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
                             mListHonorImageBean!!.add(entity)
                             mHonorImageAdapter.addData(entity.value)
                         }
+                        checkValue()
                     }
                 }
             }
@@ -238,6 +258,7 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
                     }
                 }
                 mHonorImageAdapter.deleteUrl(delList)
+                checkValue()
             }
         }
     }
@@ -322,12 +343,21 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
                 val entity = IouData.FileEntity()
                 entity.id = file.picId
                 entity.value = file.url
+                if (mListHonorImageBean == null) {
+                    mListHonorImageBean = mutableListOf()
+                }
                 mListHonorImageBean?.add(entity)
                 mHonorImageAdapter.addData(entity.value)
             }
         }
+        checkValue()
     }
 
+    override fun setResultOkAndClosePage() {
+        val intent = Intent()
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
 
     private fun doSubmit() {
         //执业证号

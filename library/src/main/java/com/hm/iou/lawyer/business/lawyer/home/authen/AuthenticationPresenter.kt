@@ -10,9 +10,12 @@ import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.bean.req.LawyerAuthenticationReqBean
 import com.hm.iou.lawyer.bean.res.ImageUrlFileIdBean
 import com.hm.iou.lawyer.business.NavigationHelper
+import com.hm.iou.lawyer.event.LawyerAuthSuccEvent
+import com.hm.iou.lawyer.event.UpdateAuthenInfoEvent
 import com.hm.iou.logger.Logger
 import com.hm.iou.tools.kt.startActivity
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 import java.io.File
 
 /**
@@ -124,12 +127,13 @@ class AuthenticationPresenter(context: Context, view: AuthenticationContract.Vie
                     , headerImageFileId, listAuthenImageFileId, listCertificateImageFileId
                 )
                 val lawyerAuthenResult = handleResponse(LawyerApi.lawyerAuthentication(req))
+                //如果入口没有开启，则通知开启入口
                 mView.dismissLoadingView()
                 lawyerAuthenResult?.let {
                     mContext.startActivity<AuthenProgressActivity>(
                         AuthenProgressActivity.EXTRA_KEY_IF_AUTHENTICATION_FAILED to false
                     )
-                    mView.closeCurrPage()
+                    mView.setResultOkAndClosePage()
                 }
 
             } catch (e: Exception) {
