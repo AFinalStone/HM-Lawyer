@@ -19,7 +19,7 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * Created by hjy on 2019/11/12
  *
- * 我的订单详情
+ * 律师函订单详情
  */
 class MyOrderDetailPresenter(context: Context, view: MyOrderDetailContract.View) :
     HMBasePresenter<MyOrderDetailContract.View>(context, view),

@@ -17,15 +17,11 @@ import com.hm.iou.tools.kt.extraDelegate
 import com.hm.iou.uikit.HMTopBarView
 import com.hm.iou.uikit.dialog.HMAlertDialog
 import kotlinx.android.synthetic.main.lawyer_activity_user_order_detail.*
-import kotlinx.android.synthetic.main.lawyer_activity_user_order_detail.iv_lawyer_avatar
-import kotlinx.android.synthetic.main.lawyer_activity_user_order_detail.tv_lawyer_age_limit
-import kotlinx.android.synthetic.main.lawyer_activity_user_order_detail.tv_lawyer_company
-import kotlinx.android.synthetic.main.lawyer_activity_user_order_detail.tv_lawyer_name
 
 /**
  * Created by hjy on 2019/11/12
  *
- * 我的订单详情页面
+ * 律师函订单详情页面
  */
 class MyOrderDetailActivity : HMBaseActivity<MyOrderDetailPresenter>(), MyOrderDetailContract.View {
 

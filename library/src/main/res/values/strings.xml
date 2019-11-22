@@ -10,4 +10,6 @@
     <string name="lawyer_letter_use3">在律师函中，会明确协商的最后期限，从而给对方紧迫感，促使对方立即协商解决纠纷，避免对方拖延 </string>
     <string name="lawyer_pay_info">律师依据案情撰写律师函1份；\n\n律师函默认一份寄送地址，如需发送两封及以上，律师接单后请联系律师。\n\n律师接单后，该笔费用不支持退款！ 律师函寄送地址不支持替换，请核对清楚；</string>
 
+    <string name="lawyer_create_consult_tips">1.律师接单后1小时未解答，可取消订单\n2.律师解答后，订单自动完成，如问题未解决可继续提问</string>
+
 </resources>

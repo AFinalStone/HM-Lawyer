@@ -118,7 +118,7 @@ class FindLawyerActivity : HMBaseActivity<FindLawyerPresenter>(), FindLawyerCont
 
     override fun showDataEmpty(isFindByAgeLimit: Boolean) {
         if (isFindByAgeLimit) {
-            loading_view.showDataEmpty("该律师不存在哦~~")
+            loading_view.showDataEmpty("暂无相关律师哦~~")
         } else {
             ensureInitSearchByNameView()
             loading_view_name.showDataEmpty("该律师不存在哦~~")

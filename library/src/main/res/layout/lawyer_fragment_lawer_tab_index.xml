@@ -98,6 +98,18 @@
                 >
 
                 <TextView
+                    android:id="@+id/tv_lawyer_lawyer_consult"
+                    style="@style/UikitTextView"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableTop="@mipmap/lawyer_ic_lawyer_consult"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="律师咨询" />
+
+                <TextView
                     android:id="@+id/tv_lawyer_find_lawyer"
                     style="@style/UikitTextView"
                     android:layout_weight="1"

@@ -5,24 +5,23 @@ import android.content.Context
 import android.content.Intent
 import android.os.Parcelable
 import com.hm.iou.base.BaseBizAppLike
-
-import com.hm.iou.lawyer.business.lawyer.home.authen.AuthenticationActivity
-
 import com.hm.iou.base.ImageGalleryActivity
 import com.hm.iou.base.utils.RouterUtil
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.bean.LetterReceiverBean
 import com.hm.iou.lawyer.bean.res.CustLetterDetailResBean
+import com.hm.iou.lawyer.business.lawyer.home.authen.AuthenticationActivity
 import com.hm.iou.lawyer.business.lawyer.home.prepare.HomePrepareActivity
 import com.hm.iou.lawyer.business.lawyer.workbench.WorkBenchActivity
 import com.hm.iou.lawyer.business.lawyer.workbench.wallet.WalletActivity
-
 import com.hm.iou.lawyer.business.lawyer.workbench.withdraw.WithDrawActivity
+import com.hm.iou.lawyer.business.user.create.CreateLawyerConsultActivity
 import com.hm.iou.lawyer.business.user.create.CreateLawyerLetterActivity
 import com.hm.iou.lawyer.business.user.create.InputReceiverAddressActivity
 import com.hm.iou.lawyer.business.user.create.LawyerLetterDescActivity
 import com.hm.iou.lawyer.business.user.find.FindLawyerActivity
 import com.hm.iou.lawyer.business.user.lawyer.LawyerDetailActivity
+import com.hm.iou.lawyer.business.user.order.ConsultDetailActivity
 import com.hm.iou.lawyer.business.user.order.MyOrderDetailActivity
 import com.hm.iou.lawyer.business.user.order.MyOrderListActivity
 import com.hm.iou.lawyer.business.user.order.RatingLawyerActivity
@@ -263,6 +262,30 @@ object NavigationHelper {
      */
     fun toCaseDelegatePage(context: Context) {
         RouterUtil.clickMenuLink(context, "https://h5.54jietiao.com/moneyMarket_V1-1-2/html/typeSelect.html")
+    }
+
+    /**
+     * 进入创建律师咨询页面
+     */
+    fun toCreateLawyerConsultPage(context: Context) {
+        context.startActivity<CreateLawyerConsultActivity>()
+    }
+
+    /**
+     * 进入创建律师咨询
+     */
+    fun toCreateLawyerConsultPage(context: Context, lawyerId: String?, price: Int?) {
+        context.startActivity<CreateLawyerConsultActivity>(
+            CreateLawyerConsultActivity.EXTRA_KEY_LAWYER_ID to (lawyerId ?: ""),
+            CreateLawyerConsultActivity.EXTRA_KEY_PRICE to (price ?: 0)
+        )
+    }
+
+    /***
+     * 进入律师咨询详情
+     */
+    fun toLawyerConsultDetailPage(context: Context, orderId: String) {
+        context.startActivity<ConsultDetailActivity>()
     }
 
 }

@@ -1,22 +1,22 @@
 package com.hm.iou.lawyer.demo
 
+//import com.hm.iou.userinfo.api.PersonApi
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.hm.iou.base.utils.RxUtil
+import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.lawyer.home.HomeActivity
 import com.hm.iou.lawyer.business.lawyer.home.authen.AuthenProgressActivity
-import com.hm.iou.lawyer.business.lawyer.workbench.WorkBenchActivity
-import com.hm.iou.logger.Logger
+import com.hm.iou.lawyer.business.user.order.RatingLawyerActivity
 import com.hm.iou.network.HttpReqManager
 import com.hm.iou.router.Router
 import com.hm.iou.sharedata.UserManager
 import com.hm.iou.sharedata.model.BaseResponse
 import com.hm.iou.sharedata.model.UserInfo
 import com.hm.iou.tools.ToastUtil
+import com.hm.iou.tools.kt.clickWithDuration
 import com.hm.iou.tools.kt.startActivity
-import com.hm.iou.userinfo.api.PersonApi
 import com.sina.weibo.sdk.utils.MD5
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -32,10 +32,10 @@ class MainActivity : AppCompatActivity() {
             login()
         }
         btn_lawyer.setOnClickListener {
-            startActivity(Intent(this@MainActivity, WorkBenchActivity::class.java))
+            startActivity(Intent(this@MainActivity, RatingLawyerActivity::class.java))
         }
         btn_bank_card.setOnClickListener {
-
+/*
             PersonApi.getUserThirdPlatformInfo()
                 .map(RxUtil.handleResponse())
                 .subscribe({ thirdInfo ->
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                         .buildWithUrl("hmiou://m.54jietiao.com/pay/user_bind_bank?source=lawyer")
                         .navigation(this@MainActivity)
                 }, { })
-
+*/
         }
 
         btn_lawyer_index.setOnClickListener {
@@ -68,7 +68,9 @@ class MainActivity : AppCompatActivity() {
         btn_lawyer_authentication_progress.setOnClickListener {
             startActivity<AuthenProgressActivity>(AuthenProgressActivity.EXTRA_KEY_IF_AUTHENTICATION_FAILED to true)
         }
-
+        btn_consult_detail.clickWithDuration {
+            NavigationHelper.toLawyerConsultDetailPage(this, "")
+        }
     }
 
     @SuppressLint("CheckResult")
