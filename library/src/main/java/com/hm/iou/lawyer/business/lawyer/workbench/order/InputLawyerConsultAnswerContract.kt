@@ -15,7 +15,8 @@ class InputLawyerConsultAnswerContract {
          * 完成解答
          */
         fun finishAnswer(
-            answer: String
+            billId: String,
+            desc: String
         )
     }
 }

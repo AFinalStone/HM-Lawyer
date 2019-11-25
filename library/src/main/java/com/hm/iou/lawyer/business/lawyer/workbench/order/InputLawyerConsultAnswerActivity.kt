@@ -5,7 +5,9 @@ import com.hm.iou.base.comm.HMTextChangeListener
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
 import com.hm.iou.tools.kt.extraDelegate
-import kotlinx.android.synthetic.main.lawyer_activity_edit_lawyer_self_introduction.*
+import com.hm.iou.tools.kt.getValue
+import com.hm.iou.tools.kt.putValue
+import kotlinx.android.synthetic.main.lawyer_activity_input_lawyer_answer.*
 
 /**
  * 咨询解答
@@ -13,6 +15,17 @@ import kotlinx.android.synthetic.main.lawyer_activity_edit_lawyer_self_introduct
 class InputLawyerConsultAnswerActivity : HMBaseActivity<InputLawyerConsultAnswerPresenter>(),
     InputLawyerConsultAnswerContract.View {
 
+    companion object {
+        const val EXTRA_KEY_ORDER_ID = "order_id"
+    }
+
+    /**
+     * 订单编号
+     */
+    private var mOrderId: String? by extraDelegate(
+        EXTRA_KEY_ORDER_ID,
+        null
+    )
 
     private var mAnswer: String? = null
 
@@ -22,8 +35,11 @@ class InputLawyerConsultAnswerActivity : HMBaseActivity<InputLawyerConsultAnswer
         InputLawyerConsultAnswerPresenter(this, this)
 
 
-    override fun initEventAndData(savedInstanceState: Bundle?) {
-        et_self_introduction.addTextChangedListener(object : HMTextChangeListener() {
+    override fun initEventAndData(bundle: Bundle?) {
+        if (bundle != null) {
+            mOrderId = bundle.getValue(EXTRA_KEY_ORDER_ID)
+        }
+        et_answer.addTextChangedListener(object : HMTextChangeListener() {
             override fun onTextChanged(
                 charSequence: CharSequence,
                 start: Int,
@@ -32,9 +48,9 @@ class InputLawyerConsultAnswerActivity : HMBaseActivity<InputLawyerConsultAnswer
             ) {
                 mAnswer = charSequence.toString()
                 val length = (mAnswer ?: "").length
-                tv_self_introduction_word_count.text =
-                    String.format("%d/500", length)
-                if (length < 30) {
+                tv_answer_word_count.text =
+                    String.format("%d/200", length)
+                if (length < 10) {
                     bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
                     bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
                     return
@@ -46,18 +62,23 @@ class InputLawyerConsultAnswerActivity : HMBaseActivity<InputLawyerConsultAnswer
         //提交认证
         bottom_bar.setOnTitleClickListener {
             val length = (mAnswer ?: "").length
-            if (length < 30) {
-                toastErrorMessage("律师介绍必须在30-500个字以内")
+            if (length < 10) {
+                toastErrorMessage("律师介绍必须在10-200个字以内")
                 return@setOnTitleClickListener
             }
-            mAnswer?.let {
-                mPresenter.finishAnswer(it)
+            mOrderId?.let {
+                mPresenter.finishAnswer(it, mAnswer ?: "")
             }
         }
-        et_self_introduction.setText(mAnswer ?: "")
-        et_self_introduction.setSelection(et_self_introduction.length())
-        et_self_introduction.requestFocus()
+        et_answer.setText(mAnswer ?: "")
+        et_answer.setSelection(et_answer.length())
+        et_answer.requestFocus()
         showSoftKeyboard()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putValue(EXTRA_KEY_ORDER_ID, mOrderId)
     }
 
 }

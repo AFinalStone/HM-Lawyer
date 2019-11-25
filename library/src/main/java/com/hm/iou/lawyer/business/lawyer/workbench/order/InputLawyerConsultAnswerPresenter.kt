@@ -5,6 +5,7 @@ import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.bean.req.UpdateLawyerAuthenticationInfReqBean
 import com.hm.iou.lawyer.dict.UpdateLawyerAuthenInfoType
+import com.hm.iou.lawyer.event.LawyerOrderStatusChangedEvent
 import com.hm.iou.lawyer.event.UpdateAuthenInfoEvent
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -19,17 +20,13 @@ class InputLawyerConsultAnswerPresenter(
     HMBasePresenter<InputLawyerConsultAnswerContract.View>(context, view),
     InputLawyerConsultAnswerContract.Presenter {
 
-    override fun finishAnswer(answer: String) {
+    override fun finishAnswer(billId: String, desc: String) {
         launch {
             try {
                 mView.showLoadingView()
-//                val req = UpdateLawyerAuthenticationInfReqBean()
-//                req.info = finishAnswer
-//                req.type = UpdateLawyerAuthenInfoType.SELF_INTRODUCE.type
-//                val result =
-//                    handleResponse(LawyerApi.updateLawyerAuthenticationInfo(req))
+                handleResponse(LawyerApi.lawyerAnswer(billId, desc))
                 mView.dismissLoadingView()
-                EventBus.getDefault().post(UpdateAuthenInfoEvent())
+                EventBus.getDefault().post(LawyerOrderStatusChangedEvent())
                 mView.closeCurrPage()
             } catch (e: Exception) {
                 mView.dismissLoadingView()

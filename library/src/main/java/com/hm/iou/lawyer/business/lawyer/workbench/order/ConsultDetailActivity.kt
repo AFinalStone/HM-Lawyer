@@ -22,6 +22,9 @@ import com.hm.iou.tools.kt.*
 import com.hm.iou.uikit.dialog.HMActionSheetDialog
 import com.hm.iou.uikit.dialog.HMAlertDialog
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_consult_order_detail.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 
 /**
@@ -50,6 +53,7 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
     )
 
     private var mAnswerAdapter: ConsultAnswerAdapter? = null
+    private var mJobTimeCount: Job? = null
 
     override fun initPresenter(): ConsultDetailPresenter = ConsultDetailPresenter(this, this)
 
@@ -77,6 +81,11 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
         }
         mPresenter.init(order, relationId)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mPresenter.onResume()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -270,6 +279,7 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
         tv_operate_02.text = "咨询解答"
         tv_operate_02.clickWithDuration {
             val intent = Intent(mContext, InputLawyerConsultAnswerActivity::class.java)
+            intent.putExtra(InputLawyerConsultAnswerActivity.EXTRA_KEY_ORDER_ID, mOrderId)
             startActivity(intent)
         }
         //律师解答列表
@@ -279,6 +289,17 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
         tv_lawyer_name.text = userInfo.name + "律师"
         ImageLoader.getInstance(mContext)
             .displayImage("", iv_lawyer_avatar, R.mipmap.uikit_icon_header_unknow)
+        if (mJobTimeCount != null) {
+            mJobTimeCount?.cancel()
+        }
+        mJobTimeCount = launch {
+            var time = 60
+            while (time > 0) {
+                tv_count_down_time.text = time.toString()
+                delay(1000)
+                time -= 1
+            }
+        }
     }
 
     private fun showComplete(detail: LawyerConsultOrderDetailResBean) {

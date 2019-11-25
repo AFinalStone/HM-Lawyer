@@ -23,7 +23,7 @@
         android:layout_marginEnd="21dp">
 
         <EditText
-            android:id="@+id/et_self_introduction"
+            android:id="@+id/et_answer"
             style="@style/UikitEditText.Normal.TextArea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,15 +36,15 @@
             android:textColorHint="#CFCFD6" />
 
         <TextView
-            android:id="@+id/tv_self_introduction_word_count"
+            android:id="@+id/tv_answer_word_count"
             style="@style/UikitTextView.Auxiliary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@id/et_self_introduction"
-            android:layout_alignBottom="@id/et_self_introduction"
+            android:layout_alignRight="@id/et_answer"
+            android:layout_alignBottom="@id/et_answer"
             android:layout_marginRight="12dip"
             android:layout_marginBottom="8dip"
-            android:text="0/500"
+            android:text="0/200"
             android:textColor="#CFCFD6" />
     </RelativeLayout>
 
