@@ -294,12 +294,12 @@ object LawyerApi {
     /**
      * 律师获取律师咨询订单详情
      */
-    suspend fun getLawyerConsultationDetail(
+    suspend fun getLawyerConsultOrderDetail(
         billId: String,
         relationId: Int?
     ): BaseResponse<LawyerConsultOrderDetailResBean> {
         val reqBean = LawyerConsultOrderDetailReqBean(billId, relationId)
-        return getService().getLawyerConsultationDetail(reqBean)
+        return getService().getLawyerConsultOrderDetail(reqBean)
     }
 
     /**
