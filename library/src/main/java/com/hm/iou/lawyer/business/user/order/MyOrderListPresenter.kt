@@ -2,6 +2,7 @@ package com.hm.iou.lawyer.business.user.order
 
 import android.content.Context
 import com.hm.iou.base.mvp.HMBasePresenter
+import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.bean.res.CustOrderItemBean
 import com.hm.iou.lawyer.dict.OrderStatus
@@ -10,13 +11,11 @@ import com.hm.iou.lawyer.event.AddLawyerLetterEvent
 import com.hm.iou.lawyer.event.UserOrderStatusChangedEvent
 import com.hm.iou.network.exception.ApiException
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * Created by hjy on 2019/11/12
@@ -149,6 +148,22 @@ class MyOrderListPresenter(context: Context, view: MyOrderListContract.View) :
 
                 override fun getType(): Int {
                     return item.type
+                }
+
+                override fun getTypeBgResId(): Int {
+                    return when(item.type) {
+                        OrderType.Letter.type -> R.drawable.lawyer_bg_lawyer_order_list_item_type_letter
+                        OrderType.Consult.type -> R.drawable.lawyer_bg_lawyer_order_list_item_type_consult
+                        else -> 0
+                    }
+                }
+
+                override fun getTypeTextColor(): Int {
+                    return when(item.type) {
+                        OrderType.Letter.type -> 0xFFBF9E6E.toInt()
+                        OrderType.Consult.type -> 0xFF6398CA.toInt()
+                        else -> 0
+                    }
                 }
 
                 override fun getPrice(): String? {

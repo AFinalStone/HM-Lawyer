@@ -19,6 +19,8 @@ class MyOrderAdapter :
         helper.setText(R.id.tv_order_desc, item.getDesc())
         helper.setText(R.id.tv_order_price, item.getPrice())
         helper.setText(R.id.tv_order_status, item.getStatusStr())
+        helper.setTextColor(R.id.tv_order_type, item.getTypeTextColor())
+        helper.setBackgroundRes(R.id.tv_order_type, item.getTypeBgResId())
     }
 }
 
@@ -38,4 +40,7 @@ interface IOrderItem {
 
     fun getStatusStr(): String?
 
+    fun getTypeBgResId(): Int
+
+    fun getTypeTextColor(): Int
 }
