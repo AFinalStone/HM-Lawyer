@@ -156,25 +156,16 @@
                         android:text="律师服务"
                         android:textSize="@dimen/textFontSize_15" />
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
 
-                    <ImageView
-                        android:id="@+id/iv_lawyer_service_edit"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:padding="9dp"
-                        android:src="@mipmap/lawyer_ic_lawyer_home_edit" />
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_lawyer_service"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
                     android:overScrollMode="never" />
 
                 <LinearLayout

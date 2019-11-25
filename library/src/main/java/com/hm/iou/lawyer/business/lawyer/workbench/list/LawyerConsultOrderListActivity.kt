@@ -6,23 +6,22 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
-import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.lawyer.workbench.order.OrderDetailActivity
 import com.hm.iou.uikit.HMLoadMoreView
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_letter_order_list.*
 
 /**
- * 我的钱包
+ * 律师咨询订单列表
  */
-class LetterOrderListActivity : HMBaseActivity<LetterOrderListPresenter>(),
-    LetterOrderListContract.View {
+class LawyerConsultOrderListActivity : HMBaseActivity<LawyerConsultOrderListPresenter>(),
+    LawyerConsultOrderListContract.View {
 
     private var mOrderAdapter: OrderAdapter? = null
 
-    override fun getLayoutId(): Int = R.layout.lawyer_activity_lawyer_letter_order_list
+    override fun getLayoutId(): Int = R.layout.lawyer_activity_lawyer_consult_order_list
 
-    override fun initPresenter(): LetterOrderListPresenter =
-        LetterOrderListPresenter(this, this)
+    override fun initPresenter(): LawyerConsultOrderListPresenter =
+        LawyerConsultOrderListPresenter(this, this)
 
     override fun initEventAndData(savedInstanceState: Bundle?) {
         mOrderAdapter = OrderAdapter(mContext)

@@ -7,7 +7,8 @@ import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.lawyer.workbench.list.InviteOrderListActivity
-import com.hm.iou.lawyer.business.lawyer.workbench.list.LetterOrderListActivity
+import com.hm.iou.lawyer.business.lawyer.workbench.list.LawyerConsultOrderListActivity
+import com.hm.iou.lawyer.business.lawyer.workbench.list.LawyerLetterOrderListActivity
 import com.hm.iou.lawyer.business.lawyer.workbench.list.MyOrderListActivity
 import com.hm.iou.lawyer.dict.LawyerOrderTabStatus
 import com.hm.iou.lawyer.dict.ModelType
@@ -95,10 +96,11 @@ class WorkBenchActivity : HMBaseActivity<WorkBenchPresenter>(),
             item?.let {
                 when (item.getIModel()) {
                     ModelType.LAWYER_ORDER_CONSULT -> {
+                        startActivity(Intent(mContext, LawyerConsultOrderListActivity::class.java))
                     }
                     ModelType.LAWYER_LETTER
                     -> {
-                        startActivity(Intent(mContext, LetterOrderListActivity::class.java))
+                        startActivity(Intent(mContext, LawyerLetterOrderListActivity::class.java))
                     }
                     ModelType.LAWYER_INVITE_RECEIVE
                     -> {

@@ -20,9 +20,9 @@ import java.text.SimpleDateFormat
  * @Date : 2019-11-08 15:19
  * @E-Mail : afinalstone@foxmail.com
  */
-class LetterOrderListPresenter(context: Context, view: LetterOrderListContract.View) :
-    HMBasePresenter<LetterOrderListContract.View>(context, view),
-    LetterOrderListContract.Presenter {
+class LawyerConsultOrderListPresenter(context: Context, view: LawyerConsultOrderListContract.View) :
+    HMBasePresenter<LawyerConsultOrderListContract.View>(context, view),
+    LawyerConsultOrderListContract.Presenter {
     companion object {
         const val PAGE_SIZE = 10
     }

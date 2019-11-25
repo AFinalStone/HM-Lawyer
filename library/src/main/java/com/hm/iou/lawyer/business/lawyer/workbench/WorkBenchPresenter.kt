@@ -29,7 +29,7 @@ class WorkBenchPresenter(context: Context, view: WorkBenchContract.View) :
     override fun init() {
         mListDataWaitToDo.add(object : IMenuItem {
             override var redCount: Int = 0
-            
+
             override fun getIModel(): ModelType = ModelType.WAIT_TO_LOADING
 
             override fun getIIcon(): Int = R.mipmap.lawyer_ic_workbench_ongoing
@@ -39,7 +39,7 @@ class WorkBenchPresenter(context: Context, view: WorkBenchContract.View) :
         })
         mListDataWaitToDo.add(object : IMenuItem {
             override var redCount: Int = 0
-            
+
             override fun getIIcon(): Int = R.mipmap.lawyer_ic_workbench_complete
 
             override fun getIModel(): ModelType = ModelType.WAIT_TO_FINISH
@@ -56,7 +56,17 @@ class WorkBenchPresenter(context: Context, view: WorkBenchContract.View) :
         })
         mView.showWaitToDoList(mListDataWaitToDo)
 
-        //显示订单
+        /**
+         * 显示律师订单
+         */
+        mListDataLawyerOrder.add(object : IMenuItem {
+            override var redCount: Int = 0
+            override fun getIIcon(): Int = R.mipmap.lawyer_ic_workbench_lawyer_consult
+
+            override fun getIModel(): ModelType = ModelType.LAWYER_ORDER_CONSULT
+
+            override fun ifShowRedDot(): Boolean = false
+        })
         mListDataLawyerOrder.add(object : IMenuItem {
             override var redCount: Int = 0
             override fun getIIcon(): Int = R.mipmap.lawyer_ic_workbench_letter

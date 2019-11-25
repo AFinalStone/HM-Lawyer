@@ -2,48 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="85dp"
-    android:layout_marginTop="10dp"
+    android:layout_height="120dp"
     android:background="@drawable/uikit_bg_card_form"
-    android:orientation="horizontal">
+    android:gravity="center"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/iv_lawyer_service_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="16dp"
         android:adjustViewBounds="true"
         android:src="@mipmap/lawyer_ic_lawyer_letter2" />
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="18dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_lawyer_service_name"
-            style="@style/UikitTextView"
-            android:text="律师函"
-            android:textSize="@dimen/textFontSize_16" />
-
-        <TextView
-            android:id="@+id/tv_lawyer_service_desc"
-            style="@style/UikitTextView.Auxiliary"
-            android:ellipsize="end"
-            android:maxLines="1"
-            tools:text="律师函介绍文案" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_lawyer_service_name"
+        style="@style/UikitTextView"
+        android:layout_marginTop="5dp"
+        android:text="律师函"
+        android:textSize="@dimen/textFontSize_16" />
 
     <TextView
         android:id="@+id/tv_lawyer_service_price"
         style="@style/UikitTextView"
-        android:layout_gravity="center_vertical"
-        android:layout_marginRight="12dp"
+        android:layout_marginTop="2dp"
         tools:text="￥100.00/份" />
 
 </LinearLayout>

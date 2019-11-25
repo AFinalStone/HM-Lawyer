@@ -7,12 +7,13 @@ import com.hm.iou.lawyer.R
 import com.hm.iou.tools.kt.extraDelegate
 import com.hm.iou.tools.kt.getValue
 import com.hm.iou.tools.kt.putValue
-import kotlinx.android.synthetic.main.lawyer_activity_edit_lawyer_service_price.*
+import kotlinx.android.synthetic.main.lawyer_activity_edit_lawyer_letter_service_price.*
 
 /**
  * 服务费用
  */
-class EditLawyerServicePriceActivity : HMBaseActivity<EditLawyerServicePricePresenter>(),
+class EditLawyerServiceLetterPriceActivity :
+    HMBaseActivity<EditLawyerServicePricePresenter>(),
     EditLawyerServicePriceContract.View {
 
     companion object {
@@ -23,7 +24,7 @@ class EditLawyerServicePriceActivity : HMBaseActivity<EditLawyerServicePricePres
     private var mServicePrice: Int? by extraDelegate(EXTRA_KEY_SERVICE_PRICE, null)
     private var mServiceId: Int? by extraDelegate(EXTRA_KEY_SERVICE_ID, null)
 
-    override fun getLayoutId(): Int = R.layout.lawyer_activity_edit_lawyer_service_price
+    override fun getLayoutId(): Int = R.layout.lawyer_activity_edit_lawyer_letter_service_price
 
     override fun initPresenter(): EditLawyerServicePricePresenter =
         EditLawyerServicePricePresenter(this, this)
@@ -64,7 +65,7 @@ class EditLawyerServicePriceActivity : HMBaseActivity<EditLawyerServicePricePres
                     mPresenter.updateLawyerServicePrice(servicePrice, serviceId)
                 }
             } else {
-                toastErrorMessage("律师费必须在300到10000之间")
+                toastErrorMessage("律师函服务费必须在300到10000之间")
             }
         }
         et_service_money.setText((mServicePrice ?: "").toString())

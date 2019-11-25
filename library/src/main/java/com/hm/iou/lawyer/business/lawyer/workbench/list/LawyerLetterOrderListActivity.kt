@@ -7,22 +7,21 @@ import android.view.View
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.business.lawyer.workbench.order.OrderDetailActivity
-import com.hm.iou.tools.kt.startActivity
 import com.hm.iou.uikit.HMLoadMoreView
-import kotlinx.android.synthetic.main.lawyer_activity_lawyer_invite_order_list.*
+import kotlinx.android.synthetic.main.lawyer_activity_lawyer_letter_order_list.*
 
 /**
- * 邀请接单订单列表
+ * 律师函订单列表
  */
-class InviteOrderListActivity : HMBaseActivity<InviteOrderListPresenter>(),
-    InviteOrderListContract.View {
+class LawyerLetterOrderListActivity : HMBaseActivity<LawyerLetterOrderListPresenter>(),
+    LawyerLetterOrderListContract.View {
 
     private var mOrderAdapter: OrderAdapter? = null
 
-    override fun getLayoutId(): Int = R.layout.lawyer_activity_lawyer_invite_order_list
+    override fun getLayoutId(): Int = R.layout.lawyer_activity_lawyer_letter_order_list
 
-    override fun initPresenter(): InviteOrderListPresenter =
-        InviteOrderListPresenter(this, this)
+    override fun initPresenter(): LawyerLetterOrderListPresenter =
+        LawyerLetterOrderListPresenter(this, this)
 
     override fun initEventAndData(savedInstanceState: Bundle?) {
         mOrderAdapter = OrderAdapter(mContext)
@@ -106,6 +105,5 @@ class InviteOrderListActivity : HMBaseActivity<InviteOrderListPresenter>(),
     override fun showLoadMoreComplete() {
         mOrderAdapter?.loadMoreComplete()
     }
-
 
 }

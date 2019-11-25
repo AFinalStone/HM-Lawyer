@@ -46,12 +46,12 @@
             android:layout_height="24dp"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="7dp"
-            android:background="@drawable/uikit_bg_round_border_gray"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="律师函"
             android:textColor="@color/uikit_text_sub_content"
-            android:textSize="@dimen/textFontSize_13" />
+            android:textSize="@dimen/textFontSize_13"
+            tools:background="@drawable/uikit_bg_round_border_gray"
+            tools:text="律师函" />
 
 
     </RelativeLayout>

@@ -5,7 +5,7 @@ import com.hm.iou.base.mvp.BaseContract
 /**
  * 我的钱包
  */
-class LetterOrderListContract {
+class LawyerConsultOrderListContract {
 
     interface View : BaseContract.BaseView {
         fun showInitLoading(show: Boolean)

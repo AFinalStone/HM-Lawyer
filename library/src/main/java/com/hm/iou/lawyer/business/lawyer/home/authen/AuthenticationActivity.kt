@@ -324,20 +324,20 @@ class AuthenticationActivity : HMBaseActivity<AuthenticationPresenter>(),
         val listAuthen = detail.authCerts
         if (!listAuthen.isNullOrEmpty()) {
             try {
-                mAuthenImageFrontBean = listAuthen.get(0)
+                mAuthenImageFrontBean = listAuthen[0]
                 ImageLoader.getInstance(mContext).displayImage(
                     mAuthenImageFrontBean?.url,
                     iv_authen_photo_front,
-                    R.mipmap.uikit_icon_header_unknow
+                    R.mipmap.lawyer_ic_lawyer_authen_front_image
                 )
                 iv_add_authen_photo_front.visibility = INVISIBLE
 
-                mAuthenImageBackBean = listAuthen.get(1)
+                mAuthenImageBackBean = listAuthen[1]
                 ImageLoader.getInstance(mContext)
                     .displayImage(
                         mAuthenImageBackBean?.url,
                         iv_authen_photo_back,
-                        R.mipmap.uikit_icon_header_unknow
+                        R.mipmap.lawyer_ic_lawyer_authen_back_image
                     )
                 iv_add_authen_photo_back.visibility = INVISIBLE
             } catch (e: Exception) {

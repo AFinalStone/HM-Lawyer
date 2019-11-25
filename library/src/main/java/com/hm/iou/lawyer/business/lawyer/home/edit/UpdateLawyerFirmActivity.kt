@@ -14,8 +14,8 @@ import com.hm.iou.tools.ImageLoader
 import com.hm.iou.tools.kt.extraDelegate
 import com.hm.iou.tools.kt.getValue
 import com.hm.iou.tools.kt.putValue
-import kotlinx.android.synthetic.main.lawyer_activity_edit_lawyer_service_price.*
-import kotlinx.android.synthetic.main.lawyer_activity_edit_lawyer_service_price.bottom_bar
+import kotlinx.android.synthetic.main.lawyer_activity_edit_lawyer_consult_service_price.*
+import kotlinx.android.synthetic.main.lawyer_activity_edit_lawyer_consult_service_price.bottom_bar
 import kotlinx.android.synthetic.main.lawyer_activity_update_lawyer_firm.*
 
 /**

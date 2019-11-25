@@ -48,7 +48,12 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.hm.iou.lawyer.business.lawyer.workbench.list.LetterOrderListActivity"
+            android:name="com.hm.iou.lawyer.business.lawyer.workbench.list.LawyerLetterOrderListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.hm.iou.lawyer.business.lawyer.workbench.list.LawyerConsultOrderListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
@@ -87,7 +92,11 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".business.lawyer.home.edit.EditLawyerServicePriceActivity"
+            android:name=".business.lawyer.home.edit.EditLawyerServiceLetterPriceActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.lawyer.home.edit.EditLawyerServiceConsultPriceActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
@@ -112,6 +121,7 @@
             android:name=".business.user.order.MyOrderListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
+
 
         <activity
             android:name=".business.user.order.MyOrderDetailActivity"

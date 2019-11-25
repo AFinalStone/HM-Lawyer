@@ -102,7 +102,7 @@ class LawyerDetailActivity : HMBaseActivity<LawyerDetailPresenter>(), LawyerDeta
         ll_lawyer_service.removeAllViews()
         list?.run {
             forEach { item ->
-                val view = inflateLayout(R.layout.lawyer_layout_layout_service, null, false)
+                val view = inflateLayout(R.layout.lawyer_layout_lawyer_service, null, false)
                 val layoutParams =
                     LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(85))
                 ll_lawyer_service.addView(view, layoutParams)

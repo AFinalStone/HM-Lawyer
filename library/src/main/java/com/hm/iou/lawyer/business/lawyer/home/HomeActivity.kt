@@ -3,6 +3,7 @@ package com.hm.iou.lawyer.business.lawyer.home
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View.*
 import android.widget.ImageView
@@ -51,7 +52,6 @@ class HomeActivity : HMBaseActivity<HomePresenter>(),
                     )
                 }
                 helper?.setText(R.id.tv_lawyer_service_name, item?.serviceName)
-                helper?.setText(R.id.tv_lawyer_service_desc, item?.serviceDesc)
                 helper?.setText(R.id.tv_lawyer_service_price, item?.servicePrice)
             }
         }
@@ -142,24 +142,6 @@ class HomeActivity : HMBaseActivity<HomePresenter>(),
             }
             startActivity(intent)
         }
-        iv_lawyer_service_edit.clickWithDuration {
-            val lawYerServicePrice = mDetail?.services?.get(0)?.price
-            val lawYerServiceId = mDetail?.services?.get(0)?.serviceId
-            val intent = Intent(mContext, EditLawyerServicePriceActivity::class.java)
-            lawYerServicePrice?.let {
-                intent.putExtra(
-                    EditLawyerServicePriceActivity.EXTRA_KEY_SERVICE_PRICE,
-                    lawYerServicePrice
-                )
-            }
-            lawYerServiceId?.let {
-                intent.putExtra(
-                    EditLawyerServicePriceActivity.EXTRA_KEY_SERVICE_ID,
-                    lawYerServiceId
-                )
-            }
-            startActivity(intent)
-        }
         iv_lawyer_self_info_edit.clickWithDuration {
             val intent = Intent(mContext, EditLawyerSelfIntroduceActivity::class.java)
             mDetail?.info?.let {
@@ -179,15 +161,51 @@ class HomeActivity : HMBaseActivity<HomePresenter>(),
             startActivity(intent)
         }
         mLawyerServiceAdapter = LawyerServiceAdapter(mContext)
-        rv_lawyer_service.layoutManager = LinearLayoutManager(mContext)
+        rv_lawyer_service.layoutManager = GridLayoutManager(mContext, 2)
         rv_lawyer_service.adapter = mLawyerServiceAdapter
+        mLawyerServiceAdapter?.setOnItemClickListener { _, _, position ->
+            val lawYerServicePrice = mLawyerServiceAdapter?.getItem(position)?.price
+            val lawYerServiceId = mLawyerServiceAdapter?.getItem(position)?.serviceId
+            if (0 == position) {
+                val intent = Intent(mContext, EditLawyerServiceLetterPriceActivity::class.java)
+                lawYerServicePrice?.let {
+                    intent.putExtra(
+                        EditLawyerServiceLetterPriceActivity.EXTRA_KEY_SERVICE_PRICE,
+                        lawYerServicePrice
+                    )
+                }
+                lawYerServiceId?.let {
+                    intent.putExtra(
+                        EditLawyerServiceLetterPriceActivity.EXTRA_KEY_SERVICE_ID,
+                        lawYerServiceId
+                    )
+                }
+                startActivity(intent)
+            } else if (1 == position) {
+                val intent = Intent(mContext, EditLawyerServiceConsultPriceActivity::class.java)
+                lawYerServicePrice?.let {
+                    intent.putExtra(
+                        EditLawyerServiceLetterPriceActivity.EXTRA_KEY_SERVICE_PRICE,
+                        lawYerServicePrice
+                    )
+                }
+                lawYerServiceId?.let {
+                    intent.putExtra(
+                        EditLawyerServiceLetterPriceActivity.EXTRA_KEY_SERVICE_ID,
+                        lawYerServiceId
+                    )
+                }
+                startActivity(intent)
+            }
+
+        }
 
         mLawyerHonorAdapter = LawyerHonorAdapter(mContext)
         mLawyerHonorAdapter?.setOnItemClickListener { adapter, _, position ->
             val list: List<ImageUrlFileIdBean> = adapter.data as List<ImageUrlFileIdBean>
             val listUrl = ArrayList<String>()
             for (honor in list) {
-                listUrl.add(honor?.url ?: "")
+                listUrl.add(honor.url ?: "")
             }
             NavigationHelper.toImageGalleryPage(this, listUrl, position)
         }
@@ -195,6 +213,7 @@ class HomeActivity : HMBaseActivity<HomePresenter>(),
             LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
         rv_lawyer_honor.adapter = mLawyerHonorAdapter
     }
+
 
     override fun showDetail(detail: GetLawyerHomeDetailResBean) {
         mDetail = detail

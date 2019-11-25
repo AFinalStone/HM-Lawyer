@@ -17,7 +17,7 @@
         app:rightTextColor="@color/white"
         app:titleBackground="@color/transparent"
         app:titleColor="@color/white"
-        app:titleText="个人证件照片" />
+        app:titleText="个人形象照片" />
 
     <RelativeLayout
         android:layout_width="match_parent"

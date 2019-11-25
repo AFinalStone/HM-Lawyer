@@ -216,6 +216,7 @@
                         android:id="@+id/iv_add_authen_photo_front"
                         android:layout_width="157dp"
                         android:layout_height="98dp"
+                        android:scaleType="centerCrop"
                         android:src="@mipmap/lawyer_ic_lawyer_authen_front_image" />
 
                     <TextView
