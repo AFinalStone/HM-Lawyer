@@ -99,5 +99,13 @@ interface LawyerService {
     @POST("/api/lawyer/v1/letter/lawyerFinishLetter")
     suspend fun lawyerFinishOrder(@Body reqBean: LawyerFinishOrderReqBean): BaseResponse<Any>
 
+    @POST("/api/lawyer/v1/consultation/lawyerConsultationWaitList")
+    suspend fun getLawyerConsultOrderList(@Body reqBean: GetLawyerConsultOrderListReqBean): BaseResponse<List<LawyerConsultOrderItemBean>>
+
+    @POST("/api/lawyer/v1/consultation/lawyerConsultationDetail")
+    suspend fun getLawyerConsultationDetail(@Body reqBean: LawyerConsultOrderDetailReqBean): BaseResponse<LawyerConsultOrderDetailResBean>
+
+    @POST("/api/lawyer/v1/consultation/reply/lawyer")
+    suspend fun lawyerAnswer(@Body reqBean: LawyerAnswerReqBean): BaseResponse<Any>
 
 }

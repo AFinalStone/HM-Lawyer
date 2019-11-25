@@ -280,4 +280,36 @@ object LawyerApi {
         return getService().lawyerFinishOrder(reqBean)
     }
 
+    /**
+     * 律师获取律师咨询订单列表
+     */
+    suspend fun getLawyerConsultOrderList(
+        page: Int,
+        size: Int
+    ): BaseResponse<List<LawyerConsultOrderItemBean>> {
+        val reqBean = GetLawyerConsultOrderListReqBean(page, size)
+        return getService().getLawyerConsultOrderList(reqBean)
+    }
+
+    /**
+     * 律师获取律师咨询订单详情
+     */
+    suspend fun getLawyerConsultationDetail(
+        billId: String,
+        relationId: Int?
+    ): BaseResponse<LawyerConsultOrderDetailResBean> {
+        val reqBean = LawyerConsultOrderDetailReqBean(billId, relationId)
+        return getService().getLawyerConsultationDetail(reqBean)
+    }
+
+    /**
+     * 律师回答答案
+     */
+    suspend fun lawyerAnswer(
+        billId: String, desc: String
+    ): BaseResponse<Any> {
+        val reqBean = LawyerAnswerReqBean(billId, desc)
+        return getService().lawyerAnswer(reqBean)
+    }
+
 }
