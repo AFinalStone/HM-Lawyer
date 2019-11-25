@@ -1,5 +1,6 @@
 package com.hm.iou.lawyer.api
 
+import com.hm.iou.lawyer.bean.ConsultReplyItemBean
 import com.hm.iou.lawyer.bean.req.*
 import com.hm.iou.lawyer.bean.res.*
 import com.hm.iou.network.HttpReqManager
@@ -303,15 +304,6 @@ object LawyerApi {
     }
 
     /**
-     * 获取解答列表
-     */
-    suspend fun getLawterConsultDetailAnswerList(
-        billId: String
-    ): BaseResponse<List<LawyerConsultOrderAnswerItemBean>> {
-        return getService().getLawyerConsultDetailAnswerList(billId)
-    }
-
-    /**
      * 律师回答答案
      */
     suspend fun lawyerAnswer(
@@ -319,6 +311,34 @@ object LawyerApi {
     ): BaseResponse<Any> {
         val reqBean = LawyerAnswerReqBean(billId, desc)
         return getService().lawyerAnswer(reqBean)
+    }
+
+    /**
+     * 创建律师咨询
+     */
+    suspend fun createLawyerConsult(reqBean: CreateLawyerConsultReqBean): BaseResponse<CreateLawyerLetterResBean> {
+        return getService().createLawyerConsult(reqBean)
+    }
+
+    /**
+     * 获取律师咨询详情
+     */
+    suspend fun getConsultDetail(billId: String): BaseResponse<LawyerConsultDetailResBean> {
+        return getService().getConsultDetail(billId)
+    }
+
+    /**
+     * 添加律师咨询额外问题
+     */
+    suspend fun addConsultQuestion(
+        billId: String?,
+        desc: String?
+    ): BaseResponse<ConsultReplyItemBean> {
+        return getService().addConsultQuestion(AddConsultQuestionReqBean(billId, desc))
+    }
+
+    suspend fun getConsultReplayList(billId: String): BaseResponse<List<ConsultReplyItemBean>> {
+        return getService().getConsultReplayList(billId)
     }
 
 }

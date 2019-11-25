@@ -1,5 +1,6 @@
 package com.hm.iou.lawyer.api
 
+import com.hm.iou.lawyer.bean.ConsultReplyItemBean
 import com.hm.iou.lawyer.bean.req.*
 import com.hm.iou.lawyer.bean.res.*
 import com.hm.iou.sharedata.model.BaseResponse
@@ -108,7 +109,16 @@ interface LawyerService {
     @POST("/api/lawyer/v1/consultation/reply/lawyer")
     suspend fun lawyerAnswer(@Body reqBean: LawyerAnswerReqBean): BaseResponse<Any>
 
+    @POST("/api/lawyer/v1/consultation/custApplyConsultation")
+    suspend fun createLawyerConsult(@Body reqBean: CreateLawyerConsultReqBean): BaseResponse<CreateLawyerLetterResBean>
+
+    @GET("/api/lawyer/v1/consultation/custConsultationDetail")
+    suspend fun getConsultDetail(@Query("billId") billId: String): BaseResponse<LawyerConsultDetailResBean>
+
+    @POST("/api/lawyer/v1/consultation/reply/cust")
+    suspend fun addConsultQuestion(@Body reqBean: AddConsultQuestionReqBean): BaseResponse<ConsultReplyItemBean>
+
     @GET("/api/lawyer/v1/consultation/replies")
-    suspend fun getLawyerConsultDetailAnswerList(@Query("billId") billId: String): BaseResponse<List<LawyerConsultOrderAnswerItemBean>>
+    suspend fun getConsultReplayList(@Query("billId") billId: String): BaseResponse<List<ConsultReplyItemBean>>
 
 }

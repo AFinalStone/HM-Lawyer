@@ -7,6 +7,7 @@ import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.bean.res.CustOrderItemBean
 import com.hm.iou.lawyer.dict.OrderStatus
 import com.hm.iou.lawyer.dict.OrderType
+import com.hm.iou.lawyer.event.AddLawyerConsultEvent
 import com.hm.iou.lawyer.event.AddLawyerLetterEvent
 import com.hm.iou.lawyer.event.UserOrderStatusChangedEvent
 import com.hm.iou.network.exception.ApiException
@@ -139,7 +140,7 @@ class MyOrderListPresenter(context: Context, view: MyOrderListContract.View) :
                 }
 
                 override fun getTypeStr(): String? {
-                    return when(item.type) {
+                    return when (item.type) {
                         OrderType.Letter.type -> "律师函"
                         OrderType.Consult.type -> "律师咨询"
                         else -> ""
@@ -151,7 +152,7 @@ class MyOrderListPresenter(context: Context, view: MyOrderListContract.View) :
                 }
 
                 override fun getTypeBgResId(): Int {
-                    return when(item.type) {
+                    return when (item.type) {
                         OrderType.Letter.type -> R.drawable.lawyer_bg_lawyer_order_list_item_type_letter
                         OrderType.Consult.type -> R.drawable.lawyer_bg_lawyer_order_list_item_type_consult
                         else -> 0
@@ -159,7 +160,7 @@ class MyOrderListPresenter(context: Context, view: MyOrderListContract.View) :
                 }
 
                 override fun getTypeTextColor(): Int {
-                    return when(item.type) {
+                    return when (item.type) {
                         OrderType.Letter.type -> 0xFFBF9E6E.toInt()
                         OrderType.Consult.type -> 0xFF6398CA.toInt()
                         else -> 0
@@ -194,6 +195,11 @@ class MyOrderListPresenter(context: Context, view: MyOrderListContract.View) :
     //创建成功之后，刷新页面
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventCreateLawyerLetter(event: AddLawyerLetterEvent) {
+        getFirstPage()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventCreateLawyerConsult(event: AddLawyerConsultEvent) {
         getFirstPage()
     }
 

@@ -6,8 +6,11 @@ import com.hm.iou.base.file.FileBizType
 import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.database.table.IouData
 import com.hm.iou.lawyer.api.LawyerApi
+import com.hm.iou.lawyer.bean.req.CreateLawyerConsultReqBean
 import com.hm.iou.lawyer.business.NavigationHelper
+import com.hm.iou.lawyer.event.AddLawyerConsultEvent
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 import java.io.File
 
 /**
@@ -18,6 +21,8 @@ import java.io.File
 class CreateLawyerConsultPresenter(context: Context, view: CreateLawyerConsultContract.View) :
     HMBasePresenter<CreateLawyerConsultContract.View>(context, view),
     CreateLawyerConsultContract.Presenter {
+
+    private var mBillId: String? = null
 
     override fun createLawyerConsult(
         lawyerId: String?,
@@ -53,6 +58,26 @@ class CreateLawyerConsultPresenter(context: Context, view: CreateLawyerConsultCo
                     }
                 }
 
+                val reqBean = CreateLawyerConsultReqBean()
+                reqBean.fileIds = fileIdList
+                if (lawyerId.isNullOrEmpty()) {
+                    reqBean.appoint = 0
+                } else {
+                    reqBean.appoint = 1
+                    reqBean.lawyerId = lawyerId
+                }
+                reqBean.caseDescription = caseDesc
+                reqBean.price = price
+
+                val result = handleResponse(LawyerApi.createLawyerConsult(reqBean))
+                mView.dismissLoadingView()
+                val billId = result?.billId
+                billId?.let {
+                    mBillId = billId
+                    NavigationHelper.toPayLawyerLetter(mContext, innerUser, it, price.toString(),
+                        CreateLawyerConsultActivity.REQ_PAY_LAWYER_CONSULT
+                    )
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 handleException(e)
@@ -63,7 +88,9 @@ class CreateLawyerConsultPresenter(context: Context, view: CreateLawyerConsultCo
     }
 
     override fun createOrderSuccess() {
-
+        EventBus.getDefault().post(AddLawyerConsultEvent())
+        NavigationHelper.toLawyerConsultDetailPage(mContext, mBillId ?: "")
+        mView.closeCurrPage()
     }
 
 }
