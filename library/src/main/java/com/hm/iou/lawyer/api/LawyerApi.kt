@@ -303,6 +303,15 @@ object LawyerApi {
     }
 
     /**
+     * 获取解答列表
+     */
+    suspend fun getLawterConsultDetailAnswerList(
+        billId: String
+    ): BaseResponse<List<LawyerConsultOrderAnswerItemBean>> {
+        return getService().getLawyerConsultDetailAnswerList(billId)
+    }
+
+    /**
      * 律师回答答案
      */
     suspend fun lawyerAnswer(

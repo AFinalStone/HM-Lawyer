@@ -1,21 +1,22 @@
 package com.hm.iou.lawyer.business.lawyer.workbench.order
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.text.SpannableString
 import android.text.style.AbsoluteSizeSpan
 import android.view.Gravity
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View.*
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
-import com.hm.iou.lawyer.bean.res.LawyerConsultOrderDetailBean
+import com.hm.iou.lawyer.bean.res.LawyerConsultOrderDetailResBean
 import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.comm.ConsultAnswerAdapter
 import com.hm.iou.lawyer.business.comm.IAnswer
 import com.hm.iou.lawyer.business.lawyer.home.edit.YearCheckAuthenActivity
 import com.hm.iou.lawyer.business.user.CommImageAdapter
 import com.hm.iou.lawyer.dict.OrderStatus
+import com.hm.iou.sharedata.UserManager
 import com.hm.iou.tools.ImageLoader
 import com.hm.iou.tools.kt.*
 import com.hm.iou.uikit.dialog.HMActionSheetDialog
@@ -59,7 +60,6 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
             mOrderId = bundle.getValue(EXTRA_KEY_ORDER_ID)
             mRelationId = bundle.getValue(EXTRA_KEY_RELATION_ID)
         }
-        initViews()
         val order = mOrderId
         if (order.isNullOrEmpty()) {
             toastErrorMessage("参数异常")
@@ -85,23 +85,33 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
         outState?.putValue(EXTRA_KEY_RELATION_ID, mRelationId)
     }
 
-    private fun initViews() {
-
-    }
 
     override fun showInitView() {
-
+        loading_view.visibility = VISIBLE
+        loading_view.showDataLoading()
     }
 
     override fun hideInitView() {
-
+        loading_view.visibility = INVISIBLE
+        loading_view.stopLoadingAnim()
     }
 
     override fun showInitFailed(msg: String) {
+        loading_view.visibility = VISIBLE
+        loading_view.showDataFail(msg) {
+            mOrderId?.let {
+                var relationId: Int? = null
+                try {
+                    relationId = mRelationId?.toInt()
+                } catch (e: Exception) {
 
+                }
+                mPresenter.init(it, relationId)
+            }
+        }
     }
 
-    override fun showDetail(detail: LawyerConsultOrderDetailBean) {
+    override fun showDetail(detail: LawyerConsultOrderDetailResBean) {
         when (detail.status) {
             OrderStatus.WAIT.status -> {
                 showWait(detail)
@@ -113,26 +123,36 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
                 showComplete(detail)
             }
             OrderStatus.CANCEL.status -> {
-                rl_order_status.visibility = VISIBLE
-                rl_order_operate_time.visibility = VISIBLE
-                view_order_status.visibility = VISIBLE
-                view_order_operate_time.visibility = VISIBLE
-                iv_more.visibility = GONE
+                //订单状态
                 tv_order_status.text = "订单已取消"
+                rl_order_operate.visibility = VISIBLE
                 tv_order_operate_label.text = "取消时间"
                 val time = detail.doDate?.replace("-", ".")
                 tv_order_operate_time.text = time
+                //底部栏
+                tv_count_down_time.visibility = GONE
+                iv_more.visibility = GONE
+                tv_operate_01.visibility = GONE
+                tv_operate_02.visibility = GONE
+                //律师解答列表
+                rl_lawyer_answer.visibility = GONE
+                ll_order_answer.visibility = GONE
             }
             OrderStatus.REFUSE.status -> {
-                rl_order_status.visibility = VISIBLE
-                rl_order_operate_time.visibility = VISIBLE
-                view_order_status.visibility = VISIBLE
-                view_order_operate_time.visibility = VISIBLE
-                iv_more.visibility = GONE
+                //订单状态
                 tv_order_status.text = "已拒绝接单"
+                rl_order_operate.visibility = VISIBLE
                 tv_order_operate_label.text = "拒绝时间"
                 val time = detail.doDate?.replace("-", ".")
                 tv_order_operate_time.text = time
+                //底部栏
+                tv_count_down_time.visibility = GONE
+                iv_more.visibility = GONE
+                tv_operate_01.visibility = GONE
+                tv_operate_02.visibility = GONE
+                //律师解答列表
+                rl_lawyer_answer.visibility = GONE
+                ll_order_answer.visibility = GONE
             }
         }
         //头像，昵称，时间
@@ -158,7 +178,7 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
         //需求描述
         tv_order_case_desc.text = detail.caseDescription ?: ""
         //图片资料
-        val list: List<String>? = null
+        val list: List<String>? = detail.fileUrls
         if (list.isNullOrEmpty()) {
             view_divider_order_img.visibility = GONE
             tv_order_img_label.visibility = GONE
@@ -182,22 +202,22 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
     }
 
     override fun showAnswerList(list: ArrayList<IAnswer>) {
-        rv_order_answer.layoutManager = LinearLayoutManager(this)
-        mAnswerAdapter = ConsultAnswerAdapter(mContext)
-        rv_order_answer.adapter = mAnswerAdapter
+        if (mAnswerAdapter == null) {
+            rv_order_answer.layoutManager = LinearLayoutManager(this)
+            mAnswerAdapter = ConsultAnswerAdapter(mContext)
+            rv_order_answer.adapter = mAnswerAdapter
+        }
         mAnswerAdapter?.setNewData(list)
     }
 
-    private fun showWait(detail: LawyerConsultOrderDetailBean) {
-        rl_order_status.visibility = VISIBLE
+    private fun showWait(detail: LawyerConsultOrderDetailResBean) {
+        //订单状态
         tv_order_status.text = "等待接单"
-        rl_order_operate_time.visibility = GONE
-        view_order_status.visibility = GONE
-        view_order_operate_time.visibility = GONE
-        iv_more.visibility = GONE
+        rl_order_operate.visibility = GONE
+        view_order_operate.visibility = GONE
+        //底部栏
         tv_count_down_time.visibility = GONE
-        tv_operate_02.visibility = VISIBLE
-        tv_operate_02.text = "立即接单"
+        iv_more.visibility = GONE
         if (true == detail.appoint) {
             tv_operate_01.visibility = VISIBLE
             tv_operate_01.text = "拒绝接单"
@@ -224,39 +244,66 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
         } else {
             tv_operate_01.visibility = GONE
         }
+        tv_operate_02.visibility = VISIBLE
+        tv_operate_02.text = "立即接单"
+        tv_operate_02.clickWithDuration {
+            mPresenter.checkCanAcceptOrder()
+        }
+        //律师解答列表
+        rl_lawyer_answer.visibility = GONE
+        ll_order_answer.visibility = GONE
     }
 
-    private fun showDonging(detail: LawyerConsultOrderDetailBean) {
-        rl_order_status.visibility = GONE
-        rl_order_operate_time.visibility = GONE
-        view_order_status.visibility = GONE
-        view_order_operate_time.visibility = GONE
+    private fun showDonging(detail: LawyerConsultOrderDetailResBean) {
+        //订单状态
+        tv_order_status.text = "等待解答"
+        rl_order_operate.visibility = GONE
+        view_order_operate.visibility = GONE
+        //底部栏
+        tv_count_down_time.visibility = VISIBLE
         iv_more.visibility = VISIBLE
-        tv_operate_01.visibility = GONE
-        tv_operate_02.visibility = VISIBLE
-        tv_operate_02.text = "咨询解答"
         iv_more.clickWithDuration {
             showBottomDialog()
         }
-        tv_operate_02.clickWithDuration {
-
-        }
-    }
-
-    private fun showComplete(detail: LawyerConsultOrderDetailBean) {
-        rl_order_status.visibility = VISIBLE
-        tv_order_status.text = "订单已完成"
-        rl_order_operate_time.visibility = VISIBLE
-        tv_order_operate_label.text = "完成时间"
-        view_order_status.visibility = VISIBLE
-        view_order_operate_time.visibility = VISIBLE
-        iv_more.visibility = GONE
         tv_operate_01.visibility = GONE
         tv_operate_02.visibility = VISIBLE
         tv_operate_02.text = "咨询解答"
+        tv_operate_02.clickWithDuration {
+            val intent = Intent(mContext, InputLawyerConsultAnswerActivity::class.java)
+            startActivity(intent)
+        }
+        //律师解答列表
+        rl_lawyer_answer.visibility = VISIBLE
+        ll_order_answer.visibility = GONE
+        val userInfo = UserManager.getInstance(mContext).userInfo
+        tv_lawyer_name.text = userInfo.name + "律师"
+        ImageLoader.getInstance(mContext)
+            .displayImage("", iv_lawyer_avatar, R.mipmap.uikit_icon_header_unknow)
+    }
 
+    private fun showComplete(detail: LawyerConsultOrderDetailResBean) {
+        //订单状态
+        tv_order_status.text = "订单已完成"
+        rl_order_operate.visibility = VISIBLE
+        tv_order_operate_label.text = "完成时间"
         val time = detail.doDate?.replace("-", ".")
-        tv_order_operate_time.text = time ?: ""
+        tv_order_operate_time.text = time
+        //底部栏
+        tv_count_down_time.visibility = GONE
+        iv_more.visibility = GONE
+        iv_more.clickWithDuration {
+            showBottomDialog()
+        }
+        tv_operate_01.visibility = GONE
+        tv_operate_02.visibility = VISIBLE
+        tv_operate_02.text = "咨询解答"
+        tv_operate_02.clickWithDuration {
+            val intent = Intent(mContext, InputLawyerConsultAnswerActivity::class.java)
+            startActivity(intent)
+        }
+        //解答列表
+        rl_lawyer_answer.visibility = GONE
+        ll_order_answer.visibility = VISIBLE
     }
 
     private fun showBottomDialog() {

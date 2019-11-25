@@ -2,7 +2,7 @@ package com.hm.iou.lawyer.business.lawyer.workbench.order
 
 
 import com.hm.iou.base.mvp.BaseContract
-import com.hm.iou.lawyer.bean.res.LawyerConsultOrderDetailBean
+import com.hm.iou.lawyer.bean.res.LawyerConsultOrderDetailResBean
 import com.hm.iou.lawyer.business.comm.IAnswer
 
 /**
@@ -22,7 +22,7 @@ interface ConsultDetailContract {
         /**
          * 显示详情
          */
-        fun showDetail(detail: LawyerConsultOrderDetailBean)
+        fun showDetail(detail: LawyerConsultOrderDetailResBean)
 
         /**
          * 显示列表

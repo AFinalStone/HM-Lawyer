@@ -3,6 +3,7 @@ package com.hm.iou.lawyer.business.lawyer.workbench.list
 import android.content.Context
 import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.api.LawyerApi
+import com.hm.iou.lawyer.bean.res.LawyerConsultOrderItemBean
 import com.hm.iou.lawyer.bean.res.LawyerOrderItem
 import com.hm.iou.lawyer.dict.OrderStatus
 import com.hm.iou.lawyer.dict.OrderType
@@ -56,16 +57,15 @@ class LawyerConsultOrderListPresenter(context: Context, view: LawyerConsultOrder
                 if (mDataList.isEmpty())
                     mView.showInitLoading(true)
                 val result = handleResponse(
-                    LawyerApi.getLawyerLetterList(
+                    LawyerApi.getLawyerConsultOrderList(
                         1,
                         PAGE_SIZE
                     )
                 )
                 mNeedRefresh = false
-                val dataList = result?.list
                 mPageNo = 1
                 mDataList.clear()
-                val list = convertData(dataList)
+                val list = convertData(result)
                 var currSize = list.size
                 mDataList.addAll(list)
                 mView.clearOrderList()
@@ -98,11 +98,11 @@ class LawyerConsultOrderListPresenter(context: Context, view: LawyerConsultOrder
             try {
                 val list = convertData(
                     handleResponse(
-                        LawyerApi.getLawyerLetterList(
+                        LawyerApi.getLawyerConsultOrderList(
                             mPageNo + 1,
                             PAGE_SIZE
                         )
-                    )?.list
+                    )
                 )
                 var currSize = list.size
                 mDataList.addAll(list)
@@ -120,7 +120,7 @@ class LawyerConsultOrderListPresenter(context: Context, view: LawyerConsultOrder
         }
     }
 
-    private fun convertData(list: List<LawyerOrderItem>?): List<IOrderItem> {
+    private fun convertData(list: List<LawyerConsultOrderItemBean>?): List<IOrderItem> {
         val dataList = mutableListOf<IOrderItem>()
         list ?: return dataList
         val sdf1 = SimpleDateFormat("yyyy.MM.dd HH:mm")
@@ -128,7 +128,7 @@ class LawyerConsultOrderListPresenter(context: Context, view: LawyerConsultOrder
         list.forEach { item ->
             dataList.add(object : IOrderItem {
                 override fun getRelationId(): Int? {
-                    return item.relationId
+                    return -1
                 }
 
                 var formatTime: String? = null

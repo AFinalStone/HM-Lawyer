@@ -4,6 +4,7 @@ import android.content.Context
 import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.event.LawyerOrderStatusChangedEvent
+import com.hm.iou.network.exception.ApiException
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -45,7 +46,29 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
     }
 
     override fun getOrderDetail() {
-
+        launch {
+            try {
+                mView.showInitView()
+                val result = handleResponse(LawyerApi.getLawyerConsultOrderDetail(mOrderId, mRelationId))
+                mView.hideInitView()
+                if (result == null) {
+                    mView.toastErrorMessage("发生异常")
+                    mView.closeCurrPage()
+                } else {
+                    mView.showDetail(result)
+                    mNeedRefresh = false
+                }
+            } catch (e: Exception) {
+                if (e is ApiException) {
+                    handleException(e, showCommError = false, showBusinessError = false)
+                    val msg = e.message ?: "初始化失败"
+                    mView.showInitFailed(msg)
+                } else {
+                    handleException(e)
+                    mView.closeCurrPage()
+                }
+            }
+        }
     }
 
     override fun getAnswerList() {

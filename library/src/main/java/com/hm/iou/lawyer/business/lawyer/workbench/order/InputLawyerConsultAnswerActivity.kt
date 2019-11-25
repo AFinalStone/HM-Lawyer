@@ -13,11 +13,8 @@ import kotlinx.android.synthetic.main.lawyer_activity_edit_lawyer_self_introduct
 class InputLawyerConsultAnswerActivity : HMBaseActivity<InputLawyerConsultAnswerPresenter>(),
     InputLawyerConsultAnswerContract.View {
 
-    companion object {
-        const val EXTRA_KEY_SELF_INTRODUCE = "answer"
-    }
 
-    private var mAnswer: String? by extraDelegate(EXTRA_KEY_SELF_INTRODUCE, null)
+    private var mAnswer: String? = null
 
     override fun getLayoutId(): Int = R.layout.lawyer_activity_input_lawyer_answer
 

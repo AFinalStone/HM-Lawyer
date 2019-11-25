@@ -108,4 +108,7 @@ interface LawyerService {
     @POST("/api/lawyer/v1/consultation/reply/lawyer")
     suspend fun lawyerAnswer(@Body reqBean: LawyerAnswerReqBean): BaseResponse<Any>
 
+    @GET("/api/lawyer/v1/consultation/replies")
+    suspend fun getLawyerConsultDetailAnswerList(@Query("billId") billId: String): BaseResponse<List<LawyerConsultOrderAnswerItemBean>>
+
 }
