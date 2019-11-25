@@ -6,11 +6,11 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <View
+    <com.hm.iou.uikit.StatusBarView
         android:id="@+id/view_statusbar_placeholder"
         android:layout_width="match_parent"
-        android:layout_height="24dip"
-        android:background="@color/white" />
+        android:layout_height="wrap_content"
+        />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -96,6 +96,18 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 >
+
+                <TextView
+                    android:id="@+id/tv_lawyer_lawyer_consult"
+                    style="@style/UikitTextView"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableTop="@mipmap/lawyer_ic_lawyer_consult"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="律师咨询" />
 
                 <TextView
                     android:id="@+id/tv_lawyer_find_lawyer"

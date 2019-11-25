@@ -55,6 +55,11 @@ class LawerTabIndexFragment : HMBaseFragment<LawerTabIndexPresenter>(),
         mContentView?.findViewById<View>(R.id.tv_lawyer_workbench)?.clickWithDuration {
             activity?.let { NavigationHelper.toWorkbenchActivity(it) }
         }
+
+        //律师咨询
+        mContentView?.findViewById<View>(R.id.tv_lawyer_lawyer_consult)?.clickWithDuration {
+            activity?.let { NavigationHelper.toCreateLawyerConsultPage(it) }
+        }
         //找律师
         mContentView?.findViewById<View>(R.id.tv_lawyer_find_lawyer)?.clickWithDuration {
             activity?.let { NavigationHelper.toFindLawyerPage(it) }

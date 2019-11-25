@@ -5,7 +5,7 @@ import com.hm.iou.base.mvp.BaseContract
 /**
  * Created by hjy on 2019/11/12
  *
- * 我的订单详情页面
+ * 律师函订单详情页面
  */
 interface MyOrderDetailContract {
 
