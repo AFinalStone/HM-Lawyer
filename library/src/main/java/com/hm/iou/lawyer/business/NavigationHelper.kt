@@ -21,10 +21,7 @@ import com.hm.iou.lawyer.business.user.create.InputReceiverAddressActivity
 import com.hm.iou.lawyer.business.user.create.LawyerLetterDescActivity
 import com.hm.iou.lawyer.business.user.find.FindLawyerActivity
 import com.hm.iou.lawyer.business.user.lawyer.LawyerDetailActivity
-import com.hm.iou.lawyer.business.user.order.ConsultDetailActivity
-import com.hm.iou.lawyer.business.user.order.MyOrderDetailActivity
-import com.hm.iou.lawyer.business.user.order.MyOrderListActivity
-import com.hm.iou.lawyer.business.user.order.RatingLawyerActivity
+import com.hm.iou.lawyer.business.user.order.*
 import com.hm.iou.router.Router
 import com.hm.iou.tools.kt.startActivity
 
@@ -272,9 +269,9 @@ object NavigationHelper {
     }
 
     /**
-     * 进入创建律师咨询
+     * 进入创建律师咨询页面，指定了律师
      */
-    fun toCreateLawyerConsultPage(context: Context, lawyerId: String?, price: Int?) {
+    fun toCreateLawyerConsultPage(context: Context, lawyerId: String?, price: Int?, desc: String? = null) {
         context.startActivity<CreateLawyerConsultActivity>(
             CreateLawyerConsultActivity.EXTRA_KEY_LAWYER_ID to (lawyerId ?: ""),
             CreateLawyerConsultActivity.EXTRA_KEY_PRICE to (price ?: 0)
@@ -285,7 +282,19 @@ object NavigationHelper {
      * 进入律师咨询详情
      */
     fun toLawyerConsultDetailPage(context: Context, orderId: String) {
-        context.startActivity<ConsultDetailActivity>()
+        context.startActivity<ConsultDetailActivity>(
+            ConsultDetailActivity.EXTRA_KEY_ORDER_ID to orderId
+        )
     }
+
+    /**
+     * 进入咨询添加问题页面
+     */
+    fun toAddConsultQuestion(context: Context, orderId: String){
+        context.startActivity<ConsultAddQuestionActivity>(
+            ConsultAddQuestionActivity.EXTRA_KEY_ORDER_ID to orderId
+        )
+    }
+
 
 }

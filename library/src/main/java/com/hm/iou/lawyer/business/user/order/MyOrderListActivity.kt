@@ -40,7 +40,7 @@ class MyOrderListActivity : HMBaseActivity<MyOrderListPresenter>(), MyOrderListC
                 if (item.getType() == OrderType.Letter.type) {
                     NavigationHelper.toUserOrderDetailPage(this, it.getOrderId() ?: "")
                 } else if (item.getType() == OrderType.Consult.type) {
-                    toastMessage("请更新版本")
+                    NavigationHelper.toLawyerConsultDetailPage(this, it.getOrderId() ?: "")
                 } else {
                     toastMessage("请更新版本")
                 }

@@ -29,6 +29,8 @@ class CreateLawyerConsultActivity : HMBaseActivity<CreateLawyerConsultPresenter>
     companion object Key {
         const val EXTRA_KEY_LAWYER_ID = "lawyer_id"
         const val EXTRA_KEY_PRICE = "price"
+        const val EXTRA_KEY_DESC = "desc"
+        const val EXTRA_KEY_IMGS = "imgs"
 
         private const val MAX_IMAGE_COUNT = 3
         private const val REQ_OPEN_SELECT_PIC = 100
@@ -39,6 +41,7 @@ class CreateLawyerConsultActivity : HMBaseActivity<CreateLawyerConsultPresenter>
 
     private var mLawyerId: String? by extraDelegate(EXTRA_KEY_LAWYER_ID, null)
     private var mPrice: Int? by extraDelegate(EXTRA_KEY_PRICE, null)
+    private var mDesc: String? by extraDelegate(EXTRA_KEY_DESC, null)
 
     private val mImageAdapter = IouImageUploadAdapter(this, MAX_IMAGE_COUNT)
     private var mFileList: MutableList<IouData.FileEntity>? = null
@@ -51,6 +54,7 @@ class CreateLawyerConsultActivity : HMBaseActivity<CreateLawyerConsultPresenter>
         savedInstanceState?.let {
             mLawyerId = it.getString(EXTRA_KEY_LAWYER_ID)
             mPrice = it.getInt(EXTRA_KEY_PRICE, 0)
+            mDesc = it.getString(EXTRA_KEY_DESC)
         }
         initViews()
     }
@@ -59,6 +63,7 @@ class CreateLawyerConsultActivity : HMBaseActivity<CreateLawyerConsultPresenter>
         super.onSaveInstanceState(outState)
         outState?.putValue(EXTRA_KEY_LAWYER_ID, mLawyerId)
         outState?.putValue(EXTRA_KEY_PRICE, mPrice)
+        outState?.putValue(EXTRA_KEY_DESC, mDesc)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -149,9 +154,16 @@ class CreateLawyerConsultActivity : HMBaseActivity<CreateLawyerConsultPresenter>
         }
 
         if (!mLawyerId.isNullOrEmpty() && (mPrice ?: 0) > 0) {
+            tv_consult_price_label.text = "订单金额"
             et_consult_price.setText("${mPrice}元")
             et_consult_price.isEnabled = false
         }
+
+        if (!mDesc.isNullOrEmpty()) {
+            et_consult_desc.setText(mDesc)
+        }
+
+
 
         bottom_bar.setOnTitleClickListener {
             toCreateLawyerConsult(false)

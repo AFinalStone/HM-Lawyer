@@ -48,7 +48,7 @@
 
                     <TextView
                         android:id="@+id/tv_order_status"
-                        style="@style/UikitTextView.Auxiliary"
+                        style="@style/UikitTextView"
                         android:layout_alignParentRight="true"
                         tools:text="等待律师接单" />
 
@@ -76,7 +76,7 @@
 
                     <TextView
                         android:id="@+id/tv_order_cancel_time"
-                        style="@style/UikitTextView.Auxiliary"
+                        style="@style/UikitTextView"
                         android:layout_alignParentRight="true"
                         tools:text="2019.11.12 12:100:19" />
 
@@ -97,7 +97,7 @@
 
                     <TextView
                         android:id="@+id/tv_order_price"
-                        style="@style/UikitTextView.Auxiliary"
+                        style="@style/UikitTextView"
                         android:layout_alignParentRight="true"
                         tools:text="￥100.00" />
 

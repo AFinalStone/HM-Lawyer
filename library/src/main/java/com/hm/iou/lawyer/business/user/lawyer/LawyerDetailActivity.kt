@@ -101,12 +101,16 @@ class LawyerDetailActivity : HMBaseActivity<LawyerDetailPresenter>(), LawyerDeta
     override fun showLawyerService(list: List<LawyerServiceBean>?) {
         ll_lawyer_service.removeAllViews()
         list?.run {
+            var index = 0
             forEach { item ->
                 val view = inflateLayout(R.layout.lawyer_layout_lawyer_service, null, false)
                 val layoutParams =
-                    LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(85))
+                    LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dp2px(106))
                 ll_lawyer_service.addView(view, layoutParams)
-                layoutParams.bottomMargin = dp2px(8)
+                layoutParams.weight = 1f
+                if (index > 0) {
+                    layoutParams.leftMargin = dp2px(4)
+                }
                 view.clickWithDuration {
                     val data = it.tag as? LawyerServiceBean
                     data?.let {
@@ -115,18 +119,19 @@ class LawyerDetailActivity : HMBaseActivity<LawyerDetailPresenter>(), LawyerDeta
                                 this@LawyerDetailActivity,
                                 mLawyerId, data.price
                             )
-                        } else {
-                            toastMessage("敬请期待")
+                        } else if (data.serviceName?.contains("律师咨询") == true){
+                            NavigationHelper.toCreateLawyerConsultPage(this@LawyerDetailActivity, mLawyerId, data.price)
                         }
                     }
                 }
                 view.tag = item
                 view.findViewById<TextView>(R.id.tv_lawyer_service_name).text = item.serviceName
-                view.findViewById<TextView>(R.id.tv_lawyer_service_desc).text = item.serviceDesc
+//                view.findViewById<TextView>(R.id.tv_lawyer_service_desc).text = item.serviceDesc
                 view.findViewById<TextView>(R.id.tv_lawyer_service_price).text = item.servicePrice
                 val ivLogo = view.findViewById<ImageView>(R.id.iv_lawyer_service_logo)
                 ImageLoader.getInstance(this@LawyerDetailActivity)
                     .displayImage(item.logo, ivLogo, R.mipmap.lawyer_ic_lawyer_letter2, R.mipmap.lawyer_ic_lawyer_letter2)
+                index++
             }
         }
     }

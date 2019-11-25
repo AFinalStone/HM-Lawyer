@@ -30,11 +30,11 @@
             style="@style/UikitTextView"
             android:layout_height="24dp"
             android:layout_alignParentRight="true"
-            android:background="@drawable/uikit_bg_round_border_gray"
+            android:background="@drawable/lawyer_bg_lawyer_order_list_item_type_letter"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="律师函"
-            android:textColor="@color/uikit_text_sub_content"
+            android:textColor="#FFBF9E6E"
             android:textSize="13dp" />
 
 
