@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
+import com.hm.iou.lawyer.business.comm.ConsultAnswerAdapter
+import com.hm.iou.lawyer.business.comm.IAnswer
 import kotlinx.android.synthetic.main.lawyer_activity_user_consult_detail.*
 
 /**
@@ -11,7 +13,7 @@ import kotlinx.android.synthetic.main.lawyer_activity_user_consult_detail.*
  *
  * 律师咨询详情
  */
-class ConsultDetailActivity: HMBaseActivity<ConsultDetailPresenter>(), ConsultDetailContract.View {
+class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultDetailContract.View {
 
     override fun initPresenter(): ConsultDetailPresenter = ConsultDetailPresenter(this, this)
 
@@ -24,11 +26,11 @@ class ConsultDetailActivity: HMBaseActivity<ConsultDetailPresenter>(), ConsultDe
     private fun initViews() {
         rv_order_answer.layoutManager = LinearLayoutManager(this)
 
-        val adapter = ConsultAnswerAdapter()
+        val adapter = ConsultAnswerAdapter(mContext)
         rv_order_answer.adapter = adapter
         val list = mutableListOf<IAnswer>()
         for (i in 0..30) {
-            list.add(object : IAnswer{
+            list.add(object : IAnswer {
 
             })
         }

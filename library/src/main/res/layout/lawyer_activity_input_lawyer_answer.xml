@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <com.hm.iou.uikit.HMTopBarView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/uikit_topbar_height"
+        app:backIconIsShow="false"
+        app:bottomDividerIsShow="false"
+        app:titleBackground="@color/transparent"
+        app:titleText="咨询解答" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="21dp">
+
+        <EditText
+            android:id="@+id/et_self_introduction"
+            style="@style/UikitEditText.Normal.TextArea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|top"
+            android:hint="请输入您的解答内容"
+            android:lineSpacingMultiplier="1.3"
+            android:maxLength="200"
+            android:minHeight="160dp"
+            android:padding="8dip"
+            android:textColorHint="#CFCFD6" />
+
+        <TextView
+            android:id="@+id/tv_self_introduction_word_count"
+            style="@style/UikitTextView.Auxiliary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/et_self_introduction"
+            android:layout_alignBottom="@id/et_self_introduction"
+            android:layout_marginRight="12dip"
+            android:layout_marginBottom="8dip"
+            android:text="0/500"
+            android:textColor="#CFCFD6" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.hm.iou.uikit.HMBottomBarView
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        app:bottomTitleBackground="@drawable/uikit_selector_btn_minor_small"
+        app:bottomTitleColor="@color/uikit_text_auxiliary"
+        app:bottomTitleText="完成解答" />
+
+</LinearLayout>

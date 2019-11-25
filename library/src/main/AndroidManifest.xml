@@ -44,6 +44,14 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.hm.iou.lawyer.business.lawyer.workbench.order.ConsultDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.hm.iou.lawyer.business.lawyer.workbench.order.InputLawyerConsultAnswerActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.hm.iou.lawyer.business.lawyer.workbench.order.LawyerFinishOrderActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
@@ -142,7 +150,6 @@
             android:name=".business.user.order.ConsultDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-
 
 
     </application>

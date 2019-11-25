@@ -12,8 +12,8 @@ enum class ModelType(val modelType: Int, val modelName: String) {
     WAIT_TO_FINISH(101, "已完成"),
     WAIT_TO_ALL_ORDER(102, "全部订单"),
     LAWYER_ORDER_CONSULT(103, "律师咨询"),
-    LAWYER_LETTER(103, "律师函"),
-    LAWYER_INVITE_RECEIVE(103, "邀请接单");
+    LAWYER_LETTER(104, "律师函"),
+    LAWYER_INVITE_RECEIVE(105, "邀请接单");
 
     companion object {
         /**

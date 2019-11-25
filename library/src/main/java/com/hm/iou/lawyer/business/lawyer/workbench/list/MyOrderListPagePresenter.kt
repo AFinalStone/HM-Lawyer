@@ -6,6 +6,7 @@ import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.bean.res.LawyerOrderItem
 import com.hm.iou.lawyer.dict.LawyerOrderTabStatus
 import com.hm.iou.lawyer.dict.OrderStatus
+import com.hm.iou.lawyer.dict.OrderType
 import com.hm.iou.lawyer.event.LawyerOrderStatusChangedEvent
 import com.hm.iou.logger.Logger
 import com.hm.iou.network.exception.ApiException
@@ -190,8 +191,8 @@ class MyOrderListPagePresenter(context: Context, view: MyOrderListPageContract.V
                     return item.caseDescription
                 }
 
-                override fun getTypeStr(): String? {
-                    return if (1 == item.type) "律师函" else "律师咨询"
+                override fun getOrderTypeStr(): String? {
+                    return if (1 == item.type) OrderType.Letter.desc else OrderType.Consult.desc
                 }
 
 

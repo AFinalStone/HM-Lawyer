@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.lawyer.home.HomeActivity
 import com.hm.iou.lawyer.business.lawyer.home.authen.AuthenProgressActivity
+import com.hm.iou.lawyer.business.lawyer.workbench.WorkBenchActivity
 import com.hm.iou.lawyer.business.user.order.RatingLawyerActivity
 import com.hm.iou.network.HttpReqManager
 import com.hm.iou.router.Router
@@ -32,24 +33,24 @@ class MainActivity : AppCompatActivity() {
             login()
         }
         btn_lawyer.setOnClickListener {
-            startActivity(Intent(this@MainActivity, RatingLawyerActivity::class.java))
+            startActivity(Intent(this@MainActivity, WorkBenchActivity::class.java))
         }
         btn_bank_card.setOnClickListener {
-/*
-            PersonApi.getUserThirdPlatformInfo()
-                .map(RxUtil.handleResponse())
-                .subscribe({ thirdInfo ->
-                    Logger.d("user" + thirdInfo.bankInfoResp.toString())
-                    //存储绑定银行卡信息
-                    val extendInfo = UserManager.getInstance(this@MainActivity).userExtendInfo
-                    extendInfo.thirdPlatformInfo = thirdInfo
-                    UserManager.getInstance(this@MainActivity)
-                        .updateOrSaveUserExtendInfo(extendInfo)
-                    Router.getInstance()
-                        .buildWithUrl("hmiou://m.54jietiao.com/pay/user_bind_bank?source=lawyer")
-                        .navigation(this@MainActivity)
-                }, { })
-*/
+            /*
+                        PersonApi.getUserThirdPlatformInfo()
+                            .map(RxUtil.handleResponse())
+                            .subscribe({ thirdInfo ->
+                                Logger.d("user" + thirdInfo.bankInfoResp.toString())
+                                //存储绑定银行卡信息
+                                val extendInfo = UserManager.getInstance(this@MainActivity).userExtendInfo
+                                extendInfo.thirdPlatformInfo = thirdInfo
+                                UserManager.getInstance(this@MainActivity)
+                                    .updateOrSaveUserExtendInfo(extendInfo)
+                                Router.getInstance()
+                                    .buildWithUrl("hmiou://m.54jietiao.com/pay/user_bind_bank?source=lawyer")
+                                    .navigation(this@MainActivity)
+                            }, { })
+            */
         }
 
         btn_lawyer_index.setOnClickListener {

@@ -5,6 +5,7 @@ import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.bean.res.LawyerOrderItem
 import com.hm.iou.lawyer.dict.OrderStatus
+import com.hm.iou.lawyer.dict.OrderType
 import com.hm.iou.lawyer.event.LawyerOrderStatusChangedEvent
 import com.hm.iou.network.exception.ApiException
 import kotlinx.coroutines.Job
@@ -159,8 +160,8 @@ class LawyerConsultOrderListPresenter(context: Context, view: LawyerConsultOrder
                     return item.caseDescription
                 }
 
-                override fun getTypeStr(): String? {
-                    return if (1 == item.billType) "律师函" else "律师咨询"
+                override fun getOrderTypeStr(): String? {
+                    return if (1 == item.billType) OrderType.Letter.desc else OrderType.Consult.desc
                 }
 
                 override fun getPrice(): String? {

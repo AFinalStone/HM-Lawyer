@@ -6,7 +6,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
+import com.hm.iou.lawyer.business.lawyer.workbench.order.ConsultDetailActivity
 import com.hm.iou.lawyer.business.lawyer.workbench.order.OrderDetailActivity
+import com.hm.iou.lawyer.dict.OrderType
 import com.hm.iou.uikit.HMLoadMoreView
 import kotlinx.android.synthetic.main.lawyer_activity_lawyer_letter_order_list.*
 
@@ -38,16 +40,29 @@ class LawyerConsultOrderListActivity : HMBaseActivity<LawyerConsultOrderListPres
         mOrderAdapter?.setOnItemClickListener { adapter, _, position ->
             val item = adapter.getItem(position) as IOrderItem?
             item?.let {
-                val intent = Intent(mContext, OrderDetailActivity::class.java)
-                val orderId = item.getOrderId()
-                orderId?.let {
-                    intent.putExtra(OrderDetailActivity.EXTRA_KEY_ORDER_ID, it)
+                if (OrderType.Consult.desc == item.getOrderTypeStr()) {
+                    val intent = Intent(mContext, ConsultDetailActivity::class.java)
+                    val orderId = item.getOrderId()
+                    orderId?.let {
+                        intent.putExtra(ConsultDetailActivity.EXTRA_KEY_ORDER_ID, it)
+                    }
+                    val relationId = item.getRelationId()
+                    relationId?.let {
+                        intent.putExtra(ConsultDetailActivity.EXTRA_KEY_RELATION_ID, it.toString())
+                    }
+                    startActivity(intent)
+                } else {
+                    val intent = Intent(mContext, OrderDetailActivity::class.java)
+                    val orderId = item.getOrderId()
+                    orderId?.let {
+                        intent.putExtra(OrderDetailActivity.EXTRA_KEY_ORDER_ID, it)
+                    }
+                    val relationId = item.getRelationId()
+                    relationId?.let {
+                        intent.putExtra(OrderDetailActivity.EXTRA_KEY_RELATION_ID, it.toString())
+                    }
+                    startActivity(intent)
                 }
-                val relationId = item.getRelationId()
-                relationId?.let {
-                    intent.putExtra(OrderDetailActivity.EXTRA_KEY_RELATION_ID, it.toString())
-                }
-                startActivity(intent)
             }
         }
         mPresenter.getFirstPage()

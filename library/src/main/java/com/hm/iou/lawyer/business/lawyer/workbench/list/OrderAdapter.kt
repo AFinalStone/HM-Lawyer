@@ -5,6 +5,7 @@ import android.widget.ImageView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.hm.iou.lawyer.R
+import com.hm.iou.lawyer.dict.OrderType
 import com.hm.iou.tools.ImageLoader
 
 /**
@@ -25,11 +26,11 @@ class OrderAdapter :
             .displayImage(item.getUserHeader(), ivHeader, R.mipmap.uikit_icon_header_unknow)
         helper.setText(R.id.tv_name, item.getUserName())
         helper.setText(R.id.tv_order_time, item.getTime())
-        helper.setText(R.id.tv_order_type, item.getTypeStr())
+        helper.setText(R.id.tv_order_type, item.getOrderTypeStr())
         helper.setText(R.id.tv_order_desc, item.getDesc())
         helper.setText(R.id.tv_order_price, item.getPrice())
         helper.setText(R.id.tv_order_status, item.getStatusStr())
-        if ("律师咨询" == item.getTypeStr()) {
+        if (OrderType.Consult.desc == item.getOrderTypeStr()) {
             helper.setTextColor(R.id.tv_order_type, 0xFF6398CA.toInt())
             helper.setBackgroundRes(
                 R.id.tv_order_type,
@@ -62,7 +63,7 @@ interface IOrderItem {
 
     fun getDesc(): String?
 
-    fun getTypeStr(): String?
+    fun getOrderTypeStr(): String?
 
     fun getPrice(): String?
 
