@@ -38,7 +38,7 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
                 mDetailInfo = data
                 data ?: return@launch
 
-                when(data.status) {
+                when (data.status) {
                     OrderStatus.WAIT.status -> {
                         mView.showOrderStatus("等待律师接单")
                         mView.showOrderCancelTips(View.GONE, null)
@@ -82,7 +82,7 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
                 mView.showLawyerAnswerLabel(View.GONE)
                 mView.showOrHideServiceRatingView(false)
 
-                when(data.status) {
+                when (data.status) {
                     OrderStatus.WAIT.status -> {            //等待接单，可以取消
                         mView.showOrHideMainBtn(true)
                         mView.showBottomMainBtn("取消订单") {
@@ -92,7 +92,12 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
                             //等待指定律师接单
                             mView.showOrHideAnswerContentView(View.VISIBLE)
                             mView.showLawyerStatus("等待接单")
-                            mView.showLawyerInfo(it.image, "${it.name}律师", "执业${it.lawYear}年", it.lawFirm)
+                            mView.showLawyerInfo(
+                                it.image,
+                                "${it.name}律师",
+                                "执业${it.lawYear}年",
+                                it.lawFirm
+                            )
                             mView.showLawyerAnswerLabel(View.GONE)
                         }
                     }
@@ -100,7 +105,12 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
                         mView.showOrHideAnswerContentView(View.VISIBLE)
                         mView.showLawyerStatus("接单律师")
                         data.lawyerAbout?.let {
-                            mView.showLawyerInfo(it.image, "${it.name}律师", "执业${it.lawYear}年", it.lawFirm)
+                            mView.showLawyerInfo(
+                                it.image,
+                                "${it.name}律师",
+                                "执业${it.lawYear}年",
+                                it.lawFirm
+                            )
                         }
                         mView.showLawyerAnswerLabel(View.VISIBLE)
 
@@ -118,7 +128,12 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
                         mView.showOrHideAnswerContentView(View.VISIBLE)
                         mView.showLawyerStatus("接单律师")
                         data.lawyerAbout?.let {
-                            mView.showLawyerInfo(it.image, "${it.name}律师", "执业${it.lawYear}年", it.lawFirm)
+                            mView.showLawyerInfo(
+                                it.image,
+                                "${it.name}律师",
+                                "执业${it.lawYear}年",
+                                it.lawFirm
+                            )
                         }
                         mView.showLawyerAnswerLabel(View.VISIBLE)
 
@@ -146,14 +161,24 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
                     OrderStatus.CANCEL.status -> {      //已取消
                         mView.showOrHideMainBtn(true)
                         mView.showBottomMainBtn("重新下单") {
-                            NavigationHelper.toCreateLawyerConsultPage(mContext,
-                                data.lawyerAbout?.lawyerId, data.price, data.caseDescription, data.fileList)
+                            NavigationHelper.toCreateLawyerConsultPage(
+                                mContext,
+                                data.lawyerAbout?.lawyerId,
+                                data.price,
+                                data.caseDescription,
+                                data.fileList
+                            )
                         }
                         data.lawyerAbout?.let {
                             //等待指定律师接单
                             mView.showOrHideAnswerContentView(View.VISIBLE)
                             mView.showLawyerStatus("等待接单")
-                            mView.showLawyerInfo(it.image, "${it.name}律师", "执业${it.lawYear}年", it.lawFirm)
+                            mView.showLawyerInfo(
+                                it.image,
+                                "${it.name}律师",
+                                "执业${it.lawYear}年",
+                                it.lawFirm
+                            )
                             mView.showLawyerAnswerLabel(View.GONE)
                         }
                     }
@@ -216,7 +241,7 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
     private fun getReplyList() {
         launch {
             try {
-                val result = handleResponse(LawyerApi.getConsultReplayList(mOrderId ?: ""))
+                val result = handleResponse(LawyerApi.getConsultReplayList(mOrderId ?: ""))?.replies
                 val list = mutableListOf<IAnswer>()
                 val sdf1 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 val sdf2 = SimpleDateFormat("yyyy.MM.dd HH:mm")
