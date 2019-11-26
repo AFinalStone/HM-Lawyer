@@ -74,7 +74,7 @@ class CreateLawyerConsultPresenter(context: Context, view: CreateLawyerConsultCo
                 val billId = result?.billId
                 billId?.let {
                     mBillId = billId
-                    NavigationHelper.toPayLawyerLetter(mContext, innerUser, it, price.toString(),
+                    NavigationHelper.toPayLawyerConsult(mContext, innerUser, it, price.toString(),
                         CreateLawyerConsultActivity.REQ_PAY_LAWYER_CONSULT
                     )
                 }

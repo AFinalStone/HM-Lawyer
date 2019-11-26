@@ -181,6 +181,19 @@ object NavigationHelper {
     }
 
     /**
+     * 支付律师咨询
+     */
+    fun toPayLawyerConsult(context: Context, innerUser: Boolean, billId: String, money: String, reqCode: Int) {
+        Router.getInstance().buildWithUrl("hmiou://m.54jietiao.com/pay/lawyer_letter_pay")
+            .withString("package_title", "律师咨询费")
+            .withString("package_money", money)
+            .withString("package_content", context.getString(R.string.lawyer_pay_consult_info))
+            .withString("bill_id", billId)
+            .withString("inner_user", if (innerUser) "1" else "")
+            .navigation(context, reqCode)
+    }
+
+    /**
      * 进入律师工作台
      */
     fun toWorkbenchActivity(context: Context) {
