@@ -279,10 +279,14 @@ class OrderDetailActivity : HMBaseActivity<OrderDetailPresenter>(),
                     .setPositiveButton("呼叫")
                     .setOnClickListener(object : HMAlertDialog.OnClickListener {
                         override fun onPosClick() {
-                            val intent = Intent(Intent.ACTION_DIAL)
-                            val data = Uri.parse("tel:$phone")
-                            intent.data = data
-                            startActivity(intent)
+                            try {
+                                val intent = Intent(Intent.ACTION_DIAL)
+                                val data = Uri.parse("tel:$phone")
+                                intent.data = data
+                                startActivity(intent)
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
                         }
 
                         override fun onNegClick() {

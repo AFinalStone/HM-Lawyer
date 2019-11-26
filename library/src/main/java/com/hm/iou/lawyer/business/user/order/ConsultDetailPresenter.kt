@@ -3,11 +3,16 @@ package com.hm.iou.lawyer.business.user.order
 import android.content.Context
 import android.view.View
 import com.hm.iou.base.mvp.HMBasePresenter
+import com.hm.iou.lawyer.api.LawyerApi
+import com.hm.iou.lawyer.bean.res.LawyerConsultDetailResBean
 import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.comm.IAnswer
+import com.hm.iou.lawyer.dict.OrderStatus
 import com.hm.iou.lawyer.event.RatingLawyerSuccEvent
-import kotlinx.coroutines.delay
+import com.hm.iou.lawyer.event.UserOrderStatusChangedEvent
+import com.hm.iou.network.exception.ApiException
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -19,85 +24,199 @@ import org.greenrobot.eventbus.ThreadMode
 class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View) :
     HMBasePresenter<ConsultDetailContract.View>(context, view), ConsultDetailContract.Presenter {
 
+    private var mOrderId: String? = null
+    private var mDetailInfo: LawyerConsultDetailResBean? = null
+
     override fun getOrderDetail(orderId: String) {
+        mOrderId = orderId
         launch {
             mView.showInitLoading(true)
-            delay(1000)
+            try {
+                val data = handleResponse(LawyerApi.getConsultDetail(orderId))
+                mDetailInfo = data
+                data ?: return@launch
 
-            mView.showInitLoading(false)
-
-            mView.showOrderStatus("等待律师接单")
-            mView.showOrderCancelTips(View.VISIBLE, "您的退款将在3个工作日内退回支付账户")
-            mView.showOrderTime("订单时间", "2019.11.23 12:10:12")
-            mView.showOrderPrice("￥100.00")
-            mView.showOrderDesc("朋友准备向我借钱，但是不知道借条是否合法，想请律师查看。")
-
-            val imgList = mutableListOf<String>()
-            imgList.add("https://pics2.baidu.com/feed/a8014c086e061d9530dd23d5821ec6d460d9cab0.jpeg?token=dac51de6a3847ba35ce74f95da68d63f&s=DF0009C04816B9D452CC259B03009002")
-            imgList.add("https://pics2.baidu.com/feed/a8014c086e061d9530dd23d5821ec6d460d9cab0.jpeg?token=dac51de6a3847ba35ce74f95da68d63f&s=DF0009C04816B9D452CC259B03009002")
-            mView.showOrderImages(imgList)
-
-
-            mView.showOrHideAnswerContentView(View.VISIBLE)
-            mView.showLawyerStatus("等待接单")
-            mView.showLawyerInfo(null, "张三律师", "执业7年", "杭州泰杭律师事务所")
-
-            mView.showLawyerAnswerLabel(View.VISIBLE)
-            val answerList = mutableListOf<IAnswer>()
-            for (i in 0..4) {
-                answerList.add(object : IAnswer {
-                    override fun getAvatar(): String? {
-                        return null
+                when(data.status) {
+                    OrderStatus.WAIT.status -> {
+                        mView.showOrderStatus("等待律师接单")
+                        mView.showOrderCancelTips(View.GONE, null)
+                        mView.showOrderTime("订单时间", data.doDate?.replace("-", "."))
                     }
-
-                    override fun getName(): String? {
-                        return "张三律师"
+                    OrderStatus.ONGOING.status -> {
+                        mView.showOrderStatus("律师已接单")
+                        mView.showOrderCancelTips(View.GONE, null)
+                        mView.showOrderTime("订单时间", data.doDate?.replace("-", "."))
                     }
-
-                    override fun getTime(): String? {
-                        return "2019.11.12 12:12:12"
+                    OrderStatus.COMPLETE.status -> {
+                        mView.showOrderStatus("订单已完成")
+                        mView.showOrderCancelTips(View.GONE, null)
+                        mView.showOrderTime("完成时间", data.doDate?.replace("-", "."))
                     }
-
-                    override fun getAnswer(): String? {
-                        return "律师回答的内容律师回答的内容律师回答的内容律师回答的内容律师回答的内容律师回答的内容"
+                    OrderStatus.CANCEL.status -> {
+                        mView.showOrderStatus("订单已取消")
+                        mView.showOrderCancelTips(View.VISIBLE, "您的退款将在3个工作日内退回支付账户")
+                        mView.showOrderTime("取消时间", data.doDate?.replace("-", "."))
                     }
-                })
+                    else -> {
+                        mView.showOrderStatus("")
+                        mView.showOrderCancelTips(View.GONE, null)
+                        mView.showOrderTime("订单时间", data.doDate?.replace("-", "."))
+                    }
+                }
+
+                mView.showOrderPrice("¥ ${data.price}")
+                mView.showOrderDesc(data.caseDescription)
+
+                val imgList = mutableListOf<String>()
+                data.fileList?.run {
+                    forEach { item ->
+                        if (!(item.url).isNullOrEmpty())
+                            imgList.add(item.url!!)
+                    }
+                }
+                mView.showOrderImages(imgList)
+
+                mView.showOrHideAnswerContentView(View.GONE)
+                mView.showLawyerAnswerLabel(View.GONE)
+                mView.showOrHideServiceRatingView(false)
+
+                when(data.status) {
+                    OrderStatus.WAIT.status -> {            //等待接单，可以取消
+                        mView.showOrHideMainBtn(true)
+                        mView.showBottomMainBtn("取消订单") {
+                            showCancelOrderDialog()
+                        }
+                        data.lawyerAbout?.let {
+                            //等待指定律师接单
+                            mView.showOrHideAnswerContentView(View.VISIBLE)
+                            mView.showLawyerStatus("等待接单")
+                            mView.showLawyerInfo(it.image, "${it.name}律师", "执业${it.lawYear}年", it.lawFirm)
+                            mView.showLawyerAnswerLabel(View.GONE)
+                        }
+                    }
+                    OrderStatus.ONGOING.status -> {     //进行中
+                        mView.showOrHideAnswerContentView(View.VISIBLE)
+                        mView.showLawyerStatus("接单律师")
+                        data.lawyerAbout?.let {
+                            mView.showLawyerInfo(it.image, "${it.name}律师", "执业${it.lawYear}年", it.lawFirm)
+                        }
+                        mView.showLawyerAnswerLabel(View.VISIBLE)
+
+                        if (data.canCancel) {
+                            mView.showOrHideMainBtn(true)
+                            mView.showBottomMainBtn("取消订单") {
+                                showCancelOrderDialog()
+                            }
+                        } else {
+                            mView.showOrHideMainBtn(false)
+                        }
+                        showWaitingLawyerAnswer()
+                    }
+                    OrderStatus.COMPLETE.status -> {    //已完成
+                        mView.showOrHideAnswerContentView(View.VISIBLE)
+                        mView.showLawyerStatus("接单律师")
+                        data.lawyerAbout?.let {
+                            mView.showLawyerInfo(it.image, "${it.name}律师", "执业${it.lawYear}年", it.lawFirm)
+                        }
+                        mView.showLawyerAnswerLabel(View.VISIBLE)
+
+                        val serviceRating = data.evaluation
+                        if (serviceRating == null) {
+                            mView.showOrHideServiceRatingView(false)
+                            mView.showOrHideMainBtn(true)
+                            mView.showBottomMainBtn("评价律师") {
+                                NavigationHelper.toRatingLawyerPage(mContext, orderId)
+                            }
+                        } else {
+                            mView.showOrHideServiceRatingView(true)
+                            mView.showServiceAttitudeRating(serviceRating.attitudeScore)
+                            mView.showServiceProfessionalRating(serviceRating.professionalScore)
+                            mView.showOrHideMainBtn(false)
+                        }
+
+                        mView.showSecondBtn("补充问题") {
+                            NavigationHelper.toAddConsultQuestion(mContext, mOrderId ?: "")
+                        }
+                        mView.scrollToBottom()
+                    }
+                    OrderStatus.CANCEL.status -> {      //已取消
+                        mView.showOrHideMainBtn(true)
+                        mView.showBottomMainBtn("重新下单") {
+                            NavigationHelper.toCreateLawyerConsultPage(mContext,
+                                data.lawyerAbout?.lawyerId, data.price, data.caseDescription, data.fileList)
+                        }
+                        data.lawyerAbout?.let {
+                            //等待指定律师接单
+                            mView.showOrHideAnswerContentView(View.VISIBLE)
+                            mView.showLawyerStatus("等待接单")
+                            mView.showLawyerInfo(it.image, "${it.name}律师", "执业${it.lawYear}年", it.lawFirm)
+                            mView.showLawyerAnswerLabel(View.GONE)
+                        }
+                    }
+                }
+                mView.showInitLoading(false)
+            } catch (e: Exception) {
+                handleException(e, showBusinessError = false, showCommError = false)
+                if (e is ApiException) {
+                    mView.showInitFail(e.message)
+                } else {
+                    mView.showInitFail("数据加载失败，请重试")
+                }
             }
-            mView.showLawyerAnswerList(answerList)
-
-            mView.showOrHideMainBtn(true)
-            /*mView.showBottomMainBtn("评价律师") {
-                NavigationHelper.toRatingLawyerPage(mContext, "")
-            }*/
-            mView.showBottomMainBtn("重新下单") {
-
-            }
-
-            mView.showSecondBtn("补充问题") {
-                NavigationHelper.toAddConsultQuestion(mContext, "")
-            }
-
-            mView.showOrHideServiceRatingView(true)
-            mView.showServiceAttitudeRating(4)
-            mView.showServiceProfessionalRating(5)
-
-
-            mView.scrollToBottom()
         }
 
     }
 
+    /**
+     * 显示取消订单确认弹窗
+     */
+    private fun showCancelOrderDialog() {
+        mView.showCommDialog(null, "是否取消该订单", "放弃取消", "确定取消") {
+            if (!it) {
+                launch {
+                    mView.showLoadingView()
+                    try {
+                        handleResponse(LawyerApi.cancelCustLawyerLetter(mOrderId ?: ""))
+                        mView.dismissLoadingView()
+                        EventBus.getDefault().post(UserOrderStatusChangedEvent())
+                        getOrderDetail(mOrderId ?: "")
+                    } catch (e: Exception) {
+                        mView.dismissLoadingView()
+                        handleException(e)
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 律师接单后，显示 '律师正在为您解答中'
+     */
+    private fun showWaitingLawyerAnswer() {
+        val list = mutableListOf<IAnswer>()
+        list.add(object : IAnswer {
+            override fun getAvatar(): String? = mDetailInfo?.lawyerAbout?.image
+
+            override fun getName(): String? = "${mDetailInfo?.lawyerAbout?.name}律师"
+
+            override fun getTime(): String? = null
+
+            override fun getAnswer(): String? = "等待律师为您解答..."
+        })
+        mView.showLawyerAnswerList(list)
+    }
+
     override fun toSeeLawyerInfo() {
-        /*mDetailInfo?.lawyerAbout?.lawyerId?.let {
+        mDetailInfo?.lawyerAbout?.lawyerId?.let {
             NavigationHelper.toLawyerDetailPage(mContext, it)
-        }*/
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventRatingLawyerSucc(event: RatingLawyerSuccEvent) {
-        /*if (mOrderId == event.billId) {
+        if (mOrderId == event.billId) {
             getOrderDetail(mOrderId ?: "")
-        }*/
+        }
     }
 
 }
