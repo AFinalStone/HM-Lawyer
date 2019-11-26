@@ -1,6 +1,5 @@
 package com.hm.iou.lawyer.api
 
-import com.hm.iou.lawyer.bean.ConsultReplyItemBean
 import com.hm.iou.lawyer.bean.req.*
 import com.hm.iou.lawyer.bean.res.*
 import com.hm.iou.network.HttpReqManager
@@ -287,7 +286,7 @@ object LawyerApi {
     suspend fun getLawyerConsultOrderList(
         page: Int,
         size: Int
-    ): BaseResponse<List<LawyerConsultOrderItemBean>> {
+    ): BaseResponse<LawyerConsultOrderListResBean> {
         val reqBean = GetLawyerConsultOrderListReqBean(page, size)
         return getService().getLawyerConsultOrderList(reqBean)
     }
@@ -333,11 +332,11 @@ object LawyerApi {
     suspend fun addConsultQuestion(
         billId: String?,
         desc: String?
-    ): BaseResponse<ConsultReplyItemBean> {
+    ): BaseResponse<Any> {
         return getService().addConsultQuestion(AddConsultQuestionReqBean(billId, desc))
     }
 
-    suspend fun getConsultReplayList(billId: String): BaseResponse<List<ConsultReplyItemBean>> {
+    suspend fun getConsultReplayList(billId: String): BaseResponse<LawyerConsultOrderAnswerListResBean> {
         return getService().getConsultReplayList(billId)
     }
 

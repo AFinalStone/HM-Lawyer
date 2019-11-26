@@ -65,7 +65,8 @@ class LawyerConsultOrderListPresenter(context: Context, view: LawyerConsultOrder
                 mNeedRefresh = false
                 mPageNo = 1
                 mDataList.clear()
-                val list = convertData(result)
+                val dataList = result?.list
+                val list = convertData(dataList)
                 var currSize = list.size
                 mDataList.addAll(list)
                 mView.clearOrderList()
@@ -102,7 +103,7 @@ class LawyerConsultOrderListPresenter(context: Context, view: LawyerConsultOrder
                             mPageNo + 1,
                             PAGE_SIZE
                         )
-                    )
+                    )?.list
                 )
                 var currSize = list.size
                 mDataList.addAll(list)

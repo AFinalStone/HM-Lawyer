@@ -196,7 +196,6 @@
                         style="@style/UikitTextView.Large"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="20dp"
                         android:text="¥ 100.00" />
                 </RelativeLayout>
 
@@ -329,6 +328,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/view_bottom_divider"
         android:layout_below="@id/topBar"
-        android:background="@color/uikit_background" />
+        android:background="@color/uikit_background"
+        tools:visibility="gone" />
 
 </RelativeLayout>

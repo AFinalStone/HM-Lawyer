@@ -3,7 +3,7 @@ package com.hm.iou.lawyer.business.lawyer.workbench.order
 import android.content.Context
 import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.api.LawyerApi
-import com.hm.iou.lawyer.bean.ConsultReplyItemBean
+import com.hm.iou.lawyer.bean.res.LawyerConsultOrderAnswerItemBean
 import com.hm.iou.lawyer.business.comm.IAnswer
 import com.hm.iou.lawyer.event.LawyerOrderStatusChangedEvent
 import com.hm.iou.network.exception.ApiException
@@ -13,7 +13,6 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 /**
- * Created by hjy on 2019-11-22
  *
  * 律师咨询详情
  */
@@ -61,7 +60,6 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
                     mView.showDetail(result)
                     mNeedRefresh = false
                 }
-                getAnswerList()
             } catch (e: Exception) {
                 if (e is ApiException) {
                     handleException(e, showCommError = false, showBusinessError = false)
@@ -79,20 +77,15 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
         launch {
             try {
                 mView.showAnswerListLoadingView()
-                val result = handleResponse(LawyerApi.getConsultReplayList(mOrderId))
+                val list = handleResponse(LawyerApi.getConsultReplayList(mOrderId))?.replies
                 mView.hideAnswerListLoadingView()
-                result?.let {
-                    mView.showAnswerList(convertData(result))
+                list?.let {
+                    mView.showAnswerList(convertData(list))
                     mNeedRefresh = false
                 }
             } catch (e: Exception) {
-                if (e is ApiException) {
-                    handleException(e, showCommError = false, showBusinessError = false)
-                    val msg = e.message ?: "初始化失败"
-                    mView.showAnswerListFailed(msg)
-                } else {
-                    handleException(e)
-                }
+                val msg = e.message ?: "初始化失败"
+                mView.showAnswerListFailed(msg)
             }
         }
     }
@@ -184,7 +177,7 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
         }
     }
 
-    private fun convertData(list: List<ConsultReplyItemBean>?): List<IAnswer> {
+    private fun convertData(list: List<LawyerConsultOrderAnswerItemBean>?): List<IAnswer> {
         val result = ArrayList<IAnswer>()
         if (!list.isNullOrEmpty()) {
             for (item in list) {

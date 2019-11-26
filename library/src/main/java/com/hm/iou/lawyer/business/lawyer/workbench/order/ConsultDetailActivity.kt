@@ -132,6 +132,7 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
             }
             OrderStatus.COMPLETE.status -> {
                 showComplete(detail)
+                mPresenter.getAnswerList()
             }
             OrderStatus.CANCEL.status -> {
                 //订单状态
@@ -301,6 +302,7 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
         tv_operate_02.clickWithDuration {
             val intent = Intent(mContext, InputLawyerConsultAnswerActivity::class.java)
             intent.putExtra(InputLawyerConsultAnswerActivity.EXTRA_KEY_ORDER_ID, mOrderId)
+            intent.putExtra(InputLawyerConsultAnswerActivity.EXTRA_KEY_MIN_LENGTH, 10)
             startActivity(intent)
         }
         //律师解答列表
@@ -354,6 +356,8 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
         tv_operate_02.text = "咨询解答"
         tv_operate_02.clickWithDuration {
             val intent = Intent(mContext, InputLawyerConsultAnswerActivity::class.java)
+            intent.putExtra(InputLawyerConsultAnswerActivity.EXTRA_KEY_ORDER_ID, mOrderId)
+            intent.putExtra(InputLawyerConsultAnswerActivity.EXTRA_KEY_MIN_LENGTH, 2)
             startActivity(intent)
         }
         //解答列表

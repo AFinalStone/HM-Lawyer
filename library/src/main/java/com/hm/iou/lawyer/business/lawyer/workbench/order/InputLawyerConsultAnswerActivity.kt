@@ -17,6 +17,7 @@ class InputLawyerConsultAnswerActivity : HMBaseActivity<InputLawyerConsultAnswer
 
     companion object {
         const val EXTRA_KEY_ORDER_ID = "order_id"
+        const val EXTRA_KEY_MIN_LENGTH = "min_length"
     }
 
     /**
@@ -25,6 +26,14 @@ class InputLawyerConsultAnswerActivity : HMBaseActivity<InputLawyerConsultAnswer
     private var mOrderId: String? by extraDelegate(
         EXTRA_KEY_ORDER_ID,
         null
+    )
+
+    /**
+     * 是否是第一次
+     */
+    private var mMinAnswerLength: Int? by extraDelegate(
+        EXTRA_KEY_MIN_LENGTH,
+        2
     )
 
     private var mAnswer: String? = null
@@ -38,6 +47,7 @@ class InputLawyerConsultAnswerActivity : HMBaseActivity<InputLawyerConsultAnswer
     override fun initEventAndData(bundle: Bundle?) {
         if (bundle != null) {
             mOrderId = bundle.getValue(EXTRA_KEY_ORDER_ID)
+            mMinAnswerLength = bundle.getValue(EXTRA_KEY_MIN_LENGTH)
         }
         et_answer.addTextChangedListener(object : HMTextChangeListener() {
             override fun onTextChanged(
@@ -50,7 +60,7 @@ class InputLawyerConsultAnswerActivity : HMBaseActivity<InputLawyerConsultAnswer
                 val length = (mAnswer ?: "").length
                 tv_answer_word_count.text =
                     String.format("%d/200", length)
-                if (length < 2) {
+                if (length < mMinAnswerLength ?: 2) {
                     bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
                     bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
                     return
@@ -62,8 +72,8 @@ class InputLawyerConsultAnswerActivity : HMBaseActivity<InputLawyerConsultAnswer
         //提交认证
         bottom_bar.setOnTitleClickListener {
             val length = (mAnswer ?: "").length
-            if (length < 2) {
-                toastErrorMessage("律师介绍必须在2-200个字以内")
+            if (length < mMinAnswerLength ?: 2) {
+                toastErrorMessage("律师介绍必须在%S-200个字以内".format(mMinAnswerLength ?: 2))
                 return@setOnTitleClickListener
             }
             mOrderId?.let {
@@ -79,6 +89,7 @@ class InputLawyerConsultAnswerActivity : HMBaseActivity<InputLawyerConsultAnswer
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.putValue(EXTRA_KEY_ORDER_ID, mOrderId)
+        outState?.putValue(EXTRA_KEY_MIN_LENGTH, mMinAnswerLength)
     }
 
 }
