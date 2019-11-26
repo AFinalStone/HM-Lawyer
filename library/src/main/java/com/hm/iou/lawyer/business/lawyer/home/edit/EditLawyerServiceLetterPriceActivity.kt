@@ -19,6 +19,8 @@ class EditLawyerServiceLetterPriceActivity :
     companion object {
         const val EXTRA_KEY_SERVICE_PRICE = "service_money"
         const val EXTRA_KEY_SERVICE_ID = "service_id"
+        private const val MIN_NUM = 300
+        private const val MAX_NUM = 10000
     }
 
     private var mServicePrice: Int? by extraDelegate(EXTRA_KEY_SERVICE_PRICE, null)
@@ -42,12 +44,12 @@ class EditLawyerServiceLetterPriceActivity :
                     0
                 }
                 mServicePrice = money
-                if (money > 10000) {
-                    et_service_money.setText("10000")
+                if (money > MAX_NUM) {
+                    et_service_money.setText(MAX_NUM.toString())
                     et_service_money.setSelection(et_service_money.length())
                     return
                 }
-                if (money in 300..10000) {
+                if (money in MIN_NUM..MAX_NUM) {
                     bottom_bar.setTitleBackgournd(R.drawable.uikit_shape_common_btn_normal)
                     bottom_bar.setTitleTextColor(R.color.uikit_text_main_content)
                 } else {
@@ -58,14 +60,14 @@ class EditLawyerServiceLetterPriceActivity :
         })
         bottom_bar.setOnTitleClickListener {
             val money = mServicePrice ?: 0
-            if (money in 300..10000) {
+            if (money in MIN_NUM..MAX_NUM) {
                 val servicePrice = mServicePrice
                 val serviceId = mServiceId
                 if (servicePrice != null && serviceId != null) {
                     mPresenter.updateLawyerServicePrice(servicePrice, serviceId)
                 }
             } else {
-                toastErrorMessage("律师函服务费必须在300到10000之间")
+                toastErrorMessage("律师函服务费必须在%S到%S之间".format(MIN_NUM, MAX_NUM))
             }
         }
         et_service_money.setText((mServicePrice ?: "").toString())

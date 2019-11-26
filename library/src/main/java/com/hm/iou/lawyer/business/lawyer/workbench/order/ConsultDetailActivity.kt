@@ -139,8 +139,14 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
                 tv_order_status.text = "订单已取消"
                 rl_order_operate.visibility = VISIBLE
                 tv_order_operate_label.text = "取消时间"
-                val time = detail.doDate?.replace("-", ".")
-                tv_order_operate_time.text = time
+                try {
+                    val sdf01 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                    val sdf02 = SimpleDateFormat("yyyy.MM.dd HH:mm")
+                    val date = sdf01.parse(detail.doDate)
+                    tv_order_operate_time.text = sdf02.format(date)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
                 //底部栏
                 tv_count_down_time.visibility = GONE
                 iv_more.visibility = GONE
@@ -155,8 +161,14 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
                 tv_order_status.text = "已拒绝接单"
                 rl_order_operate.visibility = VISIBLE
                 tv_order_operate_label.text = "拒绝时间"
-                val time = detail.doDate?.replace("-", ".")
-                tv_order_operate_time.text = time
+                try {
+                    val sdf01 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                    val sdf02 = SimpleDateFormat("yyyy.MM.dd HH:mm")
+                    val date = sdf01.parse(detail.doDate)
+                    tv_order_operate_time.text = sdf02.format(date)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
                 //底部栏
                 tv_count_down_time.visibility = GONE
                 iv_more.visibility = GONE
@@ -326,6 +338,7 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
                 delay(1000)
                 time -= 1
             }
+            tv_count_down_time.visibility = GONE
         }
     }
 
