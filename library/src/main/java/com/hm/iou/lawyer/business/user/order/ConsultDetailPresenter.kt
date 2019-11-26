@@ -8,6 +8,7 @@ import com.hm.iou.lawyer.bean.res.LawyerConsultDetailResBean
 import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.comm.IAnswer
 import com.hm.iou.lawyer.dict.OrderStatus
+import com.hm.iou.lawyer.event.ConsultAddSuccEvent
 import com.hm.iou.lawyer.event.RatingLawyerSuccEvent
 import com.hm.iou.lawyer.event.UserOrderStatusChangedEvent
 import com.hm.iou.network.exception.ApiException
@@ -15,6 +16,7 @@ import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.text.SimpleDateFormat
 
 /**
  * Created by hjy on 2019-11-22
@@ -137,7 +139,9 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
                         mView.showSecondBtn("补充问题") {
                             NavigationHelper.toAddConsultQuestion(mContext, mOrderId ?: "")
                         }
-                        mView.scrollToBottom()
+
+                        //获取反馈回复列表
+                        getReplyList()
                     }
                     OrderStatus.CANCEL.status -> {      //已取消
                         mView.showOrHideMainBtn(true)
@@ -206,6 +210,55 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
         mView.showLawyerAnswerList(list)
     }
 
+    /**
+     * 获取反馈回复列表
+     */
+    private fun getReplyList() {
+        launch {
+            try {
+                val result = handleResponse(LawyerApi.getConsultReplayList(mOrderId ?: ""))
+                val list = mutableListOf<IAnswer>()
+                val sdf1 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                val sdf2 = SimpleDateFormat("yyyy.MM.dd HH:mm")
+                result?.forEach {
+                    val item = object : IAnswer {
+
+                        var formatStr: String? = null
+
+                        override fun getAvatar(): String? {
+                            return it.avatar
+                        }
+
+                        override fun getName(): String? {
+                            return it.name
+                        }
+
+                        override fun getTime(): String? {
+                            if (formatStr.isNullOrEmpty()) {
+                                try {
+                                    val date = sdf1.parse(it.createTime)
+                                    formatStr = sdf2.format(date)
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            }
+                            return formatStr
+                        }
+
+                        override fun getAnswer(): String? {
+                            return it.msg
+                        }
+                    }
+                    list.add(item)
+                }
+                mView.showLawyerAnswerList(list)
+            } catch (e: Exception) {
+                handleException(e)
+                mView.toastMessage("律师解答获取失败")
+            }
+        }
+    }
+
     override fun toSeeLawyerInfo() {
         mDetailInfo?.lawyerAbout?.lawyerId?.let {
             NavigationHelper.toLawyerDetailPage(mContext, it)
@@ -217,6 +270,11 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
         if (mOrderId == event.billId) {
             getOrderDetail(mOrderId ?: "")
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventQuestionAddSucc(event: ConsultAddSuccEvent) {
+        getReplyList()
     }
 
 }

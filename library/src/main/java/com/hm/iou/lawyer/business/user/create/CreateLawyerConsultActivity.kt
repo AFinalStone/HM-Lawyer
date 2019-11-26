@@ -138,7 +138,7 @@ class CreateLawyerConsultActivity : HMBaseActivity<CreateLawyerConsultPresenter>
         })
         et_consult_desc.addTextChangedListener(object : HMTextChangeListener() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                tv_consult_char_count.text = "${et_consult_desc.text.trim().length}/500"
+                tv_consult_char_count.text = "${et_consult_desc.text.trim().length}/200"
                 checkInputValues()
             }
         })
@@ -169,6 +169,8 @@ class CreateLawyerConsultActivity : HMBaseActivity<CreateLawyerConsultPresenter>
             tv_consult_price_label.text = "订单金额"
             et_consult_price.setText("${mPrice}元")
             et_consult_price.isEnabled = false
+        } else {
+            et_consult_price.setText("${mPrice ?: ""}")
         }
 
         if (!mDesc.isNullOrEmpty()) {
@@ -191,7 +193,7 @@ class CreateLawyerConsultActivity : HMBaseActivity<CreateLawyerConsultPresenter>
 
     private fun checkInputValues() {
         if (et_consult_price.text.trim().isEmpty() ||
-            et_consult_desc.text.trim().length < 15
+            et_consult_desc.text.trim().length < 10
         ) {
             bottom_bar.setTitleBtnBackground(R.drawable.uikit_selector_btn_minor_small)
             bottom_bar.setTitleBtnTextColor(resources.getColor(R.color.uikit_text_auxiliary))
@@ -214,8 +216,8 @@ class CreateLawyerConsultActivity : HMBaseActivity<CreateLawyerConsultPresenter>
             return
         }
         val desc = et_consult_desc.text.trim().toString()
-        if (desc.length < 15) {
-            toastMessage("请输入15字以上的案件描述")
+        if (desc.length < 10) {
+            toastMessage("请输入10字以上的案件描述")
             return
         }
 

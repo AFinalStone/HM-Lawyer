@@ -275,7 +275,7 @@ object NavigationHelper {
      */
     fun toCreateLawyerConsultPage(context: Context, lawyerId: String?, price: Int?,
                                   desc: String? = null, fileList: List<FileInfo>? = null) {
-        val intent = Intent()
+        val intent = Intent(context, CreateLawyerConsultActivity::class.java)
         intent.putExtra(CreateLawyerConsultActivity.EXTRA_KEY_LAWYER_ID, lawyerId)
         intent.putExtra(CreateLawyerConsultActivity.EXTRA_KEY_PRICE, price)
         intent.putExtra(CreateLawyerConsultActivity.EXTRA_KEY_DESC, desc)

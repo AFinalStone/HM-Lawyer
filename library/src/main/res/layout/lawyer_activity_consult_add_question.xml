@@ -43,7 +43,7 @@
             android:layout_height="160dp"
             android:gravity="left|top"
             android:hint="请输入您要补充的问题内容"
-            android:maxLength="500"
+            android:maxLength="200"
             android:padding="10dp"
             android:imeOptions="actionDone"
             />
@@ -54,7 +54,7 @@
             android:layout_alignRight="@id/et_consult_desc"
             android:layout_alignBottom="@id/et_consult_desc"
             android:layout_margin="8dp"
-            android:text="0/500"
+            android:text="0/200"
             android:textColor="#FFCFCFD6" />
     </RelativeLayout>
 

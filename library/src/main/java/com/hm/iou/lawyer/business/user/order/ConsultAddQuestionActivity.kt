@@ -6,10 +6,12 @@ import com.hm.iou.base.mvp.BaseContract
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.R
+import com.hm.iou.lawyer.api.LawyerApi
+import com.hm.iou.lawyer.event.ConsultAddSuccEvent
 import com.hm.iou.tools.kt.extraDelegate
 import kotlinx.android.synthetic.main.lawyer_activity_create_lawyer_consult.*
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by hjy on 2019-11-25
@@ -36,7 +38,7 @@ class ConsultAddQuestionActivity : HMBaseActivity<HMBasePresenter<BaseContract.B
 
         et_consult_desc.addTextChangedListener(object : HMTextChangeListener() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                tv_consult_char_count.text = "${et_consult_desc.text.trim().length}/500"
+                tv_consult_char_count.text = "${et_consult_desc.text.trim().length}/200"
                 checkInputValues()
             }
         })
@@ -77,8 +79,10 @@ class ConsultAddQuestionActivity : HMBaseActivity<HMBasePresenter<BaseContract.B
         showLoadingView()
         launch {
             try {
-                delay(1000)
+                val result = mPresenter.handleResponse(LawyerApi.addConsultQuestion(mOrderId, question))
+                toastMessage("问题补充成功")
                 dismissLoadingView()
+                EventBus.getDefault().post(ConsultAddSuccEvent())
                 closeCurrPage()
             } catch (e: Exception) {
                 dismissLoadingView()
