@@ -3,6 +3,8 @@ package com.hm.iou.lawyer.business.lawyer.workbench.order
 import android.content.Context
 import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.api.LawyerApi
+import com.hm.iou.lawyer.bean.ConsultReplyItemBean
+import com.hm.iou.lawyer.business.comm.IAnswer
 import com.hm.iou.lawyer.event.LawyerOrderStatusChangedEvent
 import com.hm.iou.network.exception.ApiException
 import kotlinx.coroutines.launch
@@ -49,7 +51,8 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
         launch {
             try {
                 mView.showInitView()
-                val result = handleResponse(LawyerApi.getLawyerConsultOrderDetail(mOrderId, mRelationId))
+                val result =
+                    handleResponse(LawyerApi.getLawyerConsultOrderDetail(mOrderId, mRelationId))
                 mView.hideInitView()
                 if (result == null) {
                     mView.toastErrorMessage("发生异常")
@@ -58,6 +61,7 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
                     mView.showDetail(result)
                     mNeedRefresh = false
                 }
+                getAnswerList()
             } catch (e: Exception) {
                 if (e is ApiException) {
                     handleException(e, showCommError = false, showBusinessError = false)
@@ -72,7 +76,25 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
     }
 
     override fun getAnswerList() {
-
+        launch {
+            try {
+                mView.showAnswerListLoadingView()
+                val result = handleResponse(LawyerApi.getConsultReplayList(mOrderId))
+                mView.hideAnswerListLoadingView()
+                result?.let {
+                    mView.showAnswerList(convertData(result))
+                    mNeedRefresh = false
+                }
+            } catch (e: Exception) {
+                if (e is ApiException) {
+                    handleException(e, showCommError = false, showBusinessError = false)
+                    val msg = e.message ?: "初始化失败"
+                    mView.showAnswerListFailed(msg)
+                } else {
+                    handleException(e)
+                }
+            }
+        }
     }
 
     override fun checkCanAcceptOrder() {
@@ -160,6 +182,24 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
                 handleException(e)
             }
         }
+    }
+
+    private fun convertData(list: List<ConsultReplyItemBean>?): List<IAnswer> {
+        val result = ArrayList<IAnswer>()
+        if (!list.isNullOrEmpty()) {
+            for (item in list) {
+                result.add(object : IAnswer {
+                    override fun getAvatar(): String? = item.avatar
+
+                    override fun getName(): String? = item.name
+
+                    override fun getTime(): String? = item.createTime?.replace("-", ".")
+
+                    override fun getAnswer(): String? = item.msg
+                })
+            }
+        }
+        return result
     }
 
     //订单状态更改了之后，比如用户取消了该订单

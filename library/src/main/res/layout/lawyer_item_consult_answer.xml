@@ -10,8 +10,8 @@
         android:id="@+id/iv_answer_avatar"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="15dp"
         android:src="@mipmap/uikit_icon_header_unknow"
         app:civ_border_color="@color/uikti_header_border_color"
         app:civ_border_width="@dimen/uikti_header_border_width" />
@@ -23,9 +23,9 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
+        android:layout_toEndOf="@id/iv_answer_avatar"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_toRightOf="@id/iv_answer_avatar">
+        android:paddingBottom="10dp">
 
         <TextView
             android:id="@+id/tv_answer_name"
@@ -36,15 +36,15 @@
         <TextView
             android:id="@+id/tv_answer_time"
             style="@style/UikitTextView.Auxiliary.Small"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             tools:text="2019.12.16 13:23" />
 
         <TextView
             android:id="@+id/tv_answer_content"
             style="@style/UikitTextView"
             android:layout_below="@id/tv_answer_name"
-            android:lineSpacingExtra="3dp"
             android:layout_marginTop="4dp"
+            android:lineSpacingExtra="3dp"
             tools:text="律师回答的内容律师回答的内容律师回答的内容律师回答的内容律师回答的内容律师回答的内容" />
 
     </RelativeLayout>
@@ -53,8 +53,7 @@
         android:id="@+id/view_bottom_divider"
         style="@style/UikitDivider.Horizontal"
         android:layout_below="@id/rl_answer_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        />
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
 
 </RelativeLayout>

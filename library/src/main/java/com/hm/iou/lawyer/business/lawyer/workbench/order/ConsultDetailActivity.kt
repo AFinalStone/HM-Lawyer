@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.SpannableString
 import android.text.style.AbsoluteSizeSpan
 import android.view.Gravity
+import android.view.View
 import android.view.View.*
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
@@ -211,13 +212,32 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
         }
     }
 
-    override fun showAnswerList(list: ArrayList<IAnswer>) {
+    override fun showAnswerList(list: List<IAnswer>) {
         if (mAnswerAdapter == null) {
             rv_order_answer.layoutManager = LinearLayoutManager(this)
             mAnswerAdapter = ConsultAnswerAdapter(mContext)
             rv_order_answer.adapter = mAnswerAdapter
         }
         mAnswerAdapter?.setNewData(list)
+    }
+
+    override fun hideAnswerListLoadingView() {
+        loading_order_answer.visibility = GONE
+        rv_order_answer.visibility = VISIBLE
+    }
+
+    override fun showAnswerListLoadingView() {
+        loading_order_answer.visibility = VISIBLE
+        loading_order_answer.showDataLoading()
+        rv_order_answer.visibility = GONE
+    }
+
+    override fun showAnswerListFailed(msg: String?) {
+        loading_order_answer.visibility = VISIBLE
+        rv_order_answer.visibility = GONE
+        loading_order_answer.showDataFail(msg) {
+            mPresenter.getAnswerList()
+        }
     }
 
     private fun showWait(detail: LawyerConsultOrderDetailResBean) {
@@ -286,10 +306,14 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
         //律师解答列表
         rl_lawyer_answer.visibility = VISIBLE
         ll_order_answer.visibility = GONE
-        val userInfo = UserManager.getInstance(mContext).userInfo
-        tv_lawyer_name.text = userInfo.name + "律师"
+        val lawyerInfoAbout = detail.lawyerAbout
+        tv_lawyer_name.text = lawyerInfoAbout?.name
         ImageLoader.getInstance(mContext)
-            .displayImage("", iv_lawyer_avatar, R.mipmap.uikit_icon_header_unknow)
+            .displayImage(
+                lawyerInfoAbout?.image,
+                iv_lawyer_avatar,
+                R.mipmap.uikit_icon_header_unknow
+            )
         if (mJobTimeCount != null) {
             mJobTimeCount?.cancel()
         }
@@ -305,11 +329,11 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
 
     private fun formatTime(time: Long): String {
         val hour = time / 3600
-        var remainderTime = time % 3600
+        val remainderTime = time % 3600
         val minute = remainderTime / 60
         val second = remainderTime % 60
-        val df = DecimalFormat("##")
-        return "%S:%S:%S".format(df.format(hour), df.format(minute), df.format(second))
+        val df = DecimalFormat("00")
+        return "请在%S:%S:%S秒内进行解答".format(df.format(hour), df.format(minute), df.format(second))
     }
 
     private fun showComplete(detail: LawyerConsultOrderDetailResBean) {

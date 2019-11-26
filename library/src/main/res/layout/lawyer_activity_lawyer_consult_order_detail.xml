@@ -35,7 +35,8 @@
         <TextView
             android:id="@+id/tv_count_down_time"
             style="@style/UikitTextView.Auxiliary.Small"
-            android:text="请在23:59:59秒内进行解答" />
+            android:text="请在23:59:59秒内进行解答"
+            android:visibility="gone" />
 
         <View
             android:layout_width="0dp"
@@ -46,7 +47,8 @@
             android:id="@+id/iv_more"
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:src="@mipmap/lawyer_ic_more" />
+            android:src="@mipmap/lawyer_ic_more"
+            android:visibility="gone" />
 
         <View
             android:layout_width="10dp"
@@ -118,7 +120,7 @@
 
                     <TextView
                         android:id="@+id/tv_order_status"
-                        style="@style/UikitTextView.Auxiliary"
+                        style="@style/UikitTextView"
                         android:layout_alignParentRight="true"
                         tools:text="等待律师接单" />
 
@@ -140,7 +142,7 @@
 
                     <TextView
                         android:id="@+id/tv_order_operate_time"
-                        style="@style/UikitTextView.Auxiliary"
+                        style="@style/UikitTextView"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         tools:text="2019.11.12 12:100:19" />
@@ -307,7 +309,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:overScrollMode="never" />
+                    android:overScrollMode="never"
+                    android:visibility="gone" />
+
+                <com.hm.iou.uikit.HMLoadingView
+                    android:id="@+id/loading_order_answer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white" />
             </LinearLayout>
         </LinearLayout>
 
@@ -316,8 +325,10 @@
 
     <com.hm.iou.uikit.HMLoadingView
         android:id="@+id/loading_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/view_bottom_divider"
+        android:layout_below="@id/topBar"
+        android:background="@color/uikit_background" />
 
 </RelativeLayout>

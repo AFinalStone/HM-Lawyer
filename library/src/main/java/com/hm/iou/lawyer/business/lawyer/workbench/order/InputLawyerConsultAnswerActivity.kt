@@ -50,7 +50,7 @@ class InputLawyerConsultAnswerActivity : HMBaseActivity<InputLawyerConsultAnswer
                 val length = (mAnswer ?: "").length
                 tv_answer_word_count.text =
                     String.format("%d/200", length)
-                if (length < 10) {
+                if (length < 2) {
                     bottom_bar.setTitleBackgournd(R.drawable.uikit_selector_btn_minor_small)
                     bottom_bar.setTitleTextColor(R.color.uikit_text_auxiliary)
                     return
@@ -62,8 +62,8 @@ class InputLawyerConsultAnswerActivity : HMBaseActivity<InputLawyerConsultAnswer
         //提交认证
         bottom_bar.setOnTitleClickListener {
             val length = (mAnswer ?: "").length
-            if (length < 10) {
-                toastErrorMessage("律师介绍必须在10-200个字以内")
+            if (length < 2) {
+                toastErrorMessage("律师介绍必须在2-200个字以内")
                 return@setOnTitleClickListener
             }
             mOrderId?.let {

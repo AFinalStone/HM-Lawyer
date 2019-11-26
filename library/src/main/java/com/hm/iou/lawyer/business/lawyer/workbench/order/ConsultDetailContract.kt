@@ -27,7 +27,22 @@ interface ConsultDetailContract {
         /**
          * 显示列表
          */
-        fun showAnswerList(list: ArrayList<IAnswer>)
+        fun showAnswerList(list: List<IAnswer>)
+
+        /**
+         * 显示解答列表动画
+         */
+        fun showAnswerListLoadingView()
+
+        /**
+         * 隐藏解答列表动画
+         */
+        fun hideAnswerListLoadingView()
+
+        /**
+         * 显示解答列表失败动画
+         */
+        fun showAnswerListFailed(msg: String?)
 
         /**
          * 提示用户及时更新年检信息，可以接单
