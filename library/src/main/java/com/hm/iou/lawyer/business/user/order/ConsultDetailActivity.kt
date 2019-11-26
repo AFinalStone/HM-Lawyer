@@ -9,9 +9,9 @@ import android.view.Gravity
 import android.view.View
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
+import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.comm.ConsultAnswerAdapter
 import com.hm.iou.lawyer.business.comm.IAnswer
-import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.user.CommImageAdapter
 import com.hm.iou.tools.ImageLoader
 import com.hm.iou.tools.kt.clickWithDuration
@@ -67,29 +67,6 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
         rv_order_answer.layoutManager = LinearLayoutManager(this)
         rv_order_answer.adapter = mAnswerAdapter
         rv_order_answer.isNestedScrollingEnabled = false
-        val adapter = ConsultAnswerAdapter(mContext)
-        rv_order_answer.adapter = adapter
-        val list = mutableListOf<IAnswer>()
-        for (i in 0..30) {
-            list.add(object : IAnswer {
-
-                override fun getAvatar(): String? {
-                    return ""
-                }
-
-                override fun getName(): String? {
-                    return ""
-                }
-
-                override fun getTime(): String? {
-                    return ""
-                }
-
-                override fun getAnswer(): String? {
-                    return ""
-                }
-            })
-        }
     }
 
     override fun showInitLoading(show: Boolean) {

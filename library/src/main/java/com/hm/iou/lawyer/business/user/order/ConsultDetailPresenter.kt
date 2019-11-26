@@ -12,6 +12,7 @@ import com.hm.iou.lawyer.event.ConsultAddSuccEvent
 import com.hm.iou.lawyer.event.RatingLawyerSuccEvent
 import com.hm.iou.lawyer.event.UserOrderStatusChangedEvent
 import com.hm.iou.network.exception.ApiException
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -28,6 +29,15 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
 
     private var mOrderId: String? = null
     private var mDetailInfo: LawyerConsultDetailResBean? = null
+
+    init {
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
+    }
 
     override fun getOrderDetail(orderId: String) {
         mOrderId = orderId
@@ -277,6 +287,11 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
                     list.add(item)
                 }
                 mView.showLawyerAnswerList(list)
+
+                //延迟之后，再滚动到底部
+                delay(500)
+                println("ok scroll to bottom")
+                mView.scrollToBottom()
             } catch (e: Exception) {
                 handleException(e)
                 mView.toastMessage("律师解答获取失败")
