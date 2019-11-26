@@ -10,6 +10,7 @@ import com.hm.iou.base.utils.RouterUtil
 import com.hm.iou.lawyer.R
 import com.hm.iou.lawyer.bean.LetterReceiverBean
 import com.hm.iou.lawyer.bean.res.CustLetterDetailResBean
+import com.hm.iou.lawyer.bean.res.FileInfo
 import com.hm.iou.lawyer.business.lawyer.home.authen.AuthenticationActivity
 import com.hm.iou.lawyer.business.lawyer.home.prepare.HomePrepareActivity
 import com.hm.iou.lawyer.business.lawyer.workbench.WorkBenchActivity
@@ -24,6 +25,7 @@ import com.hm.iou.lawyer.business.user.lawyer.LawyerDetailActivity
 import com.hm.iou.lawyer.business.user.order.*
 import com.hm.iou.router.Router
 import com.hm.iou.tools.kt.startActivity
+import java.util.*
 
 /**
  * @author : 借条管家-shilei
@@ -271,11 +273,16 @@ object NavigationHelper {
     /**
      * 进入创建律师咨询页面，指定了律师
      */
-    fun toCreateLawyerConsultPage(context: Context, lawyerId: String?, price: Int?, desc: String? = null) {
-        context.startActivity<CreateLawyerConsultActivity>(
-            CreateLawyerConsultActivity.EXTRA_KEY_LAWYER_ID to (lawyerId ?: ""),
-            CreateLawyerConsultActivity.EXTRA_KEY_PRICE to (price ?: 0)
-        )
+    fun toCreateLawyerConsultPage(context: Context, lawyerId: String?, price: Int?,
+                                  desc: String? = null, fileList: List<FileInfo>? = null) {
+        val intent = Intent()
+        intent.putExtra(CreateLawyerConsultActivity.EXTRA_KEY_LAWYER_ID, lawyerId)
+        intent.putExtra(CreateLawyerConsultActivity.EXTRA_KEY_PRICE, price)
+        intent.putExtra(CreateLawyerConsultActivity.EXTRA_KEY_DESC, desc)
+        val arrayList = ArrayList<FileInfo>()
+        fileList?.forEach { arrayList.add(it) }
+        intent.putExtra(CreateLawyerConsultActivity.EXTRA_KEY_IMGS, arrayList)
+        context.startActivity(intent)
     }
 
     /***

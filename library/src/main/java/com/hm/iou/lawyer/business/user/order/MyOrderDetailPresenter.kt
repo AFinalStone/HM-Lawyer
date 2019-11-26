@@ -9,8 +9,6 @@ import com.hm.iou.lawyer.dict.OrderStatus
 import com.hm.iou.lawyer.event.RatingLawyerSuccEvent
 import com.hm.iou.lawyer.event.UserOrderStatusChangedEvent
 import com.hm.iou.network.exception.ApiException
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe

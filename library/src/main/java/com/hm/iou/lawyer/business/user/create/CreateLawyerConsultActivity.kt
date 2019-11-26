@@ -11,6 +11,7 @@ import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.base.photo.CompressPictureUtil
 import com.hm.iou.database.table.IouData
 import com.hm.iou.lawyer.R
+import com.hm.iou.lawyer.bean.res.FileInfo
 import com.hm.iou.lawyer.business.NavigationHelper
 import com.hm.iou.lawyer.business.comm.IouImageUploadAdapter
 import com.hm.iou.router.Router
@@ -51,6 +52,17 @@ class CreateLawyerConsultActivity : HMBaseActivity<CreateLawyerConsultPresenter>
     override fun initPresenter() = CreateLawyerConsultPresenter(this, this)
 
     override fun initEventAndData(savedInstanceState: Bundle?) {
+        val imgs = intent.getSerializableExtra(EXTRA_KEY_IMGS) as? ArrayList<FileInfo>
+        imgs?.forEach {
+            if (mFileList == null) {
+                mFileList = mutableListOf()
+            }
+            val fileInfo = IouData.FileEntity()
+            fileInfo.id = it.id
+            fileInfo.value = it.url
+            mFileList?.add(fileInfo)
+        }
+
         savedInstanceState?.let {
             mLawyerId = it.getString(EXTRA_KEY_LAWYER_ID)
             mPrice = it.getInt(EXTRA_KEY_PRICE, 0)
@@ -163,7 +175,9 @@ class CreateLawyerConsultActivity : HMBaseActivity<CreateLawyerConsultPresenter>
             et_consult_desc.setText(mDesc)
         }
 
-
+        mFileList?.forEach { item ->
+            mImageAdapter.addData(item.value)
+        }
 
         bottom_bar.setOnTitleClickListener {
             toCreateLawyerConsult(false)

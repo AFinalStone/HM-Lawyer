@@ -91,8 +91,8 @@ interface MyOrderDetailContract {
         fun showTopBarMenu(menuText: String, callback: () -> Unit)
 
         fun showCommDialog(
-            title: String?, msg: String?, posBtn: String? = "取消",
-            negBtn: String? = "确定", callback: (pos: Boolean) -> Unit
+            title: String?, msg: String?, posBtn: String? = "放弃取消",
+            negBtn: String? = "确定取消", callback: (pos: Boolean) -> Unit
         )
     }
 
