@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.lawyer_activity_lawyer_consult_order_detai
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 
 /**
@@ -293,13 +294,22 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
             mJobTimeCount?.cancel()
         }
         mJobTimeCount = launch {
-            var time = 60
+            var time = detail.leftTime ?: 0
             while (time > 0) {
-                tv_count_down_time.text = time.toString()
+                tv_count_down_time.text = formatTime(time)
                 delay(1000)
                 time -= 1
             }
         }
+    }
+
+    private fun formatTime(time: Long): String {
+        val hour = time / 3600
+        var remainderTime = time % 3600
+        val minute = remainderTime / 60
+        val second = remainderTime % 60
+        val df = DecimalFormat("##")
+        return "%S:%S:%S".format(df.format(hour), df.format(minute), df.format(second))
     }
 
     private fun showComplete(detail: LawyerConsultOrderDetailResBean) {
