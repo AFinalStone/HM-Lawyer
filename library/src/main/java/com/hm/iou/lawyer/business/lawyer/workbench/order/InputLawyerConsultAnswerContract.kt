@@ -8,6 +8,11 @@ import com.hm.iou.base.mvp.BaseContract
 class InputLawyerConsultAnswerContract {
 
     interface View : BaseContract.BaseView {
+
+        /**
+         * 发出通知
+         */
+        fun sendMsg()
     }
 
     interface Presenter : BaseContract.BasePresenter {

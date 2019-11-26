@@ -30,6 +30,11 @@ interface ConsultDetailContract {
         fun showAnswerList(list: List<IAnswer>)
 
         /**
+         * 滚动到底部
+         */
+        fun scrollToBottom()
+
+        /**
          * 显示解答列表动画
          */
         fun showAnswerListLoadingView()

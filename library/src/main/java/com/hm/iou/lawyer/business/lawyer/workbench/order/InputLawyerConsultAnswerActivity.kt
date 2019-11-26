@@ -4,16 +4,20 @@ import android.os.Bundle
 import com.hm.iou.base.comm.HMTextChangeListener
 import com.hm.iou.base.mvp.HMBaseActivity
 import com.hm.iou.lawyer.R
+import com.hm.iou.lawyer.event.AnswerListChangedEvent
+import com.hm.iou.lawyer.event.LawyerOrderStatusChangedEvent
 import com.hm.iou.tools.kt.extraDelegate
 import com.hm.iou.tools.kt.getValue
 import com.hm.iou.tools.kt.putValue
 import kotlinx.android.synthetic.main.lawyer_activity_input_lawyer_answer.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * 咨询解答
  */
 class InputLawyerConsultAnswerActivity : HMBaseActivity<InputLawyerConsultAnswerPresenter>(),
     InputLawyerConsultAnswerContract.View {
+
 
     companion object {
         const val EXTRA_KEY_ORDER_ID = "order_id"
@@ -90,6 +94,14 @@ class InputLawyerConsultAnswerActivity : HMBaseActivity<InputLawyerConsultAnswer
         super.onSaveInstanceState(outState)
         outState?.putValue(EXTRA_KEY_ORDER_ID, mOrderId)
         outState?.putValue(EXTRA_KEY_MIN_LENGTH, mMinAnswerLength)
+    }
+
+    override fun sendMsg() {
+        if (mMinAnswerLength ?: 2 > 2) {
+            EventBus.getDefault().post(LawyerOrderStatusChangedEvent())
+        } else {
+            EventBus.getDefault().post(AnswerListChangedEvent())
+        }
     }
 
 }

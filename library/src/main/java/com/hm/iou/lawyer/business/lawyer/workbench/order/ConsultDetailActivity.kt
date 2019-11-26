@@ -2,6 +2,7 @@ package com.hm.iou.lawyer.business.lawyer.workbench.order
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.widget.NestedScrollView
 import android.support.v7.widget.LinearLayoutManager
 import android.text.SpannableString
 import android.text.style.AbsoluteSizeSpan
@@ -230,8 +231,14 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
             rv_order_answer.layoutManager = LinearLayoutManager(this)
             mAnswerAdapter = ConsultAnswerAdapter(mContext)
             rv_order_answer.adapter = mAnswerAdapter
+            rv_order_answer.isNestedScrollingEnabled = false
         }
         mAnswerAdapter?.setNewData(list)
+    }
+
+
+    override fun scrollToBottom() {
+        nsv_order_content.fullScroll(NestedScrollView.FOCUS_DOWN)
     }
 
     override fun hideAnswerListLoadingView() {

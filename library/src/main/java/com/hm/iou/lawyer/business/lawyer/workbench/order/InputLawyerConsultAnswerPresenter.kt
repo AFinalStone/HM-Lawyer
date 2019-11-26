@@ -7,6 +7,7 @@ import com.hm.iou.lawyer.bean.req.UpdateLawyerAuthenticationInfReqBean
 import com.hm.iou.lawyer.dict.UpdateLawyerAuthenInfoType
 import com.hm.iou.lawyer.event.LawyerOrderStatusChangedEvent
 import com.hm.iou.lawyer.event.UpdateAuthenInfoEvent
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 
@@ -25,8 +26,8 @@ class InputLawyerConsultAnswerPresenter(
             try {
                 mView.showLoadingView()
                 handleResponse(LawyerApi.lawyerAnswer(billId, desc))
+                mView.sendMsg()
                 mView.dismissLoadingView()
-                EventBus.getDefault().post(LawyerOrderStatusChangedEvent())
                 mView.closeCurrPage()
             } catch (e: Exception) {
                 mView.dismissLoadingView()

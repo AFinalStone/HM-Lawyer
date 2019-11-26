@@ -1,16 +1,20 @@
 package com.hm.iou.lawyer.business.lawyer.workbench.order
 
+import android.annotation.SuppressLint
 import android.content.Context
 import com.hm.iou.base.mvp.HMBasePresenter
 import com.hm.iou.lawyer.api.LawyerApi
 import com.hm.iou.lawyer.bean.res.LawyerConsultOrderAnswerItemBean
 import com.hm.iou.lawyer.business.comm.IAnswer
+import com.hm.iou.lawyer.event.AnswerListChangedEvent
 import com.hm.iou.lawyer.event.LawyerOrderStatusChangedEvent
 import com.hm.iou.network.exception.ApiException
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.text.SimpleDateFormat
 
 /**
  *
@@ -81,6 +85,8 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
                 mView.hideAnswerListLoadingView()
                 list?.let {
                     mView.showAnswerList(convertData(list))
+                    delay(500)
+                    mView.scrollToBottom()
                     mNeedRefresh = false
                 }
             } catch (e: Exception) {
@@ -186,7 +192,17 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
 
                     override fun getName(): String? = item.name
 
-                    override fun getTime(): String? = item.createTime?.replace("-", ".")
+                    override fun getTime(): String? {
+                        return try {
+                            val sdf01 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                            val sdf02 = SimpleDateFormat("yyyy.MM.dd HH:mm")
+                            val date = sdf01.parse(item.createTime)
+                            sdf02.format(date)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            item.createTime?.replace("-", ".")
+                        }
+                    }
 
                     override fun getAnswer(): String? = item.msg
                 })
@@ -199,6 +215,12 @@ class ConsultDetailPresenter(context: Context, view: ConsultDetailContract.View)
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventOrderStatusChanged(event: LawyerOrderStatusChangedEvent) {
         mNeedRefresh = true
+    }
+
+    //订单状态更改了之后，比如用户取消了该订单
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventAnswerChanged(event: AnswerListChangedEvent) {
+        getAnswerList()
     }
 
 }

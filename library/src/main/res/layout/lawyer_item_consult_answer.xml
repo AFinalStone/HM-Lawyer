@@ -22,7 +22,6 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
         android:layout_toEndOf="@id/iv_answer_avatar"
         android:paddingTop="10dp"
         android:paddingBottom="10dp">
@@ -37,6 +36,7 @@
             android:id="@+id/tv_answer_time"
             style="@style/UikitTextView.Auxiliary.Small"
             android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
             tools:text="2019.12.16 13:23" />
 
         <TextView

@@ -5,8 +5,8 @@ data class LawyerConsultOrderAnswerListResBean(
 )
 
 data class LawyerConsultOrderAnswerItemBean(
-    val avatar: String,
-    val createTime: String,
-    val msg: String,
-    val name: String
+    val avatar: String?,
+    val createTime: String?,
+    val msg: String?,
+    val name: String?
 )
