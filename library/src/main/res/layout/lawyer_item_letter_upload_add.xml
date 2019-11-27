@@ -5,6 +5,6 @@
     android:layout_height="98dip"
     android:layout_marginRight="10dip"
     android:background="#FFF8F8F9"
+    android:padding="39dp"
     android:scaleType="centerInside"
-    android:src="@mipmap/uikit_ic_circle_add"
-    />
+    android:src="@mipmap/uikit_ic_circle_add" />
