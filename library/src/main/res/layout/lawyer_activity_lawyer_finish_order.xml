@@ -82,7 +82,7 @@
                 android:layout_weight="1"
                 android:gravity="end|center_vertical"
                 android:hint="请输入快递单号"
-                android:inputType="number"
+                android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:maxLength="30"
                 android:maxLines="1"
                 android:minWidth="130dp"
