@@ -216,6 +216,7 @@ class CreateLawyerLetterActivity : HMBaseActivity<CreateLawyerLetterPresenter>()
             et_letter_price.setText("${mPrice}元")
             et_letter_price.isEnabled = false
             hasLawyer = true
+            tv_letter_price_label.text = "订单金额"
         }
 
         //如果是重新创建，则会带过来原来的订单信息
