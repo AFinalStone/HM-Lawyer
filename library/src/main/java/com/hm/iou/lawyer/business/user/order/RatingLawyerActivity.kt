@@ -12,10 +12,8 @@ import com.hm.iou.lawyer.event.RatingLawyerSuccEvent
 import com.hm.iou.tools.kt.extraDelegate
 import com.hm.iou.uikit.HMTopBarView
 import kotlinx.android.synthetic.main.lawyer_activity_rating_lawyer.*
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
-import kotlin.Exception
 
 /**
  * Created by hjy on 2019/11/13
@@ -43,14 +41,6 @@ class RatingLawyerActivity : HMBaseActivity<HMBasePresenter<BaseContract.BaseVie
         et_rating_desc.addTextChangedListener(object : HMTextChangeListener() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val len = et_rating_desc.text.trim().length
-                if (len >= 5) {
-                    bottomBar.setTitleBtnBackground(R.drawable.uikit_selector_btn_main_small)
-                    bottomBar.setTitleBtnTextColor(resources.getColor(R.color.uikit_text_main_content))
-                } else {
-                    bottomBar.setTitleBtnBackground(R.drawable.uikit_selector_btn_minor_small)
-                    bottomBar.setTitleBtnTextColor(resources.getColor(R.color.uikit_text_auxiliary))
-                }
-
                 tv_rating_desc.text = "${len}/50"
             }
         })
@@ -67,7 +57,7 @@ class RatingLawyerActivity : HMBaseActivity<HMBasePresenter<BaseContract.BaseVie
 
         bottomBar.setOnTitleClickListener {
             val desc = et_rating_desc.text.trim().toString()
-            if (desc.length < 5) {
+            if (desc.length in 1..4) {
                 toastMessage("服务评价至少输入5个字")
                 return@setOnTitleClickListener
             }
