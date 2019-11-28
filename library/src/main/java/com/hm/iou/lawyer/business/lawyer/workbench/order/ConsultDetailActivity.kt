@@ -328,7 +328,7 @@ class ConsultDetailActivity : HMBaseActivity<ConsultDetailPresenter>(), ConsultD
         rl_lawyer_answer.visibility = VISIBLE
         ll_order_answer.visibility = GONE
         val lawyerInfoAbout = detail.lawyerAbout
-        tv_lawyer_name.text = lawyerInfoAbout?.name
+        tv_lawyer_name.text = lawyerInfoAbout?.name + "律师"
         ImageLoader.getInstance(mContext)
             .displayImage(
                 lawyerInfoAbout?.image,

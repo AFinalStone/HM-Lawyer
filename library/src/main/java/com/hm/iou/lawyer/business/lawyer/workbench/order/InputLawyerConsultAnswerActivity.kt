@@ -77,7 +77,7 @@ class InputLawyerConsultAnswerActivity : HMBaseActivity<InputLawyerConsultAnswer
         bottom_bar.setOnTitleClickListener {
             val length = (mAnswer ?: "").length
             if (length < mMinAnswerLength ?: 2) {
-                toastErrorMessage("律师介绍必须在%S-200个字以内".format(mMinAnswerLength ?: 2))
+                toastErrorMessage("解答内容不能少于%S个字".format(mMinAnswerLength ?: 2))
                 return@setOnTitleClickListener
             }
             mOrderId?.let {

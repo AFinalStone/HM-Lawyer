@@ -53,6 +53,7 @@ class HomeActivity : HMBaseActivity<HomePresenter>(),
                 }
                 helper?.setText(R.id.tv_lawyer_service_name, item?.serviceName)
                 helper?.setText(R.id.tv_lawyer_service_price, item?.servicePrice)
+                helper?.addOnClickListener(R.id.iv_lawyer_service_edit)
             }
         }
 
@@ -163,42 +164,44 @@ class HomeActivity : HMBaseActivity<HomePresenter>(),
         mLawyerServiceAdapter = LawyerServiceAdapter(mContext)
         rv_lawyer_service.layoutManager = GridLayoutManager(mContext, 2)
         rv_lawyer_service.adapter = mLawyerServiceAdapter
-        mLawyerServiceAdapter?.setOnItemClickListener { _, _, position ->
-            val lawYerServicePrice = mLawyerServiceAdapter?.getItem(position)?.price
-            val lawYerServiceId = mLawyerServiceAdapter?.getItem(position)?.serviceId
-            if (0 == position) {
-                val intent = Intent(mContext, EditLawyerServiceLetterPriceActivity::class.java)
-                lawYerServicePrice?.let {
-                    intent.putExtra(
-                        EditLawyerServiceLetterPriceActivity.EXTRA_KEY_SERVICE_PRICE,
-                        lawYerServicePrice
-                    )
+        mLawyerServiceAdapter?.setOnItemChildClickListener { _, view, position ->
+            if (R.id.iv_lawyer_service_edit == view.id) {
+                val lawYerServicePrice = mLawyerServiceAdapter?.getItem(position)?.price
+                val lawYerServiceId = mLawyerServiceAdapter?.getItem(position)?.serviceId
+                if (0 == position) {
+                    val intent = Intent(mContext, EditLawyerServiceLetterPriceActivity::class.java)
+                    lawYerServicePrice?.let {
+                        intent.putExtra(
+                            EditLawyerServiceLetterPriceActivity.EXTRA_KEY_SERVICE_PRICE,
+                            lawYerServicePrice
+                        )
+                    }
+                    lawYerServiceId?.let {
+                        intent.putExtra(
+                            EditLawyerServiceLetterPriceActivity.EXTRA_KEY_SERVICE_ID,
+                            lawYerServiceId
+                        )
+                    }
+                    startActivity(intent)
+                } else if (1 == position) {
+                    val intent = Intent(mContext, EditLawyerServiceConsultPriceActivity::class.java)
+                    lawYerServicePrice?.let {
+                        intent.putExtra(
+                            EditLawyerServiceLetterPriceActivity.EXTRA_KEY_SERVICE_PRICE,
+                            lawYerServicePrice
+                        )
+                    }
+                    lawYerServiceId?.let {
+                        intent.putExtra(
+                            EditLawyerServiceLetterPriceActivity.EXTRA_KEY_SERVICE_ID,
+                            lawYerServiceId
+                        )
+                    }
+                    startActivity(intent)
                 }
-                lawYerServiceId?.let {
-                    intent.putExtra(
-                        EditLawyerServiceLetterPriceActivity.EXTRA_KEY_SERVICE_ID,
-                        lawYerServiceId
-                    )
-                }
-                startActivity(intent)
-            } else if (1 == position) {
-                val intent = Intent(mContext, EditLawyerServiceConsultPriceActivity::class.java)
-                lawYerServicePrice?.let {
-                    intent.putExtra(
-                        EditLawyerServiceLetterPriceActivity.EXTRA_KEY_SERVICE_PRICE,
-                        lawYerServicePrice
-                    )
-                }
-                lawYerServiceId?.let {
-                    intent.putExtra(
-                        EditLawyerServiceLetterPriceActivity.EXTRA_KEY_SERVICE_ID,
-                        lawYerServiceId
-                    )
-                }
-                startActivity(intent)
             }
-
         }
+
 
         mLawyerHonorAdapter = LawyerHonorAdapter(mContext)
         mLawyerHonorAdapter?.setOnItemClickListener { adapter, _, position ->
