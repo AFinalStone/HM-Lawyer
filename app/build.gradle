@@ -38,9 +38,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation project(path: ':library')
-    api 'com.android.support:multidex:1.0.0'
+    implementation 'com.android.support:multidex:1.0.0'
     //图片选择
-    api 'com.heima.iou:hmselectpiclocal:1.0.0'
+//    implementation 'com.heima.iou:hmselectpiclocal:1.0.0'
     //签约密码，签章
 //    api 'com.heima.iou:hmsignaturelocal:1.0.0'
     //支付
@@ -52,9 +52,9 @@ dependencies {
     //首页、借条创建、编辑、展示等相关功能
 //    api 'com.heima.iou:hmjietiaolocal:1.0.0'
     //个人中心
-    api 'com.heima.iou:hmuserinfolocal:1.0.0'
+//    implementation 'com.heima.iou:hmuserinfolocal:1.0.0'
 
     compile(name: 'st-facecheck-release', ext: 'aar')
 
-    api project(':library')
+    implementation project(':library')
 }
